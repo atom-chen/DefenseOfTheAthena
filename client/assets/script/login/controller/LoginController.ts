@@ -1,52 +1,53 @@
-import { SessionData, Address, Session } from "../model/LoginData";
+
 import Http from "../../framework/net/Http";
-import { GameInfo } from "../../entry/model/GameInfo";
+import { SystemInfo } from "../../entry/model/SystemInfo";
 import Clog, { ClogKey } from "../../framework/clog/Clog";
 import { UITip } from "../../commonUI/UITip";
+import { UserData } from "../model/UserData";
+import { Session } from "../model/SessionData";
+import { UIManager } from "../../framework/ui/UIManager";
+import { UILogin } from "../view/UILogin";
+import { UIMap } from "../../battle/map/view/UIMap";
+
 
 
 export class LoginController {
 
-    public static async HttpHello() {
-        let postData = {
-            world: "151df4d2ddbdd1ad6a64c2c18b294828",
-        }
-        Clog.Green(ClogKey.Login, "HttpHello >>" + JSON.stringify(postData));
-        let data = await Http.Post(GameInfo.MainURL, postData)
-        let errorCode = data["ErrorCode"]
-        if (errorCode != 0) {
-            UITip.Info(errorCode)
-            return;
-        }
-        Clog.Green(ClogKey.Login, "HttpHello >> data:" + JSON.stringify(data));
-        Session.Address = new Address(data["Address"])
-    }
-
-
+    /**
+     * 登录服务器
+     * @param account 账号
+     * @param password 密码
+     */
     public static async HttpLogin(account: string, password: string) {
         let postData = {
             account: account,
             password: password
         }
         Clog.Green(ClogKey.Login, "HttpLogin >>" + JSON.stringify(postData));
-        let data = await Http.Post(Session.Address.Login, postData)
+        let data = await Http.Post(SystemInfo.Address.Login, postData)
         let errorCode = data["ErrorCode"]
         if (errorCode != 0) {
             UITip.Info(errorCode)
             return;
         }
         Clog.Green(ClogKey.Login, "HttpLogin >> data:" + JSON.stringify(data));
-
+        Session.User = new UserData(data["User"])
+        await UIManager.CloseUI(UILogin)
+        await UIManager.OpenUI(UIMap)
     }
 
-    
+    /**
+     * 注册用户
+     * @param account 账号
+     * @param password 密码
+     */
     public static async HttpRegishter(account: string, password: string) {
         let postData = {
             account: account,
             password: password
         }
         Clog.Green(ClogKey.Login, "HttpLogin >>" + JSON.stringify(postData));
-        let data = await Http.Post(Session.Address.Register, postData)
+        let data = await Http.Post(SystemInfo.Address.Register, postData)
         let errorCode = data["ErrorCode"]
         if (errorCode != 0) {
             UITip.Info(errorCode)
