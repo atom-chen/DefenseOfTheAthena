@@ -2,7 +2,7 @@ package errorCode
 
 const (
 	OK                          ErrorCode = 0
-	HelloError ErrorCode = 1
+	HelloError                  ErrorCode = 1
 	LoginAccountOrPasswordError ErrorCode = 2
 	RegisterAccountExit         ErrorCode = 3
 )

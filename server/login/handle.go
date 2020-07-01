@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"server/conf/address"
 	"server/errorCode"
-	"server/model/user"
+	"server/model"
 )
 
 func Init() {
@@ -17,18 +17,17 @@ func Init() {
 		mux.HandleFunc("/", onLogin)
 	 	http.ListenAndServe(address.Url.Login, mux)
 	}()
-
 }
 
 func onLogin(w http.ResponseWriter, r *http.Request) {
 	account := r.PostFormValue("account")
 	password := r.PostFormValue("password")
 	fmt.Printf("onLogin account=%s, password=%s\n", account, password)
-	u := user.GetUserByAccountAndPassword(account, password)
+	u := model.GetUserByAccountAndPassword(account, password)
 	resp := &respLogin{
 		Address: *address.Url,
 	}
-	if !reflect.DeepEqual(u, user.User{}) {
+	if !reflect.DeepEqual(u, model.User{}) {
 		resp.ErrorCode = errorCode.OK
 		resp.User = u
 	} else {

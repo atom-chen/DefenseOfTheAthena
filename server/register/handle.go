@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"server/conf/address"
 	"server/errorCode"
-	"server/model/user"
+	"server/model"
 )
 
 func Init() {
@@ -23,9 +23,9 @@ func onRegister(w http.ResponseWriter, r *http.Request) {
 	account := r.PostFormValue("account")
 	password := r.PostFormValue("password")
 	fmt.Printf("onRegister account=%s, password=%s\n", account, password)
-	u := user.GetUserByAccount(account)
+	u := model.GetUserByAccount(account)
 	resp := new(respRegister)
-	if reflect.DeepEqual(u, user.User{}) {
+	if reflect.DeepEqual(u, model.User{}) {
 		resp.ErrorCode = errorCode.OK
 	} else {
 		resp.ErrorCode = errorCode.RegisterAccountExit
