@@ -1,1 +1,0 @@
-{"version":3,"sources":["assets\\script\\entry\\model\\GameInfo.ts"],"names":[],"mappings":";;;;;;AAEA;IAAA;IAEA,CAAC;IADiB,gBAAO,GAAG,uBAAuB,CAAA;IACnD,eAAC;CAFD,AAEC,IAAA;AAFY,4BAAQ","file":"","sourceRoot":"/","sourcesContent":["\n\nexport class GameInfo {\n    public static MainURL = \"http://127.0.0.1:3650\"\n}"]}

@@ -7,9 +7,6 @@ import { UITip } from "../../commonUI/UITip";
 
 export class LoginController {
 
-
-    private static loginData: SessionData
-
     public static async HttpHello() {
         let postData = {
             world: "151df4d2ddbdd1ad6a64c2c18b294828",
@@ -42,7 +39,7 @@ export class LoginController {
 
     }
 
-
+    
     public static async HttpRegishter(account: string, password: string) {
         let postData = {
             account: account,

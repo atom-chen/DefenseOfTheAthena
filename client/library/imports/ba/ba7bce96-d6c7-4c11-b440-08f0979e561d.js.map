@@ -1,1 +1,0 @@
-{"version":3,"sources":["assets\\script\\battle\\map\\control\\CellController.ts"],"names":[],"mappings":";;;;;;AAEA;IAAA;IAQA,CAAC;IAJiB,8BAAe,GAA7B,UAA8B,EAAS;IAEvC,CAAC;IAEL,qBAAC;AAAD,CARA,AAQC,IAAA;AARY,wCAAc","file":"","sourceRoot":"/","sourcesContent":["\n\nexport class CellController {\n\n    \n    \n    public static GetCellDataById(id:number){\n\n    }\n\n}"]}

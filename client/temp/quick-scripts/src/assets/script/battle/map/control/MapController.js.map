@@ -1,1 +1,0 @@
-{"version":3,"sources":["assets\\script\\battle\\map\\control\\MapController.ts"],"names":[],"mappings":";;;;;;AAGA;IAAA;IAIA,CAAC;IAFiB,sBAAQ,GAAQ,CAAC,CAAC;IAEpC,oBAAC;CAJD,AAIC,IAAA;AAJY,sCAAa","file":"","sourceRoot":"/","sourcesContent":["\n\n\nexport class MapController {\n\n    public static CurMapId:number=1;\n\n}"]}

@@ -1,7 +1,7 @@
 import Clog from "../../framework/clog/Clog";
 import { AudioManager } from "../../framework/audio/AudioManager";
 import { UIManager } from "../../framework/ui/UIManager";
-import { EntryControler } from "../controller/EntryControler";
+import { EntryControler as EntryController } from "../controller/EntryControler";
 
 
 
@@ -19,7 +19,7 @@ export class UIEntry extends cc.Component {
     start() {
         cc.game.addPersistRootNode(this.node);  //设为驻留节点
         this.InitUIManager();
-        EntryControler.Init();
+        EntryController.Init();
     }
 
     //初始化UIManger
