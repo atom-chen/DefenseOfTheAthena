@@ -1,0 +1,33 @@
+# 配置说明
+
+## 1.数据库导表
+
+- 数据库用的mongodb，在navicat里点击连接，选择mongodb，取个连接名，点击确定。
+
+- 双击刚创建好的mongodb连接，右键选择新建数据库。
+
+- 如果已经创建过数据库，则以上步骤不用操作。
+
+- 将json格式的数据库表拖拽到navicat里面的数据库里。
+
+- 在”表示一个集合行的标签“里面选择json格式的数据库表里面最外层的key，如果最外层没有key，则选择空白，如下图：
+
+  <img src="pic\1-2.png" alt="1-2" style="zoom:67%;" /><img src="pic\1-1.png" style="zoom: 67%;" />
+
+- 如果有目标集合，则输入一个新的集合名字，如果有，则下来选择现有的集合，如下图：
+
+  <img src="pic\1-3.png" alt="1-3" style="zoom: 80%;" />
+
+- 如果显示的表结构没有问题，则可以一直下一步，然后开始导入了，如下图：
+
+  <img src="pic\1-4.png" alt="1-4" style="zoom:80%;" />
+
+## 2.服务器运行
+
+用golang打开项目，执行go mod download，然后执行go build。如果提示连接超时，在命令行输入：
+
+```
+go env -w GOPROXY=https://goproxy.cn,direct
+```
+
+配置一下go的国内代理
