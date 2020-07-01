@@ -15,7 +15,7 @@ import (
 type WSConnection struct {
 	//当前Conn属于哪个Server
 	TcpServer	ziface.IServer		//当前conn属于哪个server，在conn初始化的时候添加即可
-	//当前连接的 zinxWebsocket TCP套接字
+	//当前连接的 zinxServer TCP套接字
 	WsConn *websocket.Conn
 	//连接的ID
 	ConnID uint32
@@ -59,7 +59,7 @@ func InitConnection(wsConn *websocket.Conn, server ziface.IServer, connID uint32
 
 	return
 }
-//func InitConnection(wsConn *zinxWebsocket.Conn,connID uint32) (conn *WSConnection, err error) {
+//func InitConnection(wsConn *zinxServer.Conn,connID uint32) (conn *WSConnection, err error) {
 //	conn = &WSConnection{
 //		WsConn: wsConn,
 //		ConnID: connID,

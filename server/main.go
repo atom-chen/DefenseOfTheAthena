@@ -6,7 +6,7 @@ import (
 	"server/login"
 	"server/mongodb"
 	"server/register"
-	"server/zinxWebsocket"
+	"server/zinxServer"
 )
 
 func main() {
@@ -15,6 +15,6 @@ func main() {
 	hello.Init()
 	login.Init()
 	register.Init()
-	zinxWebsocket.Init()
+	zinxServer.Init()
 	select {}
 }

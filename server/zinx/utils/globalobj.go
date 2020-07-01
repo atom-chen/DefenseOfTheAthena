@@ -2,8 +2,6 @@ package utils
 
 import (
 	"server/zinx/ziface"
-	"encoding/json"
-	"io/ioutil"
 )
 
 /*
@@ -39,27 +37,27 @@ type GlobalObj struct {
 */
 var GlobalObject *GlobalObj
 
-//读取用户的配置文件
-func (g *GlobalObj) Reload() {
-	data, err := ioutil.ReadFile("conf/zinx.json")
-	if err != nil {
-		panic(err)
-	}
-	//将json数据解析到struct中
-	//fmt.Printf("json :%s\n", data)
-	err = json.Unmarshal(data, &GlobalObject)
-	if err != nil {
-		panic(err)
-	}
-}
+////读取用户的配置文件
+//func (g *GlobalObj) Reload() {
+//	data, err := ioutil.ReadFile("conf/zinx.json")
+//	if err != nil {
+//		panic(err)
+//	}
+//	//将json数据解析到struct中
+//	//fmt.Printf("json :%s\n", data)
+//	err = json.Unmarshal(data, &GlobalObject)
+//	if err != nil {
+//		panic(err)
+//	}
+//}
 
 func init() {
 	//初始化GlobalObject变量， 设置一些默认值。
 	GlobalObject = &GlobalObj{
 		Name:          "ZinxServerApp",
 		Version:       "V0.10",
-		TcpPort:       8999,
-		Host:          "0.0.0.0",
+		TcpPort:       3662,
+		Host:          "127.0.0.1",
 		MaxConn:       12000,
 		MaxPacketSize: 4096,
 		ConfFilePath:  "conf/zinx.json",

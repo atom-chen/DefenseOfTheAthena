@@ -135,7 +135,7 @@ func (s *Server) wsHandler(w http.ResponseWriter, r *http.Request){
 
 
 func (s *Server)Start()  {
-	fmt.Printf("[Start] Server Listenner at IP :%s,Port:%s,is starting \n",s.IP,s.Port)
+	fmt.Printf("[Start] Server Listenner at IP :%s,Port:%d,is starting \n",s.IP,s.Port)
 	fmt.Printf("[Zinx] Version: %s, MaxConn: %d,  MaxPacketSize: %d\n",
 		utils.GlobalObject.Version,
 		utils.GlobalObject.MaxConn,
