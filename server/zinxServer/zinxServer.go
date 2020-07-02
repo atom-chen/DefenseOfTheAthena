@@ -22,7 +22,7 @@ func OnConnectionAdd(conn ziface.IConnection) {
 
 	//time.AfterFunc(time.Second * 30, func() {
 	//	if oid,_ := conn.GetProperty("OutId"); oid == nil {
-	//		fmt.Println("数据异常，断开连接！")
+	//		log.Println("数据异常，断开连接！")
 	//		conn.Stop()
 	//	}
 	//})

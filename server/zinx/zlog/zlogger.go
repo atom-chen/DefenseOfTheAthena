@@ -99,7 +99,7 @@ func (log *ZinxLogger) formatHeader(buf *bytes.Buffer, t time.Time, file string,
 		//日期标记位
 		if log.flag&BitDate != 0 {
 			year, month, day := t.Date()
-			// fmt.Println("year:", year, " month:", month, " day:", day)
+			// log.Println("year:", year, " month:", month, " day:", day)
 			intToWidth(buf, year, 4)
 			buf.WriteByte('/') //2019/
 			intToWidth(buf, int(month), 2)

@@ -2,7 +2,6 @@ package link
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"server/enum"
 	"server/messageCommand"
@@ -53,7 +52,7 @@ func (l *UserLink) LostConnection() {
 */
 func (l *UserLink) SendMsg(msgId messageCommand.CmdType, resp interface{}) {
 	if l.Conn == nil {
-		fmt.Println("connection in player is nil")
+		log.Println("connection in player is nil")
 		return
 	}
 
@@ -73,10 +72,10 @@ func (l *UserLink) SendMsg(msgId messageCommand.CmdType, resp interface{}) {
 	}
 	//调用zinx框架的SendMsg发包
 	if err := l.Conn.SendMsg(string(jsonData)); err != nil {
-		fmt.Println("userLink WriteMessage error !")
+		log.Println("userLink WriteMessage error !")
 		return
 	}
 
-	log.Fatalf("消息发送成功 ! Cmd:%s, Msg:%v, jsonData:%s\n", p.Cmd.ToString(), p.Msg, string(jsonData))
+	log.Printf("消息发送成功 ! Cmd:%s, Msg:%v, jsonData:%s\n", p.Cmd.ToString(), p.Msg, string(jsonData))
 	return
 }

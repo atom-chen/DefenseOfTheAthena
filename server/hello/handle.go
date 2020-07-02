@@ -5,13 +5,14 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"server/conf/address"
 	"server/errorCode"
 )
 
 func Init() {
-	fmt.Println("init hello")
+	log.Println("init hello")
 	go func() {
 		mux := http.NewServeMux()
 		mux.HandleFunc("/", onHello)
@@ -31,6 +32,10 @@ func onHello(w http.ResponseWriter, r *http.Request) {
 	serverWorld := md5V(key)
 	clientWorld := r.PostFormValue("world")
 	fmt.Printf("hello server,serverWorld=%s, clientWorld=%s\n", serverWorld, clientWorld)
+	type respLogin struct {
+		ErrorCode errorCode.ErrorCode
+		Address   address.URL
+	}
 	resp := new(respLogin)
 	if serverWorld == clientWorld {
 		resp.ErrorCode = errorCode.OK

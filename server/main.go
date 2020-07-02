@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"server/hello"
 	"server/login"
 	"server/mongodb"
@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	fmt.Println("main")
+	log.Println("main")
 	mongodb.Init()
 	hello.Init()
 	login.Init()

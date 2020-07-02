@@ -3,6 +3,7 @@ package register
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"reflect"
 	"server/conf/address"
@@ -11,7 +12,7 @@ import (
 )
 
 func Init() {
-	fmt.Println("init register")
+	log.Println("init register")
 	go func() {
 		mux := http.NewServeMux()
 		mux.HandleFunc("/", onRegister)
@@ -24,6 +25,9 @@ func onRegister(w http.ResponseWriter, r *http.Request) {
 	password := r.PostFormValue("password")
 	fmt.Printf("onRegister account=%s, password=%s\n", account, password)
 	u := model.GetUserByAccount(account)
+	type respRegister struct {
+		ErrorCode errorCode.ErrorCode
+	}
 	resp := new(respRegister)
 	if reflect.DeepEqual(u, model.User{}) {
 		resp.ErrorCode = errorCode.OK

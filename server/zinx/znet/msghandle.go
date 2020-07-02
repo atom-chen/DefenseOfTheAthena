@@ -1,7 +1,6 @@
 package znet
 
 import (
-	"fmt"
 	"log"
 	"server/zinx/utils"
 	"server/zinx/ziface"
@@ -31,7 +30,7 @@ func NewMsgHandle() *MsgHandle {
 func (mh *MsgHandle) DoMsgHandler(request ziface.IRequest) {
 	handler, ok := mh.Apis[request.GetCommand()]
 	if !ok {
-		fmt.Println("api msgId = ", request.GetCommand(), " is not FOUND!")
+		log.Println("api msgId = ", request.GetCommand(), " is not FOUND!")
 		return
 	}
 	handler.PreHandle(request)
@@ -47,7 +46,7 @@ func (mh *MsgHandle) AddRouter(msgId uint32, router ziface.IRouter) {
 	}
 	//2 添加msg与api的绑定关系
 	mh.Apis[msgId] = router
-	fmt.Println("Add api msgId = ", msgId)
+	log.Println("Add api msgId = ", msgId)
 }
 
 //启动一个worker工作池 只能发生一次

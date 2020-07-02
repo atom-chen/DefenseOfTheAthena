@@ -1,7 +1,7 @@
 package link
 
 import (
-	"fmt"
+	"log"
 	"sync"
 )
 
@@ -26,7 +26,7 @@ func (m *manager) Add(link *UserLink) {
 	defer Manager.Lock.Unlock()
 	//将玩家添加到PlayerManager中
 	Manager.UserLink[link.LinkId] = link
-	fmt.Println("add link successfully: player num = ", Manager.Len())
+	log.Println("add link successfully: player num = ", Manager.Len())
 }
 
 //删除玩家长连接
@@ -36,7 +36,7 @@ func (m *manager) Remove(linkId uint32) {
 	defer Manager.Lock.Unlock()
 	//将玩家添加到PlayerManager中
 	delete(Manager.UserLink, linkId)
-	fmt.Println("link Remove linkId=", linkId, " successfully: linked num = ", Manager.Len())
+	log.Println("link Remove linkId=", linkId, " successfully: linked num = ", Manager.Len())
 }
 
 func (m *manager) Find(linkId uint32) *UserLink {

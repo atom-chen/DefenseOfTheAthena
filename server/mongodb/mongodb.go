@@ -1,7 +1,6 @@
 package mongodb
 
 import (
-	"fmt"
 	"gopkg.in/mgo.v2"
 	"log"
 )
@@ -12,15 +11,15 @@ var (
 )
 
 func Init() {
-	fmt.Println("init mongodb")
+	log.Println("init mongodb")
 	session, err1 := mgo.Dial("mongodb://127.0.0.1:27017")
 	if err1 != nil {
-		fmt.Println(err1)
+		log.Println(err1)
 		return
 	}
 	names, err2 := session.DatabaseNames()
 	if err2 != nil {
-		fmt.Println("数据库为空:", err2)
+		log.Println("数据库为空:", err2)
 	}
 	isContain := false
 	for _, item := range names {
@@ -29,10 +28,10 @@ func Init() {
 		}
 	}
 	if !isContain {
-		fmt.Println("数据库中没有名称为:" + dbName + "的数据")
+		log.Println("数据库中没有名称为:" + dbName + "的数据")
 		return
 	}
-	fmt.Println(names)
+	log.Println(names)
 	globalS = session
 }
 

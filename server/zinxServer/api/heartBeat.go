@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"server/messageCommand"
 	"server/zinx/ziface"
 	"server/zinx/znet"
@@ -33,7 +34,7 @@ func (t *HeartBeat) Handle(request ziface.IRequest) {
 	}
 	//心跳特殊处理
 	if err := userLink.Conn.SendMsg(string(jsonData)); err != nil {
-		fmt.Println("userLink HeartBeat error !")
+		log.Println("userLink HeartBeat error !")
 		return
 	}
 	fmt.Printf("发送心跳成功, resp:%s\n", string(jsonData))

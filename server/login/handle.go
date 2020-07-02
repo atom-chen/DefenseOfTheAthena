@@ -3,6 +3,7 @@ package login
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"reflect"
 	"server/conf/address"
@@ -11,7 +12,7 @@ import (
 )
 
 func Init() {
-	fmt.Println("init login")
+	log.Println("init login")
 	go func() {
 		mux := http.NewServeMux()
 		mux.HandleFunc("/", onLogin)
@@ -24,6 +25,10 @@ func onLogin(w http.ResponseWriter, r *http.Request) {
 	password := r.PostFormValue("password")
 	fmt.Printf("onLogin account=%s, password=%s\n", account, password)
 	u := model.GetUserByAccountAndPassword(account, password)
+	type respLogin struct {
+		ErrorCode errorCode.ErrorCode
+		User      model.User
+	}
 	resp := new(respLogin)
 	if !reflect.DeepEqual(u, model.User{}) {
 		resp.ErrorCode = errorCode.OK
