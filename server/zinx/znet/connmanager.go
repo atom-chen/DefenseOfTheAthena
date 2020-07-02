@@ -3,8 +3,8 @@ package znet
 import (
 	"errors"
 	"fmt"
-	"server/zinx/ziface"
 	"sync"
+	"server/zinx/ziface"
 )
 
 /*

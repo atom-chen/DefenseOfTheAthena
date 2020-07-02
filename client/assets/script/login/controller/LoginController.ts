@@ -8,6 +8,9 @@ import { Session } from "../model/SessionData";
 import { UIManager } from "../../framework/ui/UIManager";
 import { UILogin } from "../view/UILogin";
 import { UIMap } from "../../battle/map/view/UIMap";
+import { WebSocketController } from "../../websocket/WebSocketController";
+import { WebSocketCall } from "../../websocket/WebSocketCall";
+import { LinkWebsocket } from "./LinkWebsocket";
 
 
 
@@ -23,18 +26,16 @@ export class LoginController {
             account: account,
             password: password
         }
-        Clog.Green(ClogKey.Login, "HttpLogin >>" + JSON.stringify(postData));
         let data = await Http.Post(SystemInfo.Address.Login, postData)
         let errorCode = data["ErrorCode"]
         if (errorCode != 0) {
             UITip.Info(errorCode)
             return;
         }
-        Clog.Green(ClogKey.Login, "HttpLogin >> data:" + JSON.stringify(data));
         Session.User = new UserData(data["User"])
-        await UIManager.CloseUI(UILogin)
-        await UIManager.OpenUI(UIMap)
+        await LinkWebsocket.Start();
     }
+
 
     /**
      * 注册用户
@@ -46,16 +47,22 @@ export class LoginController {
             account: account,
             password: password
         }
-        Clog.Green(ClogKey.Login, "HttpLogin >>" + JSON.stringify(postData));
+        Clog.Green(ClogKey.Login, "HttpRegishter >>" + JSON.stringify(postData));
         let data = await Http.Post(SystemInfo.Address.Register, postData)
         let errorCode = data["ErrorCode"]
         if (errorCode != 0) {
             UITip.Info(errorCode)
             return;
         }
-        Clog.Green(ClogKey.Login, "HttpLogin >> data:" + JSON.stringify(data));
+        Clog.Green(ClogKey.Login, "HttpRegishter >> data:" + JSON.stringify(data));
 
     }
 
+    /**
+     * 连接websocket
+     */
+    public static LinkWebsocket() {
+
+    }
 }
 

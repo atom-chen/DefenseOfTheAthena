@@ -11,6 +11,7 @@ export class ClogKey {
     public static Api = "Api"
     public static Login = "Login"
     public static Http = "Http"
+    public static WebSocket="WebSocket"
 }
 
 
@@ -27,6 +28,7 @@ export default class Clog {
         this.OpenTag(ClogKey.Api)
         this.OpenTag(ClogKey.Login)
         this.OpenTag(ClogKey.Http)
+        this.OpenTag(ClogKey.WebSocket)
     }
 
     public static OpenTag(tag) {

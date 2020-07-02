@@ -24,9 +24,7 @@ func onLogin(w http.ResponseWriter, r *http.Request) {
 	password := r.PostFormValue("password")
 	fmt.Printf("onLogin account=%s, password=%s\n", account, password)
 	u := model.GetUserByAccountAndPassword(account, password)
-	resp := &respLogin{
-		Address: *address.Url,
-	}
+	resp := new(respLogin)
 	if !reflect.DeepEqual(u, model.User{}) {
 		resp.ErrorCode = errorCode.OK
 		resp.User = u

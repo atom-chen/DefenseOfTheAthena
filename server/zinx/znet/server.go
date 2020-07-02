@@ -6,11 +6,11 @@ import (
 	"github.com/gorilla/websocket"
 	"net"
 	"net/http"
-	"server/zinx/utils"
-	"server/zinx/ziface"
 	"strconv"
 	"sync"
 	"time"
+	"server/zinx/utils"
+	"server/zinx/ziface"
 )
 
 //iServer的接口实现，定义一个Server的服务器模块
@@ -93,6 +93,7 @@ func CallBackToClient(conn *net.TCPConn, data []byte, cnt int)error{
 }
 
 
+
 func (s *Server) wsHandler(w http.ResponseWriter, r *http.Request){
 	var (
 		wsConn *websocket.Conn
@@ -136,16 +137,13 @@ func (s *Server) wsHandler(w http.ResponseWriter, r *http.Request){
 
 func (s *Server)Start()  {
 	fmt.Printf("[Start] Server Listenner at IP :%s,Port:%d,is starting \n",s.IP,s.Port)
-	fmt.Printf("[Zinx] Version: %s, MaxConn: %d,  MaxPacketSize: %d\n",
-		utils.GlobalObject.Version,
-		utils.GlobalObject.MaxConn,
-		utils.GlobalObject.MaxPacketSize)
+	fmt.Printf("[Zinx] Version: %s, MaxConn: %d,  MaxPacketSize: %d\n", utils.GlobalObject.Version, utils.GlobalObject.MaxConn, utils.GlobalObject.MaxPacketSize)
 	go func() {
 		//0 启动worker工作池机智
 		port := strconv.Itoa(s.Port)
 		s.MsgHandle.StartWorkerPool()
 		http.HandleFunc("/ws",s.wsHandler)
-		http.ListenAndServe("0.0.0.0:" + port,nil)
+		http.ListenAndServe("127.0.0.1:" + port,nil)
 	}()
 }
 
