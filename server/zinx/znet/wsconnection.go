@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/gorilla/websocket"
 	"server/messageCommand"
+	"server/zinx/utils"
 	"server/zinx/ziface"
 	"sync"
 )
@@ -160,29 +161,34 @@ func (conn *WSConnection) readLoop() {
 			return
 		}
 
-		//{“cmd”:command(int),”msg”:”msg_data”(string)}
 		type JsonMsg struct {
 			Cmd messageCommand.CmdType `json:"cmd"`
 			Msg interface{}            `json:"msg"`
 		}
 
-		stu := JsonMsg{}
-		err = json.Unmarshal(data, &stu)
+		req := JsonMsg{}
+		err = json.Unmarshal(data, &req)
 		//解析失败会报错，如json字符串格式不对，缺"号，缺}等。断开连接
 		if err != nil {
 			conn.Stop()
 			fmt.Println("数据解析错误，断开连接。")
 			return
 		}
-		fmt.Printf("raw Data=%s,cmd=%v,msg=%v\n", string(data), stu.Cmd, stu.Msg)
+		fmt.Printf("收到客户端消息=%s,cmd=%v,msg=%v\n", string(data), req.Cmd, req.Msg)
 
-		switch stu.Cmd {
-		case messageCommand.HeartBeat:
-			{
-				fmt.Println("收到ping 回复 pong")
-				conn.WriteMessage([]byte("\"pong\""))
-				continue
-			}
+		request := Request{
+			conn: conn,
+			cmd:  req.Cmd,
+			msg:  req.Msg,
+		}
+		if utils.GlobalObject.WorkerPoolSize > 0 {
+			//已经启动工作池机制，将消息交给Worker处理
+			//fmt.Println("已经启动工作池机制，将消息交给Worker处理")
+			conn.MsgHandler.SendMsgToTaskQueue(&request)
+		} else {
+			//从绑定好的消息和对应的处理方法中执行对应的Handle方法
+			//fmt.Println("从绑定好的消息和对应的处理方法中执行对应的Handle方法")
+			go conn.MsgHandler.DoMsgHandler(&request)
 		}
 	}
 }

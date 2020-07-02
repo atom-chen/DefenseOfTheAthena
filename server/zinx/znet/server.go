@@ -6,11 +6,12 @@ import (
 	"github.com/gorilla/websocket"
 	"net"
 	"net/http"
+	"server/messageCommand"
+	"server/zinx/utils"
+	"server/zinx/ziface"
 	"strconv"
 	"sync"
 	"time"
-	"server/zinx/utils"
-	"server/zinx/ziface"
 )
 
 //iServer的接口实现，定义一个Server的服务器模块
@@ -39,16 +40,15 @@ type Server struct {
 }
 
 var (
-	cid uint32 = 0
- 	cIdLock sync.Mutex //保护CidGen的互斥机制
-	upgrader = websocket.Upgrader{
+	cid     uint32     = 0
+	cIdLock sync.Mutex //保护CidGen的互斥机制
+	wx      = websocket.Upgrader{
 		//允许跨域
 		CheckOrigin: func(r *http.Request) bool {
 			return true
 		},
 	}
 )
-
 
 /*
   创建一个服务器句柄
@@ -58,52 +58,49 @@ func NewServer() ziface.IServer {
 	//utils.GlobalObject.Reload()
 
 	s := &Server{
-		Name: utils.GlobalObject.Name,
+		Name:      utils.GlobalObject.Name,
 		IPVersion: "tcp4",
-		IP: utils.GlobalObject.Host,
-		Port:utils.GlobalObject.TcpPort,
-		MsgHandle: NewMsgHandle(), //msgHandler 初始化
-		ConnMgr: NewConnManager(), //创建ConnManager
+		IP:        utils.GlobalObject.Host,
+		Port:      utils.GlobalObject.TcpPort,
+		MsgHandle: NewMsgHandle(),   //msgHandler 初始化
+		ConnMgr:   NewConnManager(), //创建ConnManager
 	}
 
 	return s
 }
+
 //============== 实现 ziface.IServer 里的全部接口方法 ========
 
 //路由功能：给当前服务注册一个路由业务方法，供客户端链接处理使用
-func (s *Server) AddRouter(msgId uint32, router ziface.IRouter) {
+func (s *Server) AddRouter(msgId messageCommand.CmdType, router ziface.IRouter) {
 	//s.Router = router
 
 	s.MsgHandle.AddRouter(msgId, router)
-	fmt.Println("Add Router succ! " )
+	fmt.Println("Add Router succ! ")
 	//panic("implement me")
 }
 
 //定义当前客户端连接所绑定的handle api（目前这个handle是写死的，以后优化应该又用户自定义）
-func CallBackToClient(conn *net.TCPConn, data []byte, cnt int)error{
+func CallBackToClient(conn *net.TCPConn, data []byte, cnt int) error {
 	//回显的业务
 	fmt.Println("【Conn Handle】 CallbackToClient")
-	if _, err := conn.Write(data[:cnt]); err != nil{
+	if _, err := conn.Write(data[:cnt]); err != nil {
 		fmt.Println("write back buf err", err)
 		return errors.New("CallBackToClient error")
 	}
 
 	return nil
-
 }
 
-
-
-func (s *Server) wsHandler(w http.ResponseWriter, r *http.Request){
+func (s *Server) wsHandler(w http.ResponseWriter, r *http.Request) {
 	var (
 		wsConn *websocket.Conn
-		err error
-		conn *WSConnection
+		err    error
+		conn   *WSConnection
 		//data []byte
 	)
 
-
-	if wsConn, err = upgrader.Upgrade(w, r,nil); err != nil {
+	if wsConn, err = wx.Upgrade(w, r, nil); err != nil {
 		return
 	}
 	go func() {
@@ -120,10 +117,10 @@ func (s *Server) wsHandler(w http.ResponseWriter, r *http.Request){
 		//=============
 		//3.3 处理该新连接请求的 业务 方法， 此时应该有 handler 和 conn是绑定的
 		cIdLock.Lock()
-		if conn,err = InitConnection(wsConn,s,cid ,s.MsgHandle);err != nil {
+		if conn, err = InitConnection(wsConn, s, cid, s.MsgHandle); err != nil {
 			conn.Stop()
 		}
-		cid ++
+		cid++
 		cIdLock.Unlock()
 		//3.4 启动当前链接的处理业务
 		go conn.Start()
@@ -134,28 +131,27 @@ func (s *Server) wsHandler(w http.ResponseWriter, r *http.Request){
 
 }
 
-
-func (s *Server)Start()  {
-	fmt.Printf("[Start] Server Listenner at IP :%s,Port:%d,is starting \n",s.IP,s.Port)
+func (s *Server) Start() {
+	fmt.Printf("[Start] Server Listenner at IP :%s,Port:%d,is starting \n", s.IP, s.Port)
 	fmt.Printf("[Zinx] Version: %s, MaxConn: %d,  MaxPacketSize: %d\n", utils.GlobalObject.Version, utils.GlobalObject.MaxConn, utils.GlobalObject.MaxPacketSize)
 	go func() {
 		//0 启动worker工作池机智
 		port := strconv.Itoa(s.Port)
 		s.MsgHandle.StartWorkerPool()
-		http.HandleFunc("/ws",s.wsHandler)
-		http.ListenAndServe("127.0.0.1:" + port,nil)
+		http.HandleFunc("/ws", s.wsHandler)
+		http.ListenAndServe("127.0.0.1:"+port, nil)
 	}()
 }
 
-func (s *Server)Stop()  {
-	fmt.Println("[STOP] Zinx server , name " , s.Name)
+func (s *Server) Stop() {
+	fmt.Println("[STOP] Zinx server , name ", s.Name)
 
 	//TODO  Server.Stop() 将其他需要清理的连接信息或者其他信息 也要一并停止或者清理
 	s.ConnMgr.ClearConn()
 
 }
 
-func (s *Server)Serve()  {
+func (s *Server) Serve() {
 	//启动server的服务功能
 	s.Start()
 
@@ -163,10 +159,9 @@ func (s *Server)Serve()  {
 
 	//阻塞,否则主Go退出， listenner的go将会退出
 	for {
-		time.Sleep(10*time.Second)
+		time.Sleep(10 * time.Second)
 	}
 }
-
 
 //得到链接管理
 func (s *Server) GetConnMgr() ziface.IConnManager {
@@ -174,12 +169,12 @@ func (s *Server) GetConnMgr() ziface.IConnManager {
 }
 
 //设置该Server的连接创建时Hook函数
-func (s *Server) SetOnConnStart(hookFunc func(connection ziface.IWSConnection)){
+func (s *Server) SetOnConnStart(hookFunc func(connection ziface.IWSConnection)) {
 	s.OnConnStart = hookFunc
 }
 
 //设置该Server的连接断开时的Hook函数
-func (s *Server) SetOnConnStop(hookFunc func (ziface.IWSConnection)) {
+func (s *Server) SetOnConnStop(hookFunc func(ziface.IWSConnection)) {
 	s.OnConnStop = hookFunc
 }
 

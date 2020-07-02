@@ -1,11 +1,11 @@
 package enum
 
 const (
-	None    LinkStatus =0 //留空
-	Gaming  LinkStatus =1 //游戏中
-	Lobby   LinkStatus =2 //在大厅
-	OffLine LinkStatus =3 //下线
-	Idle    LinkStatus =4 //空闲
+	None    LinkStatus = 0 //留空
+	Gaming  LinkStatus = 1 //游戏中
+	Lobby   LinkStatus = 2 //在大厅
+	OffLine LinkStatus = 3 //下线
+	Idle    LinkStatus = 4 //空闲
 )
 
 type LinkStatus uint

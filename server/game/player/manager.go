@@ -1,4 +1,5 @@
-//package player
+package player
+
 //
 //import (
 //	"server/game/aoi"

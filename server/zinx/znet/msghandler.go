@@ -2,31 +2,32 @@ package znet
 
 import (
 	"fmt"
-	"strconv"
+	"server/messageCommand"
 	"server/zinx/utils"
 	"server/zinx/ziface"
+	"strconv"
 )
 
 type MsgHandle struct {
-	Apis 			map[uint32] ziface.IRouter  //存放每个MsgId 所对应的处理方法的map属性
-	WorkerPoolSize 	uint32			  			//业务工作Worker池的数量
-	TaskQueue 		[]chan ziface.IRequest		//Worker负责取任务的消息队列
+	Apis           map[messageCommand.CmdType]ziface.IRouter //存放每个MsgId 所对应的处理方法的map属性
+	WorkerPoolSize uint32                                    //业务工作Worker池的数量
+	TaskQueue      []chan ziface.IRequest                    //Worker负责取任务的消息队列
 }
 
-func NewMsgHandle() *MsgHandle{
+func NewMsgHandle() *MsgHandle {
 	return &MsgHandle{
-		Apis: make(map[uint32]ziface.IRouter),
+		Apis:           make(map[messageCommand.CmdType]ziface.IRouter),
 		WorkerPoolSize: utils.GlobalObject.WorkerPoolSize,
 		//一个worker对应一个queue
-		TaskQueue:make([]chan ziface.IRequest, utils.GlobalObject.WorkerPoolSize),
+		TaskQueue: make([]chan ziface.IRequest, utils.GlobalObject.WorkerPoolSize),
 	}
 }
 
 //马上以非阻塞方式处理消息
 func (mh *MsgHandle) DoMsgHandler(request ziface.IRequest) {
-	handler, ok := mh.Apis[request.GetMsgID()]
+	handler, ok := mh.Apis[request.GetCmd()]
 	if !ok {
-		fmt.Println("api msgId = ", request.GetMsgID(), " is not FOUND!")
+		fmt.Println("api msgId = ", request.GetCmd(), " is not FOUND!")
 		return
 	}
 
@@ -39,7 +40,7 @@ func (mh *MsgHandle) DoMsgHandler(request ziface.IRequest) {
 }
 
 //为消息添加具体的处理逻辑
-func (mh *MsgHandle) AddRouter(msgId uint32, router ziface.IRouter) {
+func (mh *MsgHandle) AddRouter(msgId messageCommand.CmdType, router ziface.IRouter) {
 	//1 判断当前msg绑定的API处理方法是否已经存在
 	if _, ok := mh.Apis[msgId]; ok {
 		panic("repeated api , msgId = " + strconv.Itoa(int(msgId)))
@@ -50,14 +51,14 @@ func (mh *MsgHandle) AddRouter(msgId uint32, router ziface.IRouter) {
 }
 
 //启动一个Worker工作流程
-func (mh *MsgHandle) StartOneWorker(workerID int, taskQueue chan ziface.IRequest){
+func (mh *MsgHandle) StartOneWorker(workerID int, taskQueue chan ziface.IRequest) {
 	fmt.Println("Worker ID = ", workerID, " is started.")
 	//不断的等待队列中的消息
 	for {
 		select {
-			//有消息则取出队列的Request，并执行绑定的业务方法
-			case request := <-taskQueue:
-				mh.DoMsgHandler(request)
+		//有消息则取出队列的Request，并执行绑定的业务方法
+		case request := <-taskQueue:
+			mh.DoMsgHandler(request)
 		}
 	}
 }
@@ -81,7 +82,7 @@ func (mh *MsgHandle) SendMsgToTaskQueue(request ziface.IRequest) {
 
 	//得到需要处理此条连接的workerID
 	workerID := request.GetConnection().GetConnID() % mh.WorkerPoolSize
-	fmt.Println("Add ConnID=", request.GetConnection().GetConnID()," request msgID=", request.GetMsgID(), "to workerID=", workerID)
+	fmt.Println("Add ConnID=", request.GetConnection().GetConnID(), " request msgID=", request.GetCmd(), "to workerID=", workerID)
 	//将请求消息发送给任务队列
 	mh.TaskQueue[workerID] <- request
 }

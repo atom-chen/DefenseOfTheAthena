@@ -8,10 +8,10 @@ import (
 )
 
 type URL struct {
-	Login string
+	Login    string
 	Register string
-	LobbyWS string
-	GameWS string
+	LobbyWS  string
+	GameWS   string
 }
 
 var Url *URL
@@ -28,11 +28,11 @@ func (u *URL) Reload() {
 		log.Println("address reload Unmarshal err:", err)
 		return
 	}
-	fmt.Printf("load address success, address=%v\n",u)
+	fmt.Printf("load address success, address=%v\n", u)
 }
 
 //初始化
 func init() {
-	Url=new(URL)
+	Url = new(URL)
 	Url.Reload()
 }

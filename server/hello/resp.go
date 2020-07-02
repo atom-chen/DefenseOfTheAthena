@@ -7,5 +7,5 @@ import (
 
 type respLogin struct {
 	ErrorCode errorCode.ErrorCode
-	Address address.URL
+	Address   address.URL
 }

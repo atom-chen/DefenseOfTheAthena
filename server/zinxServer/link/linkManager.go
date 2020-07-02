@@ -13,14 +13,14 @@ type manager struct {
 //提供一个对外的世界管理模块句柄
 var Manager *manager
 
-func init(){
+func init() {
 	Manager = &manager{
-		UserLink: make(map[uint32] *UserLink),
+		UserLink: make(map[uint32]*UserLink),
 	}
 }
 
 //增加玩家长连接
-func (m *manager)Add(link *UserLink)  {
+func (m *manager) Add(link *UserLink) {
 	//保护共享资源Map 加写锁
 	Manager.Lock.Lock()
 	defer Manager.Lock.Unlock()
@@ -30,7 +30,7 @@ func (m *manager)Add(link *UserLink)  {
 }
 
 //删除玩家长连接
-func (m *manager) Remove(linkId uint32){
+func (m *manager) Remove(linkId uint32) {
 	//保护共享资源Map 加写锁
 	Manager.Lock.Lock()
 	defer Manager.Lock.Unlock()
@@ -60,7 +60,6 @@ func (m *manager) AllLinks() []*UserLink {
 	return links
 }
 
-
 //清空玩家连接
 func (m *manager) Clear() {
 	//保护共享资源Map 加写锁
@@ -68,7 +67,7 @@ func (m *manager) Clear() {
 	defer Manager.Lock.Unlock()
 
 	//停止并删除全部的玩家信息
-	for lindId, userLink := range Manager.UserLink{
+	for lindId, userLink := range Manager.UserLink {
 		//清空玩家信息，踢掉在线的玩家
 		userLink.Conn.Stop()
 		//删除
@@ -77,6 +76,6 @@ func (m *manager) Clear() {
 }
 
 //获取长连接玩家数量
-func (m *manager) Len() int{
+func (m *manager) Len() int {
 	return len(Manager.UserLink)
 }

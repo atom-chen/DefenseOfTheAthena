@@ -7,6 +7,7 @@ import (
 	"server/zinx/ziface"
 	"server/zinx/znet"
 	"server/zinxServer/auth"
+	"server/zinxServer/heartBeat"
 	"server/zinxServer/link"
 )
 
@@ -15,11 +16,11 @@ func OnConnectionAdd(conn ziface.IWSConnection) {
 	//创建一个用户长连接
 	newLink := link.NewLink(conn)
 	//将该连接绑定属性linkId
-	linkId:=newLink.LinkId
-	newLink.Status=enum.Idle
+	linkId := newLink.LinkId
+	newLink.Status = enum.Idle
 	conn.SetProperty("linkId", linkId)
 
-	fmt.Printf("====> 玩家上线 ,linkId:%d\n",linkId)
+	fmt.Printf("====> 玩家上线 ,linkId:%d\n", linkId)
 
 	//time.AfterFunc(time.Second * 30, func() {
 	//	if oid,_ := conn.GetProperty("OutId"); oid == nil {
@@ -40,18 +41,18 @@ func OnConnectionLost(conn ziface.IWSConnection) {
 		return
 	}
 	target.LostConnection()
-	fmt.Printf("====> 玩家下线 ,linkId:%d\n",linkId)
+	fmt.Printf("====> 玩家下线 ,linkId:%d\n", linkId)
 }
 
-func Init()  {
+func Init() {
 	//创建服务器句柄
 	s := znet.NewServer()
 	//注册客户端连接建立和丢失函数
 	s.SetOnConnStart(OnConnectionAdd)
 	s.SetOnConnStop(OnConnectionLost)
 	//注册路由
-	s.AddRouter(uint32(messageCommand.LongLinkAuth),&auth.Auth{})
-
+	s.AddRouter(messageCommand.LongLinkAuth, &auth.Auth{})
+	s.AddRouter(messageCommand.HeartBeat, &heartBeat.HeartBeat{})
 	//启动服务
 	s.Serve()
 }

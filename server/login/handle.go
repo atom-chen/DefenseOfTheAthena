@@ -15,7 +15,7 @@ func Init() {
 	go func() {
 		mux := http.NewServeMux()
 		mux.HandleFunc("/", onLogin)
-	 	http.ListenAndServe(address.Url.Login, mux)
+		http.ListenAndServe(address.Url.Login, mux)
 	}()
 }
 

@@ -17,35 +17,34 @@ type User struct {
 
 //通过Id查找用户
 func FindUserById(id int) *User {
-	var user=new(User)
-	err:= mongodb.FindOne("User",bson.M{"Id":id},nil,&user)
-	if err!=nil{
-		fmt.Printf("GetUserByAccountAndPassword Error, id=%d\n",id)
+	var user = new(User)
+	err := mongodb.FindOne("User", bson.M{"Id": id}, nil, &user)
+	if err != nil {
+		fmt.Printf("GetUserByAccountAndPassword Error, id=%d\n", id)
 		return user
 	}
 	return user
 }
 
 //通过account,password查找用户
-func GetUserByAccountAndPassword(account,password string) User {
+func GetUserByAccountAndPassword(account, password string) User {
 	var user User
-	err:= mongodb.FindOne("User",bson.M{"Account":account,"Password":password},bson.M{"_id":0},&user)
-	if err!=nil{
-		fmt.Printf("GetUserByAccountAndPassword Error, account=%s, password=%s,err=%v \n",account,password,err)
+	err := mongodb.FindOne("User", bson.M{"Account": account, "Password": password}, bson.M{"_id": 0}, &user)
+	if err != nil {
+		fmt.Printf("GetUserByAccountAndPassword Error, account=%s, password=%s,err=%v \n", account, password, err)
 		return User{}
 	}
-	fmt.Printf("GetUserByAccountAndPassword success, link=%v \n",user)
+	fmt.Printf("GetUserByAccountAndPassword success, link=%v \n", user)
 	return user
 }
 
 func GetUserByAccount(account string) User {
 	var user User
-	err:= mongodb.FindOne("User",bson.M{"Account":account},bson.M{"_id":0},&user)
-	if err!=nil{
-		fmt.Printf("GetUserByAccountAndPassword Error, account=%s,err=%v \n",account,err)
+	err := mongodb.FindOne("User", bson.M{"Account": account}, bson.M{"_id": 0}, &user)
+	if err != nil {
+		fmt.Printf("GetUserByAccountAndPassword Error, account=%s,err=%v \n", account, err)
 		return User{}
 	}
-	fmt.Printf("GetUserByAccountAndPassword success, link=%v \n",user)
+	fmt.Printf("GetUserByAccountAndPassword success, link=%v \n", user)
 	return user
 }
-
