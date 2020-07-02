@@ -1,12 +1,15 @@
 package ziface
 
-/*
-   连接管理抽象层
-*/
+//连接管理
 type IConnManager interface {
-	Add(conn IWSConnection)                   //添加链接
-	Remove(conn IWSConnection)                //删除连接
-	Get(connID uint32) (IWSConnection, error) //利用ConnID获取链接
-	Len() int                                 //获取当前连接
-	ClearConn()                               //删除并停止所有链接
+	//添加连接
+	Add(conn IConnection)
+	//删除连接
+	Remove(conn IConnection)
+	//根据id查找连接
+	Get(connId uint32) (IConnection, error)
+	//总连接个数
+	Len() int
+	//清除全部连接
+	ClearConn()
 }

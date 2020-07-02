@@ -1,3 +1,5 @@
+import { WebSocketController } from "./WebSocketController";
+import { MessageCommand } from "./MessageCommond";
 
 /**
  *1.有req有resp的方法叫Call，即客户端发送数据给服务器，同时服务器也响应数据给客户端
@@ -7,6 +9,12 @@
  */
 export class WebSocketInput {
 
+    public static InputDia(content: string) {
+        let postData = {
+            content: content
+        }
+        WebSocketController.Input(MessageCommand.Test, postData)
+    }
 
 }
 

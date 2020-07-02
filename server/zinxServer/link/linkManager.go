@@ -6,11 +6,11 @@ import (
 )
 
 type manager struct {
-	UserLink map[uint32]*UserLink //管理的玩家信息
+	UserLink map[uint32]*UserLink //管理的玩家连接
 	Lock     sync.RWMutex         //读写玩家的读写锁
 }
 
-//提供一个对外的世界管理模块句柄
+//提供一个对外的管理模块句柄
 var Manager *manager
 
 func init() {

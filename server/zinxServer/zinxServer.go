@@ -6,20 +6,18 @@ import (
 	"server/messageCommand"
 	"server/zinx/ziface"
 	"server/zinx/znet"
-	"server/zinxServer/auth"
-	"server/zinxServer/heartBeat"
+	"server/zinxServer/api"
 	"server/zinxServer/link"
 )
 
 //当客户端建立连接的时候的hook函数
-func OnConnectionAdd(conn ziface.IWSConnection) {
+func OnConnectionAdd(conn ziface.IConnection) {
 	//创建一个用户长连接
 	newLink := link.NewLink(conn)
 	//将该连接绑定属性linkId
 	linkId := newLink.LinkId
 	newLink.Status = enum.Idle
 	conn.SetProperty("linkId", linkId)
-
 	fmt.Printf("====> 玩家上线 ,linkId:%d\n", linkId)
 
 	//time.AfterFunc(time.Second * 30, func() {
@@ -31,7 +29,7 @@ func OnConnectionAdd(conn ziface.IWSConnection) {
 }
 
 //当客户端断开连接的时候的hook函数
-func OnConnectionLost(conn ziface.IWSConnection) {
+func OnConnectionLost(conn ziface.IConnection) {
 	//获取当前连接的Pid属性
 	linkId, _ := conn.GetProperty("linkId")
 	//根据pid获取对应的玩家对象
@@ -51,8 +49,8 @@ func Init() {
 	s.SetOnConnStart(OnConnectionAdd)
 	s.SetOnConnStop(OnConnectionLost)
 	//注册路由
-	s.AddRouter(messageCommand.LongLinkAuth, &auth.Auth{})
-	s.AddRouter(messageCommand.HeartBeat, &heartBeat.HeartBeat{})
+	s.AddRouter(uint32(messageCommand.LongLinkAuth), &api.Auth{})
+	s.AddRouter(uint32(messageCommand.HeartBeat), &api.HeartBeat{})
 	//启动服务
 	s.Serve()
 }

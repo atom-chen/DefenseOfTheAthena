@@ -1,4 +1,6 @@
 import Clog, { ClogKey } from "../framework/clog/Clog";
+import { MessageCommand } from "./MessageCommond";
+import { WebSocketCall } from "./WebSocketCall";
 
 export class WebSocketController {
 
@@ -28,10 +30,16 @@ export class WebSocketController {
 
             //有消息过来
             this.ws.onmessage = (event: any) => {
-                let msg = new Uint8Array(event.data)
-                var str = String.fromCharCode.apply(null, msg);
-                var res = JSON.parse(str);
-                Clog.Purple(ClogKey.Net, "ws onmessage << " + JSON.stringify(res));
+                Clog.Purple(ClogKey.Net, "ws onmessage << " + event.data);
+                var res = JSON.parse(event.data);
+                let cmd: number = Number(res["Cmd"])
+                let msg = res["Msg"]
+                let func = this.funcMap.get(cmd)
+                if (func == null) {
+                    Clog.Error("on message error! func is null, cmd =" + cmd)
+                    return;
+                }
+                func(msg)
             };
 
             // 网络不通
@@ -67,4 +75,40 @@ export class WebSocketController {
         //手动断开事件
         this.ws.close();
     }
+
+
+    private static funcMap: Map<number, Function> = new Map<number, Function>();
+    public static Register(messageCommand: number, callback: Function) {
+        if (this.funcMap.has(messageCommand)) {
+            return;
+        }
+        this.funcMap.set(messageCommand, callback)
+    }
+
+    public static Call(messageCommand: number, postData: any): Promise<any> {
+        return new Promise((reslove, reject) => {
+            this.Register(messageCommand, (data: any) => {
+                if (data) {
+                    reslove(data)
+                    return
+                }
+                reject();
+            })
+            let info = {
+                Cmd: messageCommand,
+                Msg: postData,
+            }
+            Clog.Trace(ClogKey.Net, "call info:" + JSON.stringify(info))
+            this.OnSend(JSON.stringify(info))
+        })
+    }
+
+    public static Input(messageCommand: number, postData: any) {
+        let info = {
+            Cmd: messageCommand,
+            Msg: postData,
+        }
+        this.OnSend(JSON.stringify(info))
+    }
+
 }

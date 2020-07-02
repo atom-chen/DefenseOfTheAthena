@@ -1,15 +1,24 @@
 package znet
 
 import (
+	"log"
 	"server/zinx/ziface"
 )
 
-//实现router时，先嵌入这个基类，然后根据需要对这个基类的方法进行重写
+//实现router，先嵌入基类
 type BaseRouter struct{}
 
-// 这里之所以BaseRouter的方法都为空，
-// 是因为有的Router不希望有PreHandle或PostHandle
-// 所以Router全部继承BaseRouter的好处是，不需要实现PreHandle和PostHandle也可以实例化
-func (br *BaseRouter) PreHandle(req ziface.IRequest)  {}
-func (br *BaseRouter) Handle(req ziface.IRequest)     {}
-func (br *BaseRouter) PostHandle(req ziface.IRequest) {}
+//处理业务之前
+func (br *BaseRouter) PreHandle(request ziface.IRequest) {}
+
+//处理业务
+func (br *BaseRouter) Handle(request ziface.IRequest) {
+	//主业务不给路由，就提示一条输出信息
+	log.Println("Handle msg:", request.GetMessage())
+}
+
+//处理业务之后
+func (br *BaseRouter) PostHandle(request ziface.IRequest) {}
+
+//路由
+type Router struct{ BaseRouter }

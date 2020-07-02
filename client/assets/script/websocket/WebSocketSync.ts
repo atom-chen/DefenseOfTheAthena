@@ -1,3 +1,5 @@
+import { WebSocketController } from "./WebSocketController";
+import { MessageCommand } from "./MessageCommond";
 
 
 /**
@@ -8,6 +10,13 @@
  */
 export class WebSocketSync {
 
+    public static Register() {
+        WebSocketController.Register(MessageCommand.CallHeartBeat, (data) => this.AAA(data))
+    }
 
+
+    private static AAA(data: any) {
+
+    }
 
 }
