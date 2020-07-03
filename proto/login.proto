@@ -4,7 +4,7 @@ import "errorCode.proto";
 
 message ReqLogin{
     string Account = 1;   //账号
-    int32 Password = 2;   //密码
+    string Password = 2;   //密码
 }
 
 message RespLogin{
