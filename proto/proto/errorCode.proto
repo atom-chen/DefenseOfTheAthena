@@ -1,0 +1,10 @@
+syntax = "proto3";   
+package pb;
+
+enum ErrorCode
+{
+	OK=0;
+	HelloError = 1;
+	LoginAccountOrPasswordError = 2;
+	RegisterAccountExit = 3;
+}
