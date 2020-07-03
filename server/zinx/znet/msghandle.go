@@ -2,6 +2,7 @@ package znet
 
 import (
 	"log"
+	"server/zinx/command"
 	"server/zinx/utils"
 	"server/zinx/ziface"
 	"strconv"
@@ -10,7 +11,7 @@ import (
 //消息处理模块
 type MsgHandle struct {
 	//消息处理
-	Apis map[uint32]ziface.IRouter //存放每个MsgId 所对应的处理方法的map属性
+	Apis map[command.MessageCommand]ziface.IRouter //存放每个MsgId 所对应的处理方法的map属性
 	//负责worker取任务消息队列
 	TaskQueue []chan ziface.IRequest
 	//业务工作worker池的worker数量
@@ -20,7 +21,7 @@ type MsgHandle struct {
 //创建
 func NewMsgHandle() *MsgHandle {
 	return &MsgHandle{
-		Apis:           make(map[uint32]ziface.IRouter),
+		Apis:           make(map[command.MessageCommand]ziface.IRouter),
 		TaskQueue:      make([]chan ziface.IRequest, utils.GlobalObject.WorkerPoolSize),
 		WorkerPoolSize: utils.GlobalObject.WorkerPoolSize, //从全局配置获取
 	}
@@ -39,14 +40,14 @@ func (mh *MsgHandle) DoMsgHandler(request ziface.IRequest) {
 }
 
 //添加路由
-func (mh *MsgHandle) AddRouter(msgId uint32, router ziface.IRouter) {
+func (mh *MsgHandle) AddRouter(command command.MessageCommand, router ziface.IRouter) {
 	//1 判断当前msg绑定的API处理方法是否已经存在
-	if _, ok := mh.Apis[msgId]; ok {
-		panic("repeated api , msgId = " + strconv.Itoa(int(msgId)))
+	if _, ok := mh.Apis[command]; ok {
+		panic("repeated api , command = " + strconv.Itoa(int(command)))
 	}
 	//2 添加msg与api的绑定关系
-	mh.Apis[msgId] = router
-	log.Println("Add api msgId = ", msgId)
+	mh.Apis[command] = router
+	//log.Println("Add api command = ", CommandToString(command))
 }
 
 //启动一个worker工作池 只能发生一次

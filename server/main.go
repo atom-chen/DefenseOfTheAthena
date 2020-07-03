@@ -2,19 +2,15 @@ package main
 
 import (
 	"log"
-	"server/hello"
-	"server/login"
+	"server/http"
 	"server/mongodb"
-	"server/register"
 	"server/zinxServer"
 )
 
 func main() {
 	log.Println("main")
 	mongodb.Init()
-	hello.Init()
-	login.Init()
-	register.Init()
+	http.Init()
 	zinxServer.Init()
 	select {}
 }

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"server/messageCommand"
+	"server/zinx/command"
 	"server/zinx/ziface"
 	"server/zinx/znet"
 	"server/zinxServer/link"
@@ -21,11 +21,11 @@ func (t *HeartBeat) Handle(request ziface.IRequest) {
 	linkId := l.(uint32)
 	userLink := link.Manager.Find(linkId)
 	type heartBeatResp struct {
-		Cmd messageCommand.CmdType
+		Cmd command.MessageCommand
 		Msg string
 	}
 	resp := &heartBeatResp{
-		Cmd: messageCommand.HeartBeat,
+		Cmd: command.HeartBeat,
 		Msg: "pong",
 	}
 	jsonData, err := json.Marshal(resp)

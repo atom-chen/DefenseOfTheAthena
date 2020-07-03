@@ -1,18 +1,21 @@
 package znet
 
-import "server/zinx/ziface"
+import (
+	"server/zinx/command"
+	"server/zinx/ziface"
+)
 
 type Request struct {
 	//当前用户连接
 	conn ziface.IConnection
 	//消息messageCommand
-	command uint32
+	command command.MessageCommand
 	//消息体
 	message interface{}
 }
 
 //创建消息
-func NewRequest(conn ziface.IConnection, command uint32, message interface{}) *Request {
+func NewRequest(conn ziface.IConnection, command command.MessageCommand, message interface{}) *Request {
 	r := &Request{
 		conn:    conn,
 		command: command,
@@ -32,6 +35,6 @@ func (r *Request) GetMessage() interface{} {
 }
 
 //得到Command
-func (r *Request) GetCommand() uint32 {
+func (r *Request) GetCommand() command.MessageCommand {
 	return r.command
 }

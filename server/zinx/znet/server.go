@@ -4,9 +4,10 @@ import (
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
+	"server/conf/address"
+	"server/zinx/command"
 	"server/zinx/utils"
 	"server/zinx/ziface"
-	"strconv"
 )
 
 type Server struct {
@@ -14,10 +15,6 @@ type Server struct {
 	Name string
 	//服务器协议 ws,wss
 	Scheme string
-	//服务器ip地址
-	Host string
-	//服务器端口
-	Port uint32
 	//协议
 	Path string
 	//路由管理,用来绑定msgid与api关系
@@ -76,8 +73,7 @@ func (s *Server) Start() {
 	log.Println(
 		"server start name:", utils.GlobalObject.Name,
 		" scheme:", s.Scheme,
-		" ip:", s.Host,
-		" port:", strconv.Itoa(int(s.Port)),
+		"url", address.Url.Websocket,
 		" path:", s.Path,
 		" MaxConn:", utils.GlobalObject.MaxConn,
 		" MaxPackageSize:", utils.GlobalObject.MaxPackageSize,
@@ -86,7 +82,7 @@ func (s *Server) Start() {
 	s.MsgHandle.StartWorkerPool()
 
 	http.HandleFunc("/"+s.Path, s.wsHandler)
-	err := http.ListenAndServe(s.Host+":"+strconv.Itoa(int(s.Port)), nil)
+	err := http.ListenAndServe(address.Url.Websocket, nil)
 	if err != nil {
 		log.Println("server start listen error:", err)
 	}
@@ -107,7 +103,7 @@ func (s *Server) Serve() {
 }
 
 //添加路由
-func (s *Server) AddRouter(msgId uint32, router ziface.IRouter) {
+func (s *Server) AddRouter(msgId command.MessageCommand, router ziface.IRouter) {
 	s.MsgHandle.AddRouter(msgId, router)
 }
 
@@ -163,8 +159,6 @@ func NewServer() ziface.IServer {
 	s := &Server{
 		Name:      utils.GlobalObject.Name,
 		Scheme:    utils.GlobalObject.Scheme,
-		Host:      utils.GlobalObject.Host,
-		Port:      utils.GlobalObject.Port,
 		Path:      utils.GlobalObject.Path, // 比如 /echo
 		MsgHandle: NewMsgHandle(),
 		connMgr:   NewConnManager(),

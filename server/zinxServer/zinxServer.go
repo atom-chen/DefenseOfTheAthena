@@ -3,7 +3,7 @@ package zinxServer
 import (
 	"fmt"
 	"server/enum"
-	"server/messageCommand"
+	"server/zinx/command"
 	"server/zinx/ziface"
 	"server/zinx/znet"
 	"server/zinxServer/api"
@@ -49,8 +49,8 @@ func Init() {
 	s.SetOnConnStart(OnConnectionAdd)
 	s.SetOnConnStop(OnConnectionLost)
 	//注册路由
-	s.AddRouter(uint32(messageCommand.LongLinkAuth), &api.Auth{})
-	s.AddRouter(uint32(messageCommand.HeartBeat), &api.HeartBeat{})
+	s.AddRouter(command.LongLinkAuth, &api.Auth{})
+	s.AddRouter(command.HeartBeat, &api.HeartBeat{})
 	//启动服务
 	s.Serve()
 }

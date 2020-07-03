@@ -6,6 +6,7 @@ import (
 	"github.com/gorilla/websocket"
 	"log"
 	"net"
+	"server/zinx/command"
 	"server/zinx/utils"
 	"server/zinx/ziface"
 	"sync"
@@ -27,7 +28,7 @@ type Connection struct {
 	msgChan chan string
 	//有缓冲读写通信
 	msgBuffChan chan string
-	//路由管理,用来绑定msgid与api关系
+	//路由管理,用来绑定command与api关系
 	MsgHandle ziface.IMsgHandle
 	//绑定属性
 	property map[string]interface{}
@@ -77,7 +78,7 @@ func (c *Connection) StartReader() {
 		//得到request数据
 
 		type jsonMsg struct {
-			Cmd uint32
+			Cmd command.MessageCommand
 			Msg interface{}
 		}
 		temp := jsonMsg{}

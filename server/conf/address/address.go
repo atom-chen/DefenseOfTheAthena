@@ -8,10 +8,8 @@ import (
 )
 
 type URL struct {
-	Login    string
-	Register string
-	LobbyWS  string
-	GameWS   string
+	Http      string
+	Websocket string
 }
 
 var Url *URL

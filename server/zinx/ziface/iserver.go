@@ -2,6 +2,7 @@ package ziface
 
 import (
 	"github.com/gorilla/websocket"
+	"server/zinx/command"
 )
 
 //接口定义
@@ -13,7 +14,7 @@ type IServer interface {
 	//运行状态
 	Serve()
 	//添加路由
-	AddRouter(msgId uint32, router IRouter)
+	AddRouter(command command.MessageCommand, router IRouter)
 	//返回 连接管理
 	GetConnectionMgr() IConnManager
 	//连接之前回调

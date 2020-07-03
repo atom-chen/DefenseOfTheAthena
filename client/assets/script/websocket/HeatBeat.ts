@@ -12,7 +12,7 @@ export class HeatBeat {
     private static handle: number;
     private static readonly heatBeatInterval: number = 5     //发送心跳时间间隔
     private static heatBeatTimer: number = 0                //心跳计时器
-    private static lostTimeMax: number = 50;                //判定心跳丢失时长
+    private static lostTimeMax: number = 12;                //判定心跳丢失时长
 
     public static Start() {
         this.handle = window.setInterval(() => { this.HeatBeat() }, this.heatBeatInterval * 1000)

@@ -28,6 +28,13 @@ export class WebSocketCall {
         let postData = { code: code }
         let data = await WebSocketController.Call(MessageCommand.CallLongLinkAuth, postData)
         Clog.Trace(ClogKey.Net, "【授权】 >>" + JSON.stringify(data))
+        let errorCode = data["ErrorCode"]
+        if (errorCode != 0) {
+            Clog.Error("【授权失败】")
+            return;
+        }
     }
 
+
+    
 }

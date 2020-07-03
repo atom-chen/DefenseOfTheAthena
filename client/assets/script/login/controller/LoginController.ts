@@ -5,13 +5,9 @@ import Clog, { ClogKey } from "../../framework/clog/Clog";
 import { UITip } from "../../commonUI/UITip";
 import { UserData } from "../model/UserData";
 import { Session } from "../model/SessionData";
-import { UIManager } from "../../framework/ui/UIManager";
-import { UILogin } from "../view/UILogin";
-import { UIMap } from "../../battle/map/view/UIMap";
-import { WebSocketController } from "../../websocket/WebSocketController";
-import { WebSocketCall } from "../../websocket/WebSocketCall";
 import { LinkWebsocket } from "./LinkWebsocket";
-
+import { ErrorCode } from "../../other/ErrorCode";
+import { UIManager } from "../../framework/ui/UIManager";
 
 
 export class LoginController {
@@ -26,13 +22,14 @@ export class LoginController {
             account: account,
             password: password
         }
-        let data = await Http.Post(SystemInfo.Address.Login, postData)
+        let data = await Http.Post(SystemInfo.Address.Http + "/Login", postData)
         let errorCode = data["ErrorCode"]
-        if (errorCode != 0) {
-            UITip.Info(errorCode)
+        if (errorCode != ErrorCode.OK) {
+            UITip.Info(ErrorCode.ToString(errorCode))
             return;
         }
         Session.User = new UserData(data["User"])
+        Session.Token = data["Token"]
         await LinkWebsocket.Start();
     }
 
@@ -48,10 +45,10 @@ export class LoginController {
             password: password
         }
         Clog.Green(ClogKey.Login, "HttpRegishter >>" + JSON.stringify(postData));
-        let data = await Http.Post(SystemInfo.Address.Register, postData)
+        let data = await Http.Post(SystemInfo.Address.Http + "/Register", postData)
         let errorCode = data["ErrorCode"]
-        if (errorCode != 0) {
-            UITip.Info(errorCode)
+        if (errorCode != ErrorCode.OK) {
+            UITip.Info(ErrorCode.ToString(errorCode))
             return;
         }
         Clog.Green(ClogKey.Login, "HttpRegishter >> data:" + JSON.stringify(data));

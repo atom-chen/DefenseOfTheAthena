@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"log"
 	"server/enum"
-	"server/messageCommand"
 	"server/model"
+	"server/zinx/command"
 	"server/zinx/ziface"
 	"sync"
 )
@@ -50,14 +50,14 @@ func (l *UserLink) LostConnection() {
 /*
 	发送消息给客户端，
 */
-func (l *UserLink) SendMsg(msgId messageCommand.CmdType, resp interface{}) {
+func (l *UserLink) SendMsg(msgId command.MessageCommand, resp interface{}) {
 	if l.Conn == nil {
 		log.Println("connection in player is nil")
 		return
 	}
 
 	type pack struct {
-		Cmd messageCommand.CmdType
+		Cmd command.MessageCommand
 		Msg interface{}
 	}
 

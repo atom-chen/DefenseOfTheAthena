@@ -1,5 +1,9 @@
 package ziface
 
+import (
+	"server/zinx/command"
+)
+
 //把客户端数据包装成一个request
 type IRequest interface {
 	//得到当前连接
@@ -7,5 +11,5 @@ type IRequest interface {
 	//得到请求数据
 	GetMessage() interface{}
 	//得到请求messageCommand
-	GetCommand() uint32
+	GetCommand() command.MessageCommand
 }

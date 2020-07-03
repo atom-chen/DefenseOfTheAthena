@@ -13,6 +13,7 @@ type User struct {
 	NickName string `bson:"NickName"`
 	Age      int    `bson:"Age"`
 	Sex      int    `bson:"Sex"`
+	Token    string `bson:"Token"`
 }
 
 //通过Id查找用户

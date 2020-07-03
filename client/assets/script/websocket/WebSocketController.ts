@@ -35,7 +35,7 @@ export class WebSocketController {
                 let cmd: number = Number(res["Cmd"])
                 let msg = res["Msg"]
                 let func = this.funcMap.get(cmd)
-                if (func == null) {
+                if (!func) {
                     Clog.Error("on message error! func is null, cmd =" + cmd)
                     return;
                 }
@@ -73,15 +73,19 @@ export class WebSocketController {
             return;
         }
         //手动断开事件
+        Clog.Error("手动断开事件")
         this.ws.close();
     }
 
 
     private static funcMap: Map<number, Function> = new Map<number, Function>();
+
+    /**
+     * 注册回调方法
+     * @param messageCommand 消息命令
+     * @param callback callback里有Promise,所以map每次都需要重新给新的callback
+     */
     public static Register(messageCommand: number, callback: Function) {
-        if (this.funcMap.has(messageCommand)) {
-            return;
-        }
         this.funcMap.set(messageCommand, callback)
     }
 

@@ -6,6 +6,7 @@ import { LoginController } from "../../login/controller/LoginController";
 import Http from "../../framework/net/Http";
 import { SystemInfo, Address } from "../model/SystemInfo";
 import { UITip } from "../../commonUI/UITip";
+import { ErrorCode } from "../../other/ErrorCode";
 
 
 
@@ -48,10 +49,10 @@ export class EntryControler {
             world: "151df4d2ddbdd1ad6a64c2c18b294828",
         }
         Clog.Green(ClogKey.Login, "HttpHello >>" + JSON.stringify(postData));
-        let data = await Http.Post(SystemInfo.MainURL, postData)
+        let data = await Http.Post(SystemInfo.URL, postData)
         let errorCode = data["ErrorCode"]
-        if (errorCode != 0) {
-            UITip.Info(errorCode)
+        if (errorCode != ErrorCode.OK) {
+            UITip.Info(ErrorCode.ToString(errorCode))
             return;
         }
         Clog.Green(ClogKey.Login, "HttpHello >> data:" + JSON.stringify(data));

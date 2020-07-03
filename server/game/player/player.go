@@ -42,7 +42,7 @@ package player
 //
 ////告知客户端pid,同步已经生成的玩家ID给客户端
 //func (p *Player) SyncPid() {
-//	//组建MsgId0 proto数据
+//	//组建command0 proto数据
 //	//data := &pb.SyncPid{
 //	//	Pid: p.Pid,
 //	//}
@@ -54,7 +54,7 @@ package player
 ////广播玩家自己的出生地点
 //func (p *Player) BroadCastStartPosition() {
 //
-//	//组建MsgId200 proto数据
+//	//组建command200 proto数据
 //	//msg := &pb.BroadCast{
 //	//	Pid: p.Pid,
 //	//	Tp:  2, //TP2 代表广播坐标
@@ -83,7 +83,7 @@ package player
 //	发送消息给客户端，
 //	主要是将pb的protobuf数据序列化之后发送
 //*/
-//func (p *Player) SendMsg(msgId uint32, data string) {
+//func (p *Player) SendMsg(command uint32, data string) {
 //
 //
 //	return

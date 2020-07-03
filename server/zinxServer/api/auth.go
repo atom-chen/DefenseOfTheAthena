@@ -3,7 +3,7 @@ package api
 import (
 	"fmt"
 	"server/errorCode"
-	"server/messageCommand"
+	"server/zinx/command"
 	"server/zinx/ziface"
 	"server/zinx/znet"
 	"server/zinxServer/link"
@@ -28,5 +28,5 @@ func (a *Auth) Handle(request ziface.IRequest) {
 		ErrorCode: errorCode.OK,
 	}
 	fmt.Printf("api auth send Msg:%v\n", resp)
-	userLink.SendMsg(messageCommand.LongLinkAuth, resp)
+	userLink.SendMsg(command.LongLinkAuth, resp)
 }
