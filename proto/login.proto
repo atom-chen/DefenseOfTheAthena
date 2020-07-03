@@ -1,0 +1,13 @@
+syntax = "proto3";   
+package pb;
+import "errorCode.proto";
+
+message ReqLogin{
+    string Account = 1;   //账号
+    int32 Password = 2;   //密码
+}
+
+message RespLogin{
+	pb.ErrorCode ErrCode=1;
+	string Token=2;
+}
