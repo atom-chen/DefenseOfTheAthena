@@ -50,11 +50,11 @@ export default class Http {
                                 let msg: JSON;
                                 try {
                                     msg = JSON.parse(xhr.responseText);
+                                    Clog.Green(ClogKey.Net, "[XHR POST]\t\n[url]:" + url + "\t\n[msg]:" + JSON.stringify(msg));
                                 }
                                 catch (e) {
                                     reject({ message: '返回信息错误' });
                                 }
-                                Clog.Green(ClogKey.Net, "[XHR POST]\t\n[url]:" + url + "\t\n[msg]:" + JSON.stringify(msg));
                                 resolve(msg);
                             }
                             break;

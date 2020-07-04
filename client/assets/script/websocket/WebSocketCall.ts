@@ -2,6 +2,10 @@ import { WebSocketController } from "./WebSocketController";
 import { MessageCommand } from "./MessageCommond";
 import Clog, { ClogKey } from "../framework/clog/Clog";
 import { HeatBeat } from "./HeatBeat";
+import { pb } from "../other/proto";
+import { Session } from "../login/model/SessionData";
+import { UITip } from "../commonUI/UITip";
+import { ErrorCode } from "../other/ErrorCode";
 
 
 /**
@@ -16,25 +20,29 @@ export class WebSocketCall {
      * 心跳
      */
     public static async HeartBeat() {
-        let data = await WebSocketController.Call(MessageCommand.CallHeartBeat, "ping")
-        Clog.Trace(ClogKey.Net, "【心跳】 >>" + JSON.stringify(data))
+     
+
+        let data = await WebSocketController.Call(pb.MessageCommand.HeartBeat)
+        
+ 
         HeatBeat.OnHeatBeat()
     }
 
     /**
      * 授权
      */
-    public static async LongLinkAuth(code: string) {
-        let postData = { code: code }
-        let data = await WebSocketController.Call(MessageCommand.CallLongLinkAuth, postData)
-        Clog.Trace(ClogKey.Net, "【授权】 >>" + JSON.stringify(data))
-        let errorCode = data["ErrorCode"]
-        if (errorCode != 0) {
-            Clog.Error("【授权失败】")
-            return;
-        }
+    public static async LongLinkAuth() {
+        
+        let data = await WebSocketController.Call(pb.MessageCommand.LongLinkAuth)
+        // let resp = pb.RespAuth.fromObject(data)
+        // if (resp.ErrCode != pb.ErrorCode.OK) {
+        //     UITip.Info(ErrorCode.ToString(resp.ErrCode))
+        //     WebSocketController.ManulClose();
+        //     return;
+        // }
+
     }
 
 
-    
+
 }

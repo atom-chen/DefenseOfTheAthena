@@ -9,9 +9,9 @@ import { Session } from "../model/SessionData";
 export class LinkWebsocket {
 
     public static async Start(): Promise<void> {
-        await WebSocketController.OnInit(SystemInfo.Address.Websocket + "/Game").catch(() => { Clog.Error("---- error link ws ----") })
+        await WebSocketController.OnInit(SystemInfo.WebSocketUrl).catch(() => { Clog.Error("---- error link ws ----") })
         HeatBeat.Start()
-        WebSocketCall.LongLinkAuth(Session.Token);
+        // WebSocketCall.LongLinkAuth();
     }
 
 

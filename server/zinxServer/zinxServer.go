@@ -3,7 +3,7 @@ package zinxServer
 import (
 	"fmt"
 	"server/enum"
-	"server/zinx/command"
+	"server/pb"
 	"server/zinx/ziface"
 	"server/zinx/znet"
 	"server/zinxServer/api"
@@ -11,7 +11,7 @@ import (
 )
 
 //当客户端建立连接的时候的hook函数
-func OnConnectionAdd(conn ziface.IConnection) {
+func OnConnectionAdd(conn ziface.IWSConnection) {
 	//创建一个用户长连接
 	newLink := link.NewLink(conn)
 	//将该连接绑定属性linkId
@@ -29,7 +29,7 @@ func OnConnectionAdd(conn ziface.IConnection) {
 }
 
 //当客户端断开连接的时候的hook函数
-func OnConnectionLost(conn ziface.IConnection) {
+func OnConnectionLost(conn ziface.IWSConnection) {
 	//获取当前连接的Pid属性
 	linkId, _ := conn.GetProperty("linkId")
 	//根据pid获取对应的玩家对象
@@ -49,8 +49,8 @@ func Init() {
 	s.SetOnConnStart(OnConnectionAdd)
 	s.SetOnConnStop(OnConnectionLost)
 	//注册路由
-	s.AddRouter(command.LongLinkAuth, &api.Auth{})
-	s.AddRouter(command.HeartBeat, &api.HeartBeat{})
+	s.AddRouter(uint32(pb.MessageCommand_LongLinkAuth), &api.Auth{})
+	s.AddRouter(uint32(pb.MessageCommand_HeartBeat), &api.HeartBeat{})
 	//启动服务
 	s.Serve()
 }

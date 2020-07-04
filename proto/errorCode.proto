@@ -1,10 +1,12 @@
 syntax = "proto3";   
 package pb;
 
+//proto3中，如果是go语言，默认值为0，数据不会下发，所以OK从1开始
 enum ErrorCode
 {
-	OK=0;
-	HelloError = 1;
-	LoginAccountOrPasswordError = 2;
-	RegisterAccountExit = 3;
+	Uknow=0;	
+	OK=1;
+	HelloError = 2;
+	LoginAccountOrPasswordError = 3;
+	RegisterAccountExit = 4;
 }

@@ -1,23 +1,17 @@
 package errorCode
 
-const (
-	OK                          ErrorCode = 0
-	HelloError                  ErrorCode = 1
-	LoginAccountOrPasswordError ErrorCode = 2
-	RegisterAccountExit         ErrorCode = 3
-)
+import "server/pb"
 
-type ErrorCode uint
-
-func (e ErrorCode) ToString() string {
+//打印错误日志
+func Print(e pb.ErrorCode) string {
 	switch e {
-	case OK:
+	case pb.ErrorCode_OK:
 		return "OK"
-	case HelloError:
+	case pb.ErrorCode_HelloError:
 		return "签名错误"
-	case LoginAccountOrPasswordError:
+	case pb.ErrorCode_LoginAccountOrPasswordError:
 		return "账号或密码错误"
-	case RegisterAccountExit:
+	case pb.ErrorCode_RegisterAccountExit:
 		return "账号已存在"
 	default:
 		return "UNKNOWN"

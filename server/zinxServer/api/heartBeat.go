@@ -1,10 +1,10 @@
 package api
 
 import (
-	"encoding/json"
 	"fmt"
+	"github.com/golang/protobuf/proto"
 	"log"
-	"server/zinx/command"
+	"server/pb"
 	"server/zinx/ziface"
 	"server/zinx/znet"
 	"server/zinxServer/link"
@@ -17,26 +17,21 @@ type HeartBeat struct {
 
 func (t *HeartBeat) Handle(request ziface.IRequest) {
 	//根据连接获取玩家
-	l, _ := request.GetConn().GetProperty("linkId")
+	l, _ := request.GetConnection().GetProperty("linkId")
 	linkId := l.(uint32)
 	userLink := link.Manager.Find(linkId)
-	type heartBeatResp struct {
-		Cmd command.MessageCommand
-		Msg string
+	resp := &pb.RespPackage{
+		Cmd: pb.MessageCommand_HeartBeat,
 	}
-	resp := &heartBeatResp{
-		Cmd: command.HeartBeat,
-		Msg: "pong",
-	}
-	jsonData, err := json.Marshal(resp)
+	pbBuf, err := proto.Marshal(resp)
 	if err != nil {
 		return
 	}
 	//心跳特殊处理
-	if err := userLink.Conn.SendMsg(string(jsonData)); err != nil {
+	if err := userLink.Conn.WriteMessage(pbBuf); err != nil {
 		log.Println("userLink HeartBeat error !")
 		return
 	}
-	fmt.Printf("发送心跳成功, resp:%s\n", string(jsonData))
+	fmt.Printf("发送心跳成功, resp:%v\n", resp)
 	return
 }

@@ -7,7 +7,7 @@ import { EnumUIHierarchy } from "../framework/ui/UIEnum";
 
 export class UITip extends UIBase {
 
-    private static DURATION_SHORT = 2; 
+    private static DURATION_SHORT = 0.6; 
     private static content: string
 
     /**

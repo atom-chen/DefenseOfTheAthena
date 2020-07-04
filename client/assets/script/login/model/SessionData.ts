@@ -1,12 +1,9 @@
 import { UserData } from "./UserData";
 
 export class SessionData {
-
-    public User: UserData
+    
     public Token:string;
-    constructor() {
-        this.User = new UserData();
-    }
+  
 
 
 }

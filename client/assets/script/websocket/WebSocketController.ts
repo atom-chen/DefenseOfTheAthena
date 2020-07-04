@@ -1,6 +1,7 @@
 import Clog, { ClogKey } from "../framework/clog/Clog";
-import { MessageCommand } from "./MessageCommond";
-import { WebSocketCall } from "./WebSocketCall";
+import { pb } from "../other/proto";
+import { Session } from "../login/model/SessionData";
+import protobuf = require("protobufjs");
 
 export class WebSocketController {
 
@@ -30,16 +31,15 @@ export class WebSocketController {
 
             //有消息过来
             this.ws.onmessage = (event: any) => {
-                Clog.Purple(ClogKey.Net, "ws onmessage << " + event.data);
-                var res = JSON.parse(event.data);
-                let cmd: number = Number(res["Cmd"])
-                let msg = res["Msg"]
-                let func = this.funcMap.get(cmd)
+                let buff=new Uint8Array(event.data)
+                let resp = pb.RespPackage.decode(buff)
+                Clog.Purple(ClogKey.Net, "onmessage <<" + JSON.stringify(resp))
+                let func = this.funcMap.get(resp.Cmd)
                 if (!func) {
-                    Clog.Error("on message error! func is null, cmd =" + cmd)
+                    Clog.Error("on message error! func is null, cmd =" + resp.Cmd)
                     return;
                 }
-                func(msg)
+                func(resp.Msg)
             };
 
             // 网络不通
@@ -89,21 +89,19 @@ export class WebSocketController {
         this.funcMap.set(messageCommand, callback)
     }
 
-    public static Call(messageCommand: number, postData: any): Promise<any> {
+    public static Call(command: pb.MessageCommand, postData?: any): Promise<any> {
         return new Promise((reslove, reject) => {
-            this.Register(messageCommand, (data: any) => {
+            this.Register(command, (data: any) => {
                 if (data) {
                     reslove(data)
                     return
                 }
                 reject();
             })
-            let info = {
-                Cmd: messageCommand,
-                Msg: postData,
-            }
-            Clog.Trace(ClogKey.Net, "call info:" + JSON.stringify(info))
-            this.OnSend(JSON.stringify(info))
+            let req = pb.ReqPackage.create({ Cmd: command, Token: Session.Token });//构造对象
+            let reqBuf = pb.ReqPackage.encode(req).finish(); //获取二进制数据，一定要注意使用finish函数
+            Clog.Trace(ClogKey.Net, "call message" + JSON.stringify(req))
+            this.OnSend(reqBuf)
         })
     }
 

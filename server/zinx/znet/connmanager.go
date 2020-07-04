@@ -2,70 +2,83 @@ package znet
 
 import (
 	"errors"
-	"log"
+	"fmt"
 	"server/zinx/ziface"
 	"sync"
 )
 
-//连接管理
+/*
+   连接管理模块
+*/
 type ConnManager struct {
-	//管理连接
-	connections map[uint32]ziface.IConnection
-	//保护连接锁
-	connLock sync.RWMutex
+	connections map[uint32]ziface.IWSConnection //管理的连接信息
+	connLock    sync.RWMutex                    //读写连接的读写锁
 }
 
-//创建管理
+/*
+   创建一个链接管理
+*/
 func NewConnManager() *ConnManager {
 	return &ConnManager{
-		connections: make(map[uint32]ziface.IConnection),
+		connections: make(map[uint32]ziface.IWSConnection),
 	}
 }
 
-//添加连接
-func (connMgr *ConnManager) Add(conn ziface.IConnection) {
-	//共享锁
+//添加链接
+func (connMgr *ConnManager) Add(conn ziface.IWSConnection) {
+	//保护共享资源Map 加写锁
 	connMgr.connLock.Lock()
 	defer connMgr.connLock.Unlock()
-	connMgr.connections[conn.GetConnId()] = conn
-	log.Println("connManager add connId:", conn.GetConnId())
+
+	//将conn连接添加到ConnMananger中
+	connMgr.connections[conn.GetConnID()] = conn
+
+	fmt.Println("connection add to ConnManager successfully: conn num = ", connMgr.Len())
 }
 
 //删除连接
-func (connMgr *ConnManager) Remove(conn ziface.IConnection) {
-	//共享锁
+func (connMgr *ConnManager) Remove(conn ziface.IWSConnection) {
+	//保护共享资源Map 加写锁
 	connMgr.connLock.Lock()
 	defer connMgr.connLock.Unlock()
-	delete(connMgr.connections, conn.GetConnId())
-	log.Println("connManager Remove connId:", conn.GetConnId())
+
+	//删除连接信息
+	delete(connMgr.connections, conn.GetConnID())
+
+	fmt.Println("connection Remove ConnID=", conn.GetConnID(), " successfully: conn num = ", connMgr.Len())
 }
 
-//根据id查找连接
-func (connMgr *ConnManager) Get(connId uint32) (ziface.IConnection, error) {
-	//共享锁
+//利用ConnID获取链接
+func (connMgr *ConnManager) Get(connID uint32) (ziface.IWSConnection, error) {
+	//保护共享资源Map 加读锁
 	connMgr.connLock.RLock()
 	defer connMgr.connLock.RUnlock()
-	if conn, ok := connMgr.connections[connId]; ok {
+
+	if conn, ok := connMgr.connections[connID]; ok {
 		return conn, nil
 	} else {
-		return nil, errors.New("connmanager Get err")
+		return nil, errors.New("connection not found")
 	}
 }
 
-//总连接个数
+//获取当前连接
 func (connMgr *ConnManager) Len() int {
 	return len(connMgr.connections)
 }
 
-//清除全部连接
+//清除并停止所有连接
 func (connMgr *ConnManager) ClearConn() {
-	//共享锁
+	//保护共享资源Map 加写锁
 	connMgr.connLock.Lock()
 	defer connMgr.connLock.Unlock()
-	//删除conn停止工作
-	for connId, conn := range connMgr.connections {
+
+	//停止并删除全部的连接信息
+	for connID, conn := range connMgr.connections {
+		//停止
 		conn.Stop()
-		delete(connMgr.connections, connId)
+		//删除
+		delete(connMgr.connections, connID)
 	}
-	log.Println("connManager Clear Conn success")
+
+	fmt.Println("Clear All Connections successfully: conn num = ", connMgr.Len())
 }

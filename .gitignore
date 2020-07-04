@@ -1,3 +1,5 @@
 /client/temp
 /client/local
 /client/library
+/proto/pb_go
+/proto/pb_ts

@@ -43,7 +43,7 @@ package player
 ////告知客户端pid,同步已经生成的玩家ID给客户端
 //func (p *Player) SyncPid() {
 //	//组建command0 proto数据
-//	//data := &pb.SyncPid{
+//	//data := &proto.SyncPid{
 //	//	Pid: p.Pid,
 //	//}
 //	//
@@ -55,11 +55,11 @@ package player
 //func (p *Player) BroadCastStartPosition() {
 //
 //	//组建command200 proto数据
-//	//msg := &pb.BroadCast{
+//	//msg := &proto.BroadCast{
 //	//	Pid: p.Pid,
 //	//	Tp:  2, //TP2 代表广播坐标
-//	//	Data: &pb.BroadCast_P{
-//	//		P: &pb.Position{
+//	//	Data: &proto.BroadCast_P{
+//	//		P: &proto.Position{
 //	//			X: p.X,
 //	//			Y: p.Y,
 //	//			Z: p.Z,

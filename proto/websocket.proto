@@ -1,0 +1,23 @@
+syntax = "proto3";   
+package pb;
+import "errorCode.proto";
+import "messageCommand.proto";
+
+
+//所有的客户端请求，都是这个数据结构
+message ReqPackage{
+	MessageCommand Cmd=1;   //message command
+	string Token=2;     	//每个消息都带token
+	bytes Msg=3;			//所有的请求，都在这里
+}
+
+//所有的服务器响应，都是这个数据结构
+message RespPackage{
+	MessageCommand Cmd=1;   //message command
+	pb.ErrorCode ErrCode=2; //响应结果
+	bytes Msg=3;			//所有的回应，都在这里
+}
+
+
+
+

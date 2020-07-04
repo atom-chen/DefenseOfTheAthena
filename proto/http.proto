@@ -1,0 +1,39 @@
+syntax = "proto3";   
+package pb;
+import "errorCode.proto";
+
+//入口消息req，用于服务端与客户端握手
+message ReqEntry{
+   string Secret=1;
+}
+
+//入口消息resp，服务端将登录、注册、长连接等地址下发
+message RespEntry{
+	pb.ErrorCode ErrCode=1;
+	string LoginUrl=2;
+	string RegisterUrl=3;
+	string WebSocketUrl=4;
+}
+
+//登录req
+message ReqLogin{
+    string Account = 1;   //账号
+    string Password = 2;   //密码
+}
+
+//登录resp
+message RespLogin{
+	pb.ErrorCode ErrCode=1;
+	string Token=2;
+}
+
+//注册req
+message ReqRegister{
+    string Account = 1;    //账号
+    string Password = 2;   //密码
+}
+
+//注册resp
+message RespRegister{
+	pb.ErrorCode ErrCode=1;
+}

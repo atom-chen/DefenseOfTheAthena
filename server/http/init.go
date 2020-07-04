@@ -12,7 +12,7 @@ func Init() {
 		mux := http.NewServeMux()
 		mux.HandleFunc("/Login", onLogin)
 		mux.HandleFunc("/Register", onRegister)
-		mux.HandleFunc("/", onHello)
+		mux.HandleFunc("/", onEntry)
 		http.ListenAndServe(address.Url.Http, mux)
 	}()
 }

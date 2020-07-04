@@ -2,15 +2,11 @@ import Clog, { ClogKey } from "../../framework/clog/Clog";
 import { UIManager } from "../../framework/ui/UIManager";
 import { UILogin } from "../../login/view/UILogin";
 import { AudioManager } from "../../framework/audio/AudioManager";
-import { LoginController } from "../../login/controller/LoginController";
 import Http from "../../framework/net/Http";
-import { SystemInfo, Address } from "../model/SystemInfo";
+import { SystemInfo } from "../model/SystemInfo";
 import { UITip } from "../../commonUI/UITip";
 import { ErrorCode } from "../../other/ErrorCode";
-
-
-
-
+import { pb } from "../../other/proto";
 
 export class EntryControler {
 
@@ -45,17 +41,19 @@ export class EntryControler {
     }
 
     public static async HttpHello() {
-        let postData = {
-            world: "151df4d2ddbdd1ad6a64c2c18b294828",
-        }
-        Clog.Green(ClogKey.Login, "HttpHello >>" + JSON.stringify(postData));
-        let data = await Http.Post(SystemInfo.URL, postData)
-        let errorCode = data["ErrorCode"]
-        if (errorCode != ErrorCode.OK) {
-            UITip.Info(ErrorCode.ToString(errorCode))
+        let req = new pb.ReqEntry({
+            Secret: "151df4d2ddbdd1ad6a64c2c18b294828"
+        })
+        Clog.Green(ClogKey.Login, "HttpHello >>" + JSON.stringify(req));
+        let data = await Http.Post(SystemInfo.EntryUrl, req)
+        let resp = pb.RespEntry.fromObject(data)
+        Clog.Green(ClogKey.Login, "HttpHello >> resp:" + JSON.stringify(resp));
+        if (resp.ErrCode != pb.ErrorCode.OK) {
+            UITip.Info(ErrorCode.ToString(resp.ErrCode))
             return;
         }
-        Clog.Green(ClogKey.Login, "HttpHello >> data:" + JSON.stringify(data));
-        SystemInfo.Address = new Address(data["Address"])
+        SystemInfo.LoginUrl = resp.LoginUrl
+        SystemInfo.RegisterUrl = resp.RegisterUrl;
+        SystemInfo.WebSocketUrl = resp.WebSocketUrl;
     }
 }

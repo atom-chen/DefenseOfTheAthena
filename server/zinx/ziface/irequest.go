@@ -1,15 +1,12 @@
 package ziface
 
-import (
-	"server/zinx/command"
-)
+/*
+  IRequest 接口：
+    实际上是把客户端请求的链接信息 和 请求的数据 包装到了 Request里
+ */
 
-//把客户端数据包装成一个request
 type IRequest interface {
-	//得到当前连接
-	GetConn() IConnection
-	//得到请求数据
-	GetMessage() interface{}
-	//得到请求messageCommand
-	GetCommand() command.MessageCommand
+	GetConnection() IWSConnection //获取请求连接信息
+	GetData() []byte			//获取请求消息的数据
+	GetMsgID() uint32
 }

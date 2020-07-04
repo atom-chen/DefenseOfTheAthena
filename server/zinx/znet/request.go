@@ -1,40 +1,33 @@
 package znet
 
 import (
-	"server/zinx/command"
+	"server/pb"
 	"server/zinx/ziface"
 )
 
 type Request struct {
-	//当前用户连接
-	conn ziface.IConnection
-	//消息messageCommand
-	command command.MessageCommand
-	//消息体
-	message interface{}
+	conn ziface.IWSConnection //已经和客户端建立好的 链接
+	msg  pb.ReqPackage        //客户端请求的数据
 }
 
-//创建消息
-func NewRequest(conn ziface.IConnection, command command.MessageCommand, message interface{}) *Request {
-	r := &Request{
-		conn:    conn,
-		command: command,
-		message: message,
+func NewRequest(conn ziface.IWSConnection, msg pb.ReqPackage) *Request {
+	return &Request{
+		conn: conn,
+		msg:  msg,
 	}
-	return r
 }
 
-//得到当前连接
-func (r *Request) GetConn() ziface.IConnection {
+//获取请求连接信息
+func (r *Request) GetConnection() ziface.IWSConnection {
 	return r.conn
 }
 
-//得到请求数据
-func (r *Request) GetMessage() interface{} {
-	return r.message
+//获取请求消息的数据
+func (r *Request) GetData() []byte {
+	return r.msg.Msg
 }
 
-//得到Command
-func (r *Request) GetCommand() command.MessageCommand {
-	return r.command
+//获取请求的消息的ID
+func (r *Request) GetMsgID() uint32 {
+	return uint32(r.msg.Cmd)
 }

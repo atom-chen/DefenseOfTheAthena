@@ -8,6 +8,7 @@ import { Session } from "../model/SessionData";
 import { LinkWebsocket } from "./LinkWebsocket";
 import { ErrorCode } from "../../other/ErrorCode";
 import { UIManager } from "../../framework/ui/UIManager";
+import { pb } from "../../other/proto";
 
 
 export class LoginController {
@@ -18,18 +19,17 @@ export class LoginController {
      * @param password 密码
      */
     public static async HttpLogin(account: string, password: string) {
-        let postData = {
-            account: account,
-            password: password
-        }
-        let data = await Http.Post(SystemInfo.Address.Http + "/Login", postData)
-        let errorCode = data["ErrorCode"]
-        if (errorCode != ErrorCode.OK) {
-            UITip.Info(ErrorCode.ToString(errorCode))
+        let req = new pb.ReqLogin({
+            Account: account,
+            Password: password
+        })
+        let data = await Http.Post(SystemInfo.LoginUrl, req)
+        let resp = pb.RespLogin.fromObject(data)
+        if (resp.ErrCode != pb.ErrorCode.OK) {
+            UITip.Info(ErrorCode.ToString(resp.ErrCode))
             return;
         }
-        Session.User = new UserData(data["User"])
-        Session.Token = data["Token"]
+        Session.Token = resp.Token
         await LinkWebsocket.Start();
     }
 
@@ -44,15 +44,12 @@ export class LoginController {
             account: account,
             password: password
         }
-        Clog.Green(ClogKey.Login, "HttpRegishter >>" + JSON.stringify(postData));
-        let data = await Http.Post(SystemInfo.Address.Http + "/Register", postData)
-        let errorCode = data["ErrorCode"]
-        if (errorCode != ErrorCode.OK) {
-            UITip.Info(ErrorCode.ToString(errorCode))
+        let data = await Http.Post(SystemInfo.RegisterUrl, postData)
+        let resp = pb.RespRegister.fromObject(data)
+        if (resp.ErrCode != pb.ErrorCode.OK) {
+            UITip.Info(ErrorCode.ToString(resp.ErrCode))
             return;
         }
-        Clog.Green(ClogKey.Login, "HttpRegishter >> data:" + JSON.stringify(data));
-
     }
 
     /**
