@@ -49,7 +49,7 @@ func Init() {
 	s.SetOnConnStart(OnConnectionAdd)
 	s.SetOnConnStop(OnConnectionLost)
 	//注册路由
-	s.AddRouter(uint32(pb.MessageCommand_LongLinkAuth), &api.Auth{})
+	s.AddRouter(uint32(pb.MessageCommand_LinkAuth), &api.Auth{})
 	s.AddRouter(uint32(pb.MessageCommand_HeartBeat), &api.HeartBeat{})
 	//启动服务
 	s.Serve()

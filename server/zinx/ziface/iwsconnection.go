@@ -6,7 +6,7 @@ type IWSConnection interface {
 	//停止链接
 	Stop()
 	//获取当前连接模块的连接ID
-	GetConnID() uint32
+	GetConnId() uint32
 	//回写消息
 	WriteMessage([]byte) error
 	//设置连接属性

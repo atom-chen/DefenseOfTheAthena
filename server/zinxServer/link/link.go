@@ -20,7 +20,6 @@ var IdLock sync.Mutex //保护PidGen的互斥机制
 
 //创建一个玩家link
 func NewLink(conn ziface.IWSConnection) *UserLink {
-	//生成一个PID
 	IdLock.Lock()
 	id := Gen
 	Gen++
@@ -33,21 +32,7 @@ func NewLink(conn ziface.IWSConnection) *UserLink {
 	return link
 }
 
-//上线
-func (l *UserLink) OnLine() {
-	//data := "Pid:" + strconv.Itoa(int(l.LinkId))
-	//l.SendMsg(1, []byte(data))
-}
-
 //下线
 func (l *UserLink) LostConnection() {
 	Manager.Remove(l.LinkId)
-}
-
-/*
-	发送消息给客户端，
-*/
-func (l *UserLink) SendMsg(resp []byte) {
-
-	return
 }

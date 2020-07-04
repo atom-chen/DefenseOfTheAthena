@@ -19,9 +19,10 @@ func (a *Auth) Handle(request ziface.IRequest) {
 	//根据连接获取玩家
 	l, _ := request.GetConnection().GetProperty("linkId")
 	linkId := l.(uint32)
+
 	userLink := link.Manager.Find(linkId)
 	resp := &pb.RespPackage{
-		Cmd:     pb.MessageCommand_HeartBeat,
+		Cmd:     pb.MessageCommand_LinkAuth,
 		ErrCode: pb.ErrorCode_OK,
 	}
 	pbBuf, err := proto.Marshal(resp)
@@ -33,6 +34,6 @@ func (a *Auth) Handle(request ziface.IRequest) {
 		log.Println("userLink HeartBeat error !")
 		return
 	}
-	fmt.Printf("发送授权成功, resp:%v\n", resp)
+	fmt.Printf("[授权],connId=%d, resp=%v\n", userLink.Conn.GetConnId(), resp)
 	return
 }

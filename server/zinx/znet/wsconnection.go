@@ -14,7 +14,7 @@ import (
 
 type WSConnection struct {
 	//当前Conn属于哪个Server
-	TcpServer ziface.IServer //当前conn属于哪个server，在conn初始化的时候添加即可
+	Server ziface.IServer //当前conn属于哪个server，在conn初始化的时候添加即可
 	//当前连接的 websocket TCP套接字
 	WsConn *websocket.Conn
 	//连接的ID
@@ -44,7 +44,7 @@ type JsonMsg struct {
 
 func InitConnection(wsConn *websocket.Conn, server ziface.IServer, connID uint32, msgHandler ziface.IMsgHandle) (conn *WSConnection, err error) {
 	conn = &WSConnection{
-		TcpServer:  server,
+		Server:     server,
 		WsConn:     wsConn,
 		ConnID:     connID,
 		MsgHandler: msgHandler,
@@ -55,7 +55,7 @@ func InitConnection(wsConn *websocket.Conn, server ziface.IServer, connID uint32
 		property:   make(map[string]interface{}), //对链接属性map初始化
 	}
 	//将新创建的Conn添加到链接管理中
-	conn.TcpServer.GetConnMgr().Add(conn) //将当前新创建的连接添加到ConnManager中
+	conn.Server.GetConnMgr().Add(conn) //将当前新创建的连接添加到ConnManager中
 
 	return
 }
@@ -67,18 +67,13 @@ func (conn *WSConnection) Start() {
 	go conn.readLoop()
 	//2 开启用于写回客户端数据流程的Goroutine
 	go conn.writeLoop()
-
-	//==================
 	//按照用户传递进来的创建连接时需要处理的业务，执行钩子方法
-	conn.TcpServer.CallOnConnStart(conn)
-	//==================
-
+	conn.Server.CallOnConnStart(conn)
 }
 
 //停止链接
 func (conn *WSConnection) Stop() {
 	fmt.Println("Conn stop() ..ConnID=", conn.ConnID)
-
 	conn.close()
 }
 
@@ -101,25 +96,21 @@ func (conn *WSConnection) WriteMessage(data []byte) (err error) {
 	return
 }
 
-func (conn *WSConnection) GetConnID() uint32 {
+func (conn *WSConnection) GetConnId() uint32 {
 	return conn.ConnID
 }
 
 func (conn *WSConnection) close() {
 	//线程安全的可重入的Close
 	_ = conn.WsConn.Close()
-
 	//如果当前链接已经关闭
 	if conn.isClosed == true {
 		return
 	}
-
 	//如果用户注册了该链接的关闭回调业务，那么在此刻应该显示调用
-	conn.TcpServer.CallOnConnStop(conn)
-
+	conn.Server.CallOnConnStop(conn)
 	//将链接从连接管理器中删除
-	conn.TcpServer.GetConnMgr().Remove(conn)
-
+	conn.Server.GetConnMgr().Remove(conn)
 	conn.mutex.Lock()
 	//保证只关闭一次channel
 	if !conn.isClosed {
@@ -127,7 +118,6 @@ func (conn *WSConnection) close() {
 		conn.isClosed = true
 	}
 	conn.mutex.Unlock()
-
 }
 
 //内部实现
@@ -195,7 +185,6 @@ ERR:
 func (conn *WSConnection) SetProperty(key string, value interface{}) {
 	conn.propertyLock.Lock()
 	defer conn.propertyLock.Unlock()
-
 	conn.property[key] = value
 }
 
@@ -203,7 +192,6 @@ func (conn *WSConnection) SetProperty(key string, value interface{}) {
 func (conn *WSConnection) GetProperty(key string) (interface{}, error) {
 	conn.propertyLock.RLock()
 	defer conn.propertyLock.RUnlock()
-
 	if value, ok := conn.property[key]; ok {
 		return value, nil
 	} else {
@@ -215,6 +203,5 @@ func (conn *WSConnection) GetProperty(key string) (interface{}, error) {
 func (conn *WSConnection) RemoveProperty(key string) {
 	conn.propertyLock.Lock()
 	defer conn.propertyLock.Unlock()
-
 	delete(conn.property, key)
 }

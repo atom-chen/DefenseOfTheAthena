@@ -9,7 +9,7 @@ type IServer interface {
 	//运行服务器
 	Serve()
 	//路由功能：给当前服务注册一个路由业务方法，供客户端链接处理使用
-	AddRouter(messageCommand uint32, router IRouter)
+	AddRouter(cmd uint32, router IRouter)
 	//得到链接管理
 	GetConnMgr() IConnManager
 	//设置该Server的链接创建时的Hook函数

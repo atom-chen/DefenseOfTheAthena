@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"github.com/golang/protobuf/proto"
 	"log"
 	"server/pb"
@@ -32,6 +31,6 @@ func (t *HeartBeat) Handle(request ziface.IRequest) {
 		log.Println("userLink HeartBeat error !")
 		return
 	}
-	fmt.Printf("发送心跳成功, resp:%v\n", resp)
+	log.Printf("[心跳],connId=%d, resp=%v\n", userLink.Conn.GetConnId(), resp)
 	return
 }

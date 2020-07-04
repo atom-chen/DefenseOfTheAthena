@@ -5,5 +5,5 @@ import (
 )
 
 func onRegister(w http.ResponseWriter, r *http.Request) {
-
+	//todo
 }

@@ -23,11 +23,11 @@ func (r *Request) GetConnection() ziface.IWSConnection {
 }
 
 //获取请求消息的数据
-func (r *Request) GetData() []byte {
+func (r *Request) GetMsg() []byte {
 	return r.msg.Msg
 }
 
 //获取请求的消息的ID
-func (r *Request) GetMsgID() uint32 {
+func (r *Request) GetCmd() uint32 {
 	return uint32(r.msg.Cmd)
 }

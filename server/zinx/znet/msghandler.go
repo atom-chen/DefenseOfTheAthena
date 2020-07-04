@@ -24,34 +24,31 @@ func NewMsgHandle() *MsgHandle {
 
 //马上以非阻塞方式处理消息
 func (mh *MsgHandle) DoMsgHandler(request ziface.IRequest) {
-	handler, ok := mh.Apis[request.GetMsgID()]
+	handler, ok := mh.Apis[request.GetCmd()]
 	if !ok {
-		fmt.Println("api messageCommand = ", request.GetMsgID(), " is not FOUND!")
+		fmt.Println("api messageCommand = ", request.GetCmd(), " is not FOUND!")
 		return
 	}
-
-	fmt.Println("处理消息")
 	//执行对应处理方法
 	handler.PreHandle(request)
 	handler.Handle(request)
 	handler.PostHandle(request)
-	fmt.Println("处理完毕")
 }
 
 //为消息添加具体的处理逻辑
-func (mh *MsgHandle) AddRouter(messageCommand uint32, router ziface.IRouter) {
+func (mh *MsgHandle) AddRouter(cmd uint32, router ziface.IRouter) {
 	//1 判断当前msg绑定的API处理方法是否已经存在
-	if _, ok := mh.Apis[messageCommand]; ok {
-		panic("repeated api , messageCommand = " + strconv.Itoa(int(messageCommand)))
+	if _, ok := mh.Apis[cmd]; ok {
+		panic("repeated api , cmd = " + strconv.Itoa(int(cmd)))
 	}
 	//2 添加msg与api的绑定关系
-	mh.Apis[messageCommand] = router
-	fmt.Println("Add api messageCommand = ", messageCommand)
+	mh.Apis[cmd] = router
+	fmt.Println("Add api, cmd = ", cmd)
 }
 
 //启动一个Worker工作流程
-func (mh *MsgHandle) StartOneWorker(workerID int, taskQueue chan ziface.IRequest) {
-	fmt.Println("Worker ID = ", workerID, " is started.")
+func (mh *MsgHandle) StartOneWorker(workerId int, taskQueue chan ziface.IRequest) {
+	fmt.Println("Worker ID = ", workerId, " is started.")
 	//不断的等待队列中的消息
 	for {
 		select {
@@ -78,10 +75,8 @@ func (mh *MsgHandle) StartWorkerPool() {
 func (mh *MsgHandle) SendMsgToTaskQueue(request ziface.IRequest) {
 	//根据ConnID来分配当前的连接应该由哪个worker负责处理
 	//轮询的平均分配法则
-
 	//得到需要处理此条连接的workerID
-	workerID := request.GetConnection().GetConnID() % mh.WorkerPoolSize
-	fmt.Println("Add ConnID=", request.GetConnection().GetConnID(), " request msgID=", request.GetMsgID(), "to workerID=", workerID)
+	workerID := request.GetConnection().GetConnId() % mh.WorkerPoolSize
 	//将请求消息发送给任务队列
 	mh.TaskQueue[workerID] <- request
 }

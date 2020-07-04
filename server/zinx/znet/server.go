@@ -16,8 +16,6 @@ import (
 type Server struct {
 	//服务器的名称
 	Name string
-	//服务器绑定的IP版本
-	IPVersion string
 	//服务器监听的IP
 	IP string
 	//服务器监听的端口
@@ -33,9 +31,9 @@ type Server struct {
 }
 
 var (
-	cid      uint32     = 0
-	cIdLock  sync.Mutex //保护CidGen的互斥机制
-	upgrader = websocket.Upgrader{
+	cid     uint32     = 0
+	cIdLock sync.Mutex //保护CidGen的互斥机制
+	ws      = websocket.Upgrader{
 		//允许跨域
 		CheckOrigin: func(r *http.Request) bool {
 			return true
@@ -48,29 +46,21 @@ var (
 */
 func NewServer() ziface.IServer {
 	//先初始化全局配置文件
-	//utils.GlobalObject.Reload()
-
 	s := &Server{
 		Name:      utils.GlobalObject.Name,
-		IPVersion: "tcp4",
 		IP:        utils.GlobalObject.Host,
-		Port:      utils.GlobalObject.TcpPort,
+		Port:      utils.GlobalObject.Port,
 		MsgHandle: NewMsgHandle(),   //msgHandler 初始化
 		ConnMgr:   NewConnManager(), //创建ConnManager
 	}
-
 	return s
 }
 
 //============== 实现 ziface.IServer 里的全部接口方法 ========
 
 //路由功能：给当前服务注册一个路由业务方法，供客户端链接处理使用
-func (s *Server) AddRouter(messageCommand uint32, router ziface.IRouter) {
-	//s.Router = router
-
-	s.MsgHandle.AddRouter(messageCommand, router)
-	fmt.Println("Add Router succ! ")
-	//panic("implement me")
+func (s *Server) AddRouter(cmd uint32, router ziface.IRouter) {
+	s.MsgHandle.AddRouter(cmd, router)
 }
 
 //定义当前客户端连接所绑定的handle api（目前这个handle是写死的，以后优化应该又用户自定义）
@@ -89,10 +79,9 @@ func (s *Server) wsHandler(w http.ResponseWriter, r *http.Request) {
 		wsConn *websocket.Conn
 		err    error
 		conn   *WSConnection
-		//data []byte
 	)
 
-	if wsConn, err = upgrader.Upgrade(w, r, nil); err != nil {
+	if wsConn, err = ws.Upgrade(w, r, nil); err != nil {
 		return
 	}
 	go func() {
@@ -107,7 +96,7 @@ func (s *Server) wsHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		//=============
-		//3.3 处理该新连接请求的 业务 方法， 此时应该有 handler 和 conn是绑定的
+		//3.3 处理该新连接请求的业务方法， 此时应该有handler和conn是绑定的
 		cIdLock.Lock()
 		if conn, err = InitConnection(wsConn, s, cid, s.MsgHandle); err != nil {
 			conn.Stop()
@@ -137,10 +126,8 @@ func (s *Server) Start() {
 
 func (s *Server) Stop() {
 	fmt.Println("[STOP] Zinx server , name ", s.Name)
-
 	//TODO  Server.Stop() 将其他需要清理的连接信息或者其他信息 也要一并停止或者清理
 	s.ConnMgr.ClearConn()
-
 }
 
 func (s *Server) Serve() {
@@ -148,11 +135,6 @@ func (s *Server) Serve() {
 	s.Start()
 
 	//TODO Server.Serve() 是否在启动服务的时候 还要处理其他的事情呢 可以在这里添加
-
-	////阻塞,否则主Go退出， listenner的go将会退出
-	//for {
-	//	time.Sleep(10 * time.Second)
-	//}
 }
 
 //得到链接管理
