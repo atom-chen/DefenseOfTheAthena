@@ -34,7 +34,7 @@ func onEntry(w http.ResponseWriter, r *http.Request) {
 		resp.RegisterUrl = "http://" + address.Url.Http + "/Register"
 		resp.WebSocketUrl = "ws://" + address.Url.Websocket + "/Game"
 	} else {
-		resp.ErrCode = pb.ErrorCode_HelloError
+		resp.ErrCode = pb.ErrorCode_EntryError
 	}
 
 	jsonData, err := json.Marshal(resp)

@@ -11,7 +11,8 @@ export class LinkWebsocket {
     public static async Start(): Promise<void> {
         await WebSocketController.OnInit(SystemInfo.WebSocketUrl).catch(() => { Clog.Error("---- error link ws ----") })
         HeatBeat.Start()
-        // WebSocketCall.LongLinkAuth();
+        await WebSocketCall.LongLinkAuth();
+        await WebSocketCall.GetUserInfo();
     }
 
 

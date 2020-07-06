@@ -7,7 +7,7 @@ export class ErrorCode {
         switch (code) {
             case pb.ErrorCode.OK:
                 return "OK"
-            case pb.ErrorCode.HelloError:
+            case pb.ErrorCode.EntryError:
                 return "签名错误"
             case pb.ErrorCode.LoginAccountOrPasswordError:
                 return "账号或密码错误"

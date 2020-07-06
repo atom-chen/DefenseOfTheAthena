@@ -9,10 +9,10 @@ import (
 )
 
 /*通过时间生成token*/
-func GenTimeToken() string {
+func GenTimeToken(key string) string {
 	curTime := time.Now().Unix()
 	h := md5.New()
-	io.WriteString(h, strconv.FormatInt(curTime, 10))
+	io.WriteString(h, strconv.FormatInt(curTime, 10)+key)
 	token := fmt.Sprintf("%x", h.Sum(nil))
 	fmt.Println("[GenTimeToken] curTime-->", curTime, ", token--->", token)
 	return token

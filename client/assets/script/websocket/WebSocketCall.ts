@@ -20,11 +20,7 @@ export class WebSocketCall {
      * 心跳
      */
     public static async HeartBeat() {
-     
-
-        let data = await WebSocketController.Call(pb.MessageCommand.HeartBeat)
-        
- 
+        await WebSocketController.Call(pb.MessageCommand.HeartBeat)
         HeatBeat.OnHeatBeat()
     }
 
@@ -32,17 +28,19 @@ export class WebSocketCall {
      * 授权
      */
     public static async LongLinkAuth() {
-        
-        let data = await WebSocketController.Call(pb.MessageCommand.LongLinkAuth)
-        // let resp = pb.RespAuth.fromObject(data)
-        // if (resp.ErrCode != pb.ErrorCode.OK) {
-        //     UITip.Info(ErrorCode.ToString(resp.ErrCode))
-        //     WebSocketController.ManulClose();
-        //     return;
-        // }
-
+        let data = await WebSocketController.Call(pb.MessageCommand.LinkAuth)
     }
 
+    public static async GetUserInfo() {
+        let resp = await WebSocketController.Call(pb.MessageCommand.GetUserInfo)
+        if (resp.ErrCode != pb.ErrorCode.OK) {
+            UITip.Info(ErrorCode.ToString(resp.ErrCode))
+            return;
+        }
+        let msg: pb.RespUserInfo = pb.RespUserInfo.decode(resp.Msg)
+        Clog.Trace(ClogKey.Net, "GetUserInfo:" + JSON.stringify(msg))
+    }
 
+    
 
 }

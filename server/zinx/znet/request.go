@@ -31,3 +31,7 @@ func (r *Request) GetMsg() []byte {
 func (r *Request) GetCmd() uint32 {
 	return uint32(r.msg.Cmd)
 }
+
+func (r *Request) GetToken() string {
+	return r.msg.Token
+}

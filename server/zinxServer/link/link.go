@@ -34,5 +34,12 @@ func NewLink(conn ziface.IWSConnection) *UserLink {
 
 //下线
 func (l *UserLink) LostConnection() {
+	if l.User == nil {
+		return
+	}
+	//下线时清掉token
+	l.User.Token = ""
+	l.User.UpdateUser()
+
 	Manager.Remove(l.LinkId)
 }

@@ -31,15 +31,14 @@ export class WebSocketController {
 
             //有消息过来
             this.ws.onmessage = (event: any) => {
-                let buff=new Uint8Array(event.data)
-                let resp = pb.RespPackage.decode(buff)
-                Clog.Purple(ClogKey.Net, "onmessage <<" + JSON.stringify(resp))
+                let buff = new Uint8Array(event.data)
+                let resp: pb.RespPackage = pb.RespPackage.decode(buff)
                 let func = this.funcMap.get(resp.Cmd)
                 if (!func) {
                     Clog.Error("on message error! func is null, cmd =" + resp.Cmd)
                     return;
                 }
-                func(resp.Msg)
+                func(resp)
             };
 
             // 网络不通
@@ -78,39 +77,41 @@ export class WebSocketController {
     }
 
 
-    private static funcMap: Map<number, Function> = new Map<number, Function>();
+    private static funcMap: Map<number, (data: pb.RespPackage) => void> = new Map<number, (data: pb.RespPackage) => void>();
 
     /**
      * 注册回调方法
      * @param messageCommand 消息命令
      * @param callback callback里有Promise,所以map每次都需要重新给新的callback
      */
-    public static Register(messageCommand: number, callback: Function) {
+    public static Register(messageCommand: number, callback: (data: pb.RespPackage) => void) {
         this.funcMap.set(messageCommand, callback)
     }
 
-    public static Call(command: pb.MessageCommand, postData?: any): Promise<any> {
+    public static Call(command: pb.MessageCommand, msg?: (Uint8Array | null)): Promise<pb.RespPackage> {
         return new Promise((reslove, reject) => {
-            this.Register(command, (data: any) => {
-                if (data) {
-                    reslove(data)
+            this.Register(command, (resp: pb.RespPackage) => {
+                if (resp) {
+                   
+                    reslove(resp)
                     return
                 }
                 reject();
             })
-            let req = pb.ReqPackage.create({ Cmd: command, Token: Session.Token });//构造对象
+            let req = pb.ReqPackage.create({ Cmd: command, Token: Session.Token, Msg: msg });//构造对象
             let reqBuf = pb.ReqPackage.encode(req).finish(); //获取二进制数据，一定要注意使用finish函数
-            Clog.Trace(ClogKey.Net, "call message" + JSON.stringify(req))
             this.OnSend(reqBuf)
+            if (req.Cmd != pb.MessageCommand.HeartBeat) {
+                Clog.Trace(ClogKey.Net, "[call req]:" + JSON.stringify(req))
+            }
         })
     }
 
-    public static Input(messageCommand: number, postData: any) {
-        let info = {
-            Cmd: messageCommand,
-            Msg: postData,
-        }
-        this.OnSend(JSON.stringify(info))
+    public static Input(command: pb.MessageCommand, msg?: (Uint8Array | null)) {
+        let req = pb.ReqPackage.create({ Cmd: command, Token: Session.Token, Msg: msg });   //构造对象
+        let reqBuf = pb.ReqPackage.encode(req).finish();                                    //获取二进制数据，一定要注意使用finish函数
+        this.OnSend(reqBuf)
+        Clog.Trace(ClogKey.Net, "[Input]:" + JSON.stringify(req))
     }
 
 }

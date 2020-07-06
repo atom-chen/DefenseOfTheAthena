@@ -4,7 +4,7 @@ package pb;
 enum MessageCommand
 { 
 	Unknown=0;
-	LongLinkAuth=1;
+	LinkAuth=1;
     HeartBeat=2; 
 	GetUserInfo=3;
 };

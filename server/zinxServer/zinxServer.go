@@ -51,6 +51,7 @@ func Init() {
 	//注册路由
 	s.AddRouter(uint32(pb.MessageCommand_LinkAuth), &api.Auth{})
 	s.AddRouter(uint32(pb.MessageCommand_HeartBeat), &api.HeartBeat{})
+	s.AddRouter(uint32(pb.MessageCommand_GetUserInfo), &api.UserInfo{})
 	//启动服务
 	s.Serve()
 }

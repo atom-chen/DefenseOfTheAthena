@@ -40,17 +40,19 @@ $root.pb = (function() {
      * @enum {number}
      * @property {number} Uknow=0 Uknow value
      * @property {number} OK=1 OK value
-     * @property {number} HelloError=2 HelloError value
+     * @property {number} EntryError=2 EntryError value
      * @property {number} LoginAccountOrPasswordError=3 LoginAccountOrPasswordError value
      * @property {number} RegisterAccountExit=4 RegisterAccountExit value
+     * @property {number} AuthFailed=5 AuthFailed value
      */
     pb.ErrorCode = (function() {
         var valuesById = {}, values = Object.create(valuesById);
         values[valuesById[0] = "Uknow"] = 0;
         values[valuesById[1] = "OK"] = 1;
-        values[valuesById[2] = "HelloError"] = 2;
+        values[valuesById[2] = "EntryError"] = 2;
         values[valuesById[3] = "LoginAccountOrPasswordError"] = 3;
         values[valuesById[4] = "RegisterAccountExit"] = 4;
+        values[valuesById[5] = "AuthFailed"] = 5;
         return values;
     })();
 
@@ -422,6 +424,7 @@ $root.pb = (function() {
                 case 2:
                 case 3:
                 case 4:
+                case 5:
                     break;
                 }
             if (message.LoginUrl != null && message.hasOwnProperty("LoginUrl"))
@@ -457,7 +460,7 @@ $root.pb = (function() {
             case 1:
                 message.ErrCode = 1;
                 break;
-            case "HelloError":
+            case "EntryError":
             case 2:
                 message.ErrCode = 2;
                 break;
@@ -468,6 +471,10 @@ $root.pb = (function() {
             case "RegisterAccountExit":
             case 4:
                 message.ErrCode = 4;
+                break;
+            case "AuthFailed":
+            case 5:
+                message.ErrCode = 5;
                 break;
             }
             if (object.LoginUrl != null)
@@ -886,6 +893,7 @@ $root.pb = (function() {
                 case 2:
                 case 3:
                 case 4:
+                case 5:
                     break;
                 }
             if (message.Token != null && message.hasOwnProperty("Token"))
@@ -915,7 +923,7 @@ $root.pb = (function() {
             case 1:
                 message.ErrCode = 1;
                 break;
-            case "HelloError":
+            case "EntryError":
             case 2:
                 message.ErrCode = 2;
                 break;
@@ -926,6 +934,10 @@ $root.pb = (function() {
             case "RegisterAccountExit":
             case 4:
                 message.ErrCode = 4;
+                break;
+            case "AuthFailed":
+            case 5:
+                message.ErrCode = 5;
                 break;
             }
             if (object.Token != null)
@@ -1320,6 +1332,7 @@ $root.pb = (function() {
                 case 2:
                 case 3:
                 case 4:
+                case 5:
                     break;
                 }
             return null;
@@ -1346,7 +1359,7 @@ $root.pb = (function() {
             case 1:
                 message.ErrCode = 1;
                 break;
-            case "HelloError":
+            case "EntryError":
             case 2:
                 message.ErrCode = 2;
                 break;
@@ -1357,6 +1370,10 @@ $root.pb = (function() {
             case "RegisterAccountExit":
             case 4:
                 message.ErrCode = 4;
+                break;
+            case "AuthFailed":
+            case 5:
+                message.ErrCode = 5;
                 break;
             }
             return message;
@@ -1401,14 +1418,14 @@ $root.pb = (function() {
      * @name pb.MessageCommand
      * @enum {number}
      * @property {number} Unknown=0 Unknown value
-     * @property {number} LongLinkAuth=1 LongLinkAuth value
+     * @property {number} LinkAuth=1 LinkAuth value
      * @property {number} HeartBeat=2 HeartBeat value
      * @property {number} GetUserInfo=3 GetUserInfo value
      */
     pb.MessageCommand = (function() {
         var valuesById = {}, values = Object.create(valuesById);
         values[valuesById[0] = "Unknown"] = 0;
-        values[valuesById[1] = "LongLinkAuth"] = 1;
+        values[valuesById[1] = "LinkAuth"] = 1;
         values[valuesById[2] = "HeartBeat"] = 2;
         values[valuesById[3] = "GetUserInfo"] = 3;
         return values;
@@ -1608,7 +1625,7 @@ $root.pb = (function() {
             case 0:
                 message.Cmd = 0;
                 break;
-            case "LongLinkAuth":
+            case "LinkAuth":
             case 1:
                 message.Cmd = 1;
                 break;
@@ -1855,6 +1872,7 @@ $root.pb = (function() {
                 case 2:
                 case 3:
                 case 4:
+                case 5:
                     break;
                 }
             if (message.Msg != null && message.hasOwnProperty("Msg"))
@@ -1880,7 +1898,7 @@ $root.pb = (function() {
             case 0:
                 message.Cmd = 0;
                 break;
-            case "LongLinkAuth":
+            case "LinkAuth":
             case 1:
                 message.Cmd = 1;
                 break;
@@ -1902,7 +1920,7 @@ $root.pb = (function() {
             case 1:
                 message.ErrCode = 1;
                 break;
-            case "HelloError":
+            case "EntryError":
             case 2:
                 message.ErrCode = 2;
                 break;
@@ -1913,6 +1931,10 @@ $root.pb = (function() {
             case "RegisterAccountExit":
             case 4:
                 message.ErrCode = 4;
+                break;
+            case "AuthFailed":
+            case 5:
+                message.ErrCode = 5;
                 break;
             }
             if (object.Msg != null)
@@ -1968,6 +1990,890 @@ $root.pb = (function() {
         };
 
         return RespPackage;
+    })();
+
+    pb.UserBaseInfo = (function() {
+
+        /**
+         * Properties of a UserBaseInfo.
+         * @memberof pb
+         * @interface IUserBaseInfo
+         * @property {string|null} [NickName] UserBaseInfo NickName
+         * @property {pb.EnumSex|null} [Sex] UserBaseInfo Sex
+         * @property {number|null} [Age] UserBaseInfo Age
+         * @property {number|null} [Vip] UserBaseInfo Vip
+         * @property {number|null} [Lv] UserBaseInfo Lv
+         */
+
+        /**
+         * Constructs a new UserBaseInfo.
+         * @memberof pb
+         * @classdesc Represents a UserBaseInfo.
+         * @implements IUserBaseInfo
+         * @constructor
+         * @param {pb.IUserBaseInfo=} [properties] Properties to set
+         */
+        function UserBaseInfo(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * UserBaseInfo NickName.
+         * @member {string} NickName
+         * @memberof pb.UserBaseInfo
+         * @instance
+         */
+        UserBaseInfo.prototype.NickName = "";
+
+        /**
+         * UserBaseInfo Sex.
+         * @member {pb.EnumSex} Sex
+         * @memberof pb.UserBaseInfo
+         * @instance
+         */
+        UserBaseInfo.prototype.Sex = 0;
+
+        /**
+         * UserBaseInfo Age.
+         * @member {number} Age
+         * @memberof pb.UserBaseInfo
+         * @instance
+         */
+        UserBaseInfo.prototype.Age = 0;
+
+        /**
+         * UserBaseInfo Vip.
+         * @member {number} Vip
+         * @memberof pb.UserBaseInfo
+         * @instance
+         */
+        UserBaseInfo.prototype.Vip = 0;
+
+        /**
+         * UserBaseInfo Lv.
+         * @member {number} Lv
+         * @memberof pb.UserBaseInfo
+         * @instance
+         */
+        UserBaseInfo.prototype.Lv = 0;
+
+        /**
+         * Creates a new UserBaseInfo instance using the specified properties.
+         * @function create
+         * @memberof pb.UserBaseInfo
+         * @static
+         * @param {pb.IUserBaseInfo=} [properties] Properties to set
+         * @returns {pb.UserBaseInfo} UserBaseInfo instance
+         */
+        UserBaseInfo.create = function create(properties) {
+            return new UserBaseInfo(properties);
+        };
+
+        /**
+         * Encodes the specified UserBaseInfo message. Does not implicitly {@link pb.UserBaseInfo.verify|verify} messages.
+         * @function encode
+         * @memberof pb.UserBaseInfo
+         * @static
+         * @param {pb.IUserBaseInfo} message UserBaseInfo message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        UserBaseInfo.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.NickName != null && Object.hasOwnProperty.call(message, "NickName"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.NickName);
+            if (message.Sex != null && Object.hasOwnProperty.call(message, "Sex"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.Sex);
+            if (message.Age != null && Object.hasOwnProperty.call(message, "Age"))
+                writer.uint32(/* id 3, wireType 0 =*/24).uint32(message.Age);
+            if (message.Vip != null && Object.hasOwnProperty.call(message, "Vip"))
+                writer.uint32(/* id 4, wireType 0 =*/32).uint32(message.Vip);
+            if (message.Lv != null && Object.hasOwnProperty.call(message, "Lv"))
+                writer.uint32(/* id 5, wireType 0 =*/40).uint32(message.Lv);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified UserBaseInfo message, length delimited. Does not implicitly {@link pb.UserBaseInfo.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof pb.UserBaseInfo
+         * @static
+         * @param {pb.IUserBaseInfo} message UserBaseInfo message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        UserBaseInfo.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a UserBaseInfo message from the specified reader or buffer.
+         * @function decode
+         * @memberof pb.UserBaseInfo
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {pb.UserBaseInfo} UserBaseInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        UserBaseInfo.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.pb.UserBaseInfo();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.NickName = reader.string();
+                    break;
+                case 2:
+                    message.Sex = reader.int32();
+                    break;
+                case 3:
+                    message.Age = reader.uint32();
+                    break;
+                case 4:
+                    message.Vip = reader.uint32();
+                    break;
+                case 5:
+                    message.Lv = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a UserBaseInfo message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof pb.UserBaseInfo
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {pb.UserBaseInfo} UserBaseInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        UserBaseInfo.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a UserBaseInfo message.
+         * @function verify
+         * @memberof pb.UserBaseInfo
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        UserBaseInfo.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.NickName != null && message.hasOwnProperty("NickName"))
+                if (!$util.isString(message.NickName))
+                    return "NickName: string expected";
+            if (message.Sex != null && message.hasOwnProperty("Sex"))
+                switch (message.Sex) {
+                default:
+                    return "Sex: enum value expected";
+                case 0:
+                case 1:
+                case 2:
+                    break;
+                }
+            if (message.Age != null && message.hasOwnProperty("Age"))
+                if (!$util.isInteger(message.Age))
+                    return "Age: integer expected";
+            if (message.Vip != null && message.hasOwnProperty("Vip"))
+                if (!$util.isInteger(message.Vip))
+                    return "Vip: integer expected";
+            if (message.Lv != null && message.hasOwnProperty("Lv"))
+                if (!$util.isInteger(message.Lv))
+                    return "Lv: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a UserBaseInfo message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof pb.UserBaseInfo
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {pb.UserBaseInfo} UserBaseInfo
+         */
+        UserBaseInfo.fromObject = function fromObject(object) {
+            if (object instanceof $root.pb.UserBaseInfo)
+                return object;
+            var message = new $root.pb.UserBaseInfo();
+            if (object.NickName != null)
+                message.NickName = String(object.NickName);
+            switch (object.Sex) {
+            case "Unknow":
+            case 0:
+                message.Sex = 0;
+                break;
+            case "Male":
+            case 1:
+                message.Sex = 1;
+                break;
+            case "Female":
+            case 2:
+                message.Sex = 2;
+                break;
+            }
+            if (object.Age != null)
+                message.Age = object.Age >>> 0;
+            if (object.Vip != null)
+                message.Vip = object.Vip >>> 0;
+            if (object.Lv != null)
+                message.Lv = object.Lv >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a UserBaseInfo message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof pb.UserBaseInfo
+         * @static
+         * @param {pb.UserBaseInfo} message UserBaseInfo
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        UserBaseInfo.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.NickName = "";
+                object.Sex = options.enums === String ? "Unknow" : 0;
+                object.Age = 0;
+                object.Vip = 0;
+                object.Lv = 0;
+            }
+            if (message.NickName != null && message.hasOwnProperty("NickName"))
+                object.NickName = message.NickName;
+            if (message.Sex != null && message.hasOwnProperty("Sex"))
+                object.Sex = options.enums === String ? $root.pb.EnumSex[message.Sex] : message.Sex;
+            if (message.Age != null && message.hasOwnProperty("Age"))
+                object.Age = message.Age;
+            if (message.Vip != null && message.hasOwnProperty("Vip"))
+                object.Vip = message.Vip;
+            if (message.Lv != null && message.hasOwnProperty("Lv"))
+                object.Lv = message.Lv;
+            return object;
+        };
+
+        /**
+         * Converts this UserBaseInfo to JSON.
+         * @function toJSON
+         * @memberof pb.UserBaseInfo
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        UserBaseInfo.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return UserBaseInfo;
+    })();
+
+    pb.UserMoneyInfo = (function() {
+
+        /**
+         * Properties of a UserMoneyInfo.
+         * @memberof pb
+         * @interface IUserMoneyInfo
+         * @property {number|null} [Gold] UserMoneyInfo Gold
+         * @property {number|null} [Diamond] UserMoneyInfo Diamond
+         */
+
+        /**
+         * Constructs a new UserMoneyInfo.
+         * @memberof pb
+         * @classdesc Represents a UserMoneyInfo.
+         * @implements IUserMoneyInfo
+         * @constructor
+         * @param {pb.IUserMoneyInfo=} [properties] Properties to set
+         */
+        function UserMoneyInfo(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * UserMoneyInfo Gold.
+         * @member {number} Gold
+         * @memberof pb.UserMoneyInfo
+         * @instance
+         */
+        UserMoneyInfo.prototype.Gold = 0;
+
+        /**
+         * UserMoneyInfo Diamond.
+         * @member {number} Diamond
+         * @memberof pb.UserMoneyInfo
+         * @instance
+         */
+        UserMoneyInfo.prototype.Diamond = 0;
+
+        /**
+         * Creates a new UserMoneyInfo instance using the specified properties.
+         * @function create
+         * @memberof pb.UserMoneyInfo
+         * @static
+         * @param {pb.IUserMoneyInfo=} [properties] Properties to set
+         * @returns {pb.UserMoneyInfo} UserMoneyInfo instance
+         */
+        UserMoneyInfo.create = function create(properties) {
+            return new UserMoneyInfo(properties);
+        };
+
+        /**
+         * Encodes the specified UserMoneyInfo message. Does not implicitly {@link pb.UserMoneyInfo.verify|verify} messages.
+         * @function encode
+         * @memberof pb.UserMoneyInfo
+         * @static
+         * @param {pb.IUserMoneyInfo} message UserMoneyInfo message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        UserMoneyInfo.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.Gold != null && Object.hasOwnProperty.call(message, "Gold"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.Gold);
+            if (message.Diamond != null && Object.hasOwnProperty.call(message, "Diamond"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.Diamond);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified UserMoneyInfo message, length delimited. Does not implicitly {@link pb.UserMoneyInfo.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof pb.UserMoneyInfo
+         * @static
+         * @param {pb.IUserMoneyInfo} message UserMoneyInfo message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        UserMoneyInfo.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a UserMoneyInfo message from the specified reader or buffer.
+         * @function decode
+         * @memberof pb.UserMoneyInfo
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {pb.UserMoneyInfo} UserMoneyInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        UserMoneyInfo.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.pb.UserMoneyInfo();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.Gold = reader.uint32();
+                    break;
+                case 2:
+                    message.Diamond = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a UserMoneyInfo message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof pb.UserMoneyInfo
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {pb.UserMoneyInfo} UserMoneyInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        UserMoneyInfo.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a UserMoneyInfo message.
+         * @function verify
+         * @memberof pb.UserMoneyInfo
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        UserMoneyInfo.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.Gold != null && message.hasOwnProperty("Gold"))
+                if (!$util.isInteger(message.Gold))
+                    return "Gold: integer expected";
+            if (message.Diamond != null && message.hasOwnProperty("Diamond"))
+                if (!$util.isInteger(message.Diamond))
+                    return "Diamond: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a UserMoneyInfo message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof pb.UserMoneyInfo
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {pb.UserMoneyInfo} UserMoneyInfo
+         */
+        UserMoneyInfo.fromObject = function fromObject(object) {
+            if (object instanceof $root.pb.UserMoneyInfo)
+                return object;
+            var message = new $root.pb.UserMoneyInfo();
+            if (object.Gold != null)
+                message.Gold = object.Gold >>> 0;
+            if (object.Diamond != null)
+                message.Diamond = object.Diamond >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a UserMoneyInfo message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof pb.UserMoneyInfo
+         * @static
+         * @param {pb.UserMoneyInfo} message UserMoneyInfo
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        UserMoneyInfo.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.Gold = 0;
+                object.Diamond = 0;
+            }
+            if (message.Gold != null && message.hasOwnProperty("Gold"))
+                object.Gold = message.Gold;
+            if (message.Diamond != null && message.hasOwnProperty("Diamond"))
+                object.Diamond = message.Diamond;
+            return object;
+        };
+
+        /**
+         * Converts this UserMoneyInfo to JSON.
+         * @function toJSON
+         * @memberof pb.UserMoneyInfo
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        UserMoneyInfo.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return UserMoneyInfo;
+    })();
+
+    pb.ReqUserInfo = (function() {
+
+        /**
+         * Properties of a ReqUserInfo.
+         * @memberof pb
+         * @interface IReqUserInfo
+         */
+
+        /**
+         * Constructs a new ReqUserInfo.
+         * @memberof pb
+         * @classdesc Represents a ReqUserInfo.
+         * @implements IReqUserInfo
+         * @constructor
+         * @param {pb.IReqUserInfo=} [properties] Properties to set
+         */
+        function ReqUserInfo(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new ReqUserInfo instance using the specified properties.
+         * @function create
+         * @memberof pb.ReqUserInfo
+         * @static
+         * @param {pb.IReqUserInfo=} [properties] Properties to set
+         * @returns {pb.ReqUserInfo} ReqUserInfo instance
+         */
+        ReqUserInfo.create = function create(properties) {
+            return new ReqUserInfo(properties);
+        };
+
+        /**
+         * Encodes the specified ReqUserInfo message. Does not implicitly {@link pb.ReqUserInfo.verify|verify} messages.
+         * @function encode
+         * @memberof pb.ReqUserInfo
+         * @static
+         * @param {pb.IReqUserInfo} message ReqUserInfo message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ReqUserInfo.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ReqUserInfo message, length delimited. Does not implicitly {@link pb.ReqUserInfo.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof pb.ReqUserInfo
+         * @static
+         * @param {pb.IReqUserInfo} message ReqUserInfo message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ReqUserInfo.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ReqUserInfo message from the specified reader or buffer.
+         * @function decode
+         * @memberof pb.ReqUserInfo
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {pb.ReqUserInfo} ReqUserInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ReqUserInfo.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.pb.ReqUserInfo();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ReqUserInfo message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof pb.ReqUserInfo
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {pb.ReqUserInfo} ReqUserInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ReqUserInfo.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ReqUserInfo message.
+         * @function verify
+         * @memberof pb.ReqUserInfo
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ReqUserInfo.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a ReqUserInfo message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof pb.ReqUserInfo
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {pb.ReqUserInfo} ReqUserInfo
+         */
+        ReqUserInfo.fromObject = function fromObject(object) {
+            if (object instanceof $root.pb.ReqUserInfo)
+                return object;
+            return new $root.pb.ReqUserInfo();
+        };
+
+        /**
+         * Creates a plain object from a ReqUserInfo message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof pb.ReqUserInfo
+         * @static
+         * @param {pb.ReqUserInfo} message ReqUserInfo
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ReqUserInfo.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this ReqUserInfo to JSON.
+         * @function toJSON
+         * @memberof pb.ReqUserInfo
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ReqUserInfo.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return ReqUserInfo;
+    })();
+
+    pb.RespUserInfo = (function() {
+
+        /**
+         * Properties of a RespUserInfo.
+         * @memberof pb
+         * @interface IRespUserInfo
+         * @property {pb.IUserBaseInfo|null} [BaseInfo] RespUserInfo BaseInfo
+         * @property {pb.IUserMoneyInfo|null} [MoneyInfo] RespUserInfo MoneyInfo
+         */
+
+        /**
+         * Constructs a new RespUserInfo.
+         * @memberof pb
+         * @classdesc Represents a RespUserInfo.
+         * @implements IRespUserInfo
+         * @constructor
+         * @param {pb.IRespUserInfo=} [properties] Properties to set
+         */
+        function RespUserInfo(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RespUserInfo BaseInfo.
+         * @member {pb.IUserBaseInfo|null|undefined} BaseInfo
+         * @memberof pb.RespUserInfo
+         * @instance
+         */
+        RespUserInfo.prototype.BaseInfo = null;
+
+        /**
+         * RespUserInfo MoneyInfo.
+         * @member {pb.IUserMoneyInfo|null|undefined} MoneyInfo
+         * @memberof pb.RespUserInfo
+         * @instance
+         */
+        RespUserInfo.prototype.MoneyInfo = null;
+
+        /**
+         * Creates a new RespUserInfo instance using the specified properties.
+         * @function create
+         * @memberof pb.RespUserInfo
+         * @static
+         * @param {pb.IRespUserInfo=} [properties] Properties to set
+         * @returns {pb.RespUserInfo} RespUserInfo instance
+         */
+        RespUserInfo.create = function create(properties) {
+            return new RespUserInfo(properties);
+        };
+
+        /**
+         * Encodes the specified RespUserInfo message. Does not implicitly {@link pb.RespUserInfo.verify|verify} messages.
+         * @function encode
+         * @memberof pb.RespUserInfo
+         * @static
+         * @param {pb.IRespUserInfo} message RespUserInfo message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RespUserInfo.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.BaseInfo != null && Object.hasOwnProperty.call(message, "BaseInfo"))
+                $root.pb.UserBaseInfo.encode(message.BaseInfo, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            if (message.MoneyInfo != null && Object.hasOwnProperty.call(message, "MoneyInfo"))
+                $root.pb.UserMoneyInfo.encode(message.MoneyInfo, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RespUserInfo message, length delimited. Does not implicitly {@link pb.RespUserInfo.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof pb.RespUserInfo
+         * @static
+         * @param {pb.IRespUserInfo} message RespUserInfo message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RespUserInfo.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RespUserInfo message from the specified reader or buffer.
+         * @function decode
+         * @memberof pb.RespUserInfo
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {pb.RespUserInfo} RespUserInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RespUserInfo.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.pb.RespUserInfo();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.BaseInfo = $root.pb.UserBaseInfo.decode(reader, reader.uint32());
+                    break;
+                case 2:
+                    message.MoneyInfo = $root.pb.UserMoneyInfo.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RespUserInfo message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof pb.RespUserInfo
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {pb.RespUserInfo} RespUserInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RespUserInfo.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RespUserInfo message.
+         * @function verify
+         * @memberof pb.RespUserInfo
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RespUserInfo.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.BaseInfo != null && message.hasOwnProperty("BaseInfo")) {
+                var error = $root.pb.UserBaseInfo.verify(message.BaseInfo);
+                if (error)
+                    return "BaseInfo." + error;
+            }
+            if (message.MoneyInfo != null && message.hasOwnProperty("MoneyInfo")) {
+                var error = $root.pb.UserMoneyInfo.verify(message.MoneyInfo);
+                if (error)
+                    return "MoneyInfo." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a RespUserInfo message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof pb.RespUserInfo
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {pb.RespUserInfo} RespUserInfo
+         */
+        RespUserInfo.fromObject = function fromObject(object) {
+            if (object instanceof $root.pb.RespUserInfo)
+                return object;
+            var message = new $root.pb.RespUserInfo();
+            if (object.BaseInfo != null) {
+                if (typeof object.BaseInfo !== "object")
+                    throw TypeError(".pb.RespUserInfo.BaseInfo: object expected");
+                message.BaseInfo = $root.pb.UserBaseInfo.fromObject(object.BaseInfo);
+            }
+            if (object.MoneyInfo != null) {
+                if (typeof object.MoneyInfo !== "object")
+                    throw TypeError(".pb.RespUserInfo.MoneyInfo: object expected");
+                message.MoneyInfo = $root.pb.UserMoneyInfo.fromObject(object.MoneyInfo);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RespUserInfo message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof pb.RespUserInfo
+         * @static
+         * @param {pb.RespUserInfo} message RespUserInfo
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RespUserInfo.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.BaseInfo = null;
+                object.MoneyInfo = null;
+            }
+            if (message.BaseInfo != null && message.hasOwnProperty("BaseInfo"))
+                object.BaseInfo = $root.pb.UserBaseInfo.toObject(message.BaseInfo, options);
+            if (message.MoneyInfo != null && message.hasOwnProperty("MoneyInfo"))
+                object.MoneyInfo = $root.pb.UserMoneyInfo.toObject(message.MoneyInfo, options);
+            return object;
+        };
+
+        /**
+         * Converts this RespUserInfo to JSON.
+         * @function toJSON
+         * @memberof pb.RespUserInfo
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RespUserInfo.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return RespUserInfo;
     })();
 
     return pb;

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/golang/protobuf/proto"
 	"log"
+	"server/model"
 	"server/pb"
 	"server/zinx/ziface"
 	"server/zinx/znet"
@@ -21,9 +22,16 @@ func (a *Auth) Handle(request ziface.IRequest) {
 	linkId := l.(uint32)
 
 	userLink := link.Manager.Find(linkId)
-	resp := &pb.RespPackage{
-		Cmd:     pb.MessageCommand_LinkAuth,
-		ErrCode: pb.ErrorCode_OK,
+
+	u := model.FindUserByToken(request.GetToken())
+	var resp = new(pb.RespPackage)
+	resp.Cmd = pb.MessageCommand_LinkAuth
+	if u == nil {
+		resp.ErrCode = pb.ErrorCode_LoginAccountOrPasswordError
+		userLink.Conn.Stop()
+	} else {
+		userLink.User = u
+		resp.ErrCode = pb.ErrorCode_OK
 	}
 	pbBuf, err := proto.Marshal(resp)
 	if err != nil {

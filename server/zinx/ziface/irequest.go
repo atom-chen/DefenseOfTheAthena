@@ -9,4 +9,5 @@ type IRequest interface {
 	GetConnection() IWSConnection //获取请求连接信息
 	GetMsg() []byte               //获取请求消息的数据
 	GetCmd() uint32               //获取请求的Cmd
+	GetToken() string
 }

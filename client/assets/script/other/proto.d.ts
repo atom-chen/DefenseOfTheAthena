@@ -13,9 +13,10 @@ export namespace pb {
     enum ErrorCode {
         Uknow = 0,
         OK = 1,
-        HelloError = 2,
+        EntryError = 2,
         LoginAccountOrPasswordError = 3,
-        RegisterAccountExit = 4
+        RegisterAccountExit = 4,
+        AuthFailed = 5
     }
 
     /** Properties of a ReqEntry. */
@@ -597,7 +598,7 @@ export namespace pb {
     /** MessageCommand enum. */
     enum MessageCommand {
         Unknown = 0,
-        LongLinkAuth = 1,
+        LinkAuth = 1,
         HeartBeat = 2,
         GetUserInfo = 3
     }
@@ -801,6 +802,396 @@ export namespace pb {
 
         /**
          * Converts this RespPackage to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a UserBaseInfo. */
+    interface IUserBaseInfo {
+
+        /** UserBaseInfo NickName */
+        NickName?: (string|null);
+
+        /** UserBaseInfo Sex */
+        Sex?: (pb.EnumSex|null);
+
+        /** UserBaseInfo Age */
+        Age?: (number|null);
+
+        /** UserBaseInfo Vip */
+        Vip?: (number|null);
+
+        /** UserBaseInfo Lv */
+        Lv?: (number|null);
+    }
+
+    /** Represents a UserBaseInfo. */
+    class UserBaseInfo implements IUserBaseInfo {
+
+        /**
+         * Constructs a new UserBaseInfo.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: pb.IUserBaseInfo);
+
+        /** UserBaseInfo NickName. */
+        public NickName: string;
+
+        /** UserBaseInfo Sex. */
+        public Sex: pb.EnumSex;
+
+        /** UserBaseInfo Age. */
+        public Age: number;
+
+        /** UserBaseInfo Vip. */
+        public Vip: number;
+
+        /** UserBaseInfo Lv. */
+        public Lv: number;
+
+        /**
+         * Creates a new UserBaseInfo instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns UserBaseInfo instance
+         */
+        public static create(properties?: pb.IUserBaseInfo): pb.UserBaseInfo;
+
+        /**
+         * Encodes the specified UserBaseInfo message. Does not implicitly {@link pb.UserBaseInfo.verify|verify} messages.
+         * @param message UserBaseInfo message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: pb.IUserBaseInfo, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified UserBaseInfo message, length delimited. Does not implicitly {@link pb.UserBaseInfo.verify|verify} messages.
+         * @param message UserBaseInfo message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: pb.IUserBaseInfo, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a UserBaseInfo message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns UserBaseInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.UserBaseInfo;
+
+        /**
+         * Decodes a UserBaseInfo message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns UserBaseInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.UserBaseInfo;
+
+        /**
+         * Verifies a UserBaseInfo message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a UserBaseInfo message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns UserBaseInfo
+         */
+        public static fromObject(object: { [k: string]: any }): pb.UserBaseInfo;
+
+        /**
+         * Creates a plain object from a UserBaseInfo message. Also converts values to other types if specified.
+         * @param message UserBaseInfo
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: pb.UserBaseInfo, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this UserBaseInfo to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a UserMoneyInfo. */
+    interface IUserMoneyInfo {
+
+        /** UserMoneyInfo Gold */
+        Gold?: (number|null);
+
+        /** UserMoneyInfo Diamond */
+        Diamond?: (number|null);
+    }
+
+    /** Represents a UserMoneyInfo. */
+    class UserMoneyInfo implements IUserMoneyInfo {
+
+        /**
+         * Constructs a new UserMoneyInfo.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: pb.IUserMoneyInfo);
+
+        /** UserMoneyInfo Gold. */
+        public Gold: number;
+
+        /** UserMoneyInfo Diamond. */
+        public Diamond: number;
+
+        /**
+         * Creates a new UserMoneyInfo instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns UserMoneyInfo instance
+         */
+        public static create(properties?: pb.IUserMoneyInfo): pb.UserMoneyInfo;
+
+        /**
+         * Encodes the specified UserMoneyInfo message. Does not implicitly {@link pb.UserMoneyInfo.verify|verify} messages.
+         * @param message UserMoneyInfo message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: pb.IUserMoneyInfo, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified UserMoneyInfo message, length delimited. Does not implicitly {@link pb.UserMoneyInfo.verify|verify} messages.
+         * @param message UserMoneyInfo message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: pb.IUserMoneyInfo, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a UserMoneyInfo message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns UserMoneyInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.UserMoneyInfo;
+
+        /**
+         * Decodes a UserMoneyInfo message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns UserMoneyInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.UserMoneyInfo;
+
+        /**
+         * Verifies a UserMoneyInfo message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a UserMoneyInfo message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns UserMoneyInfo
+         */
+        public static fromObject(object: { [k: string]: any }): pb.UserMoneyInfo;
+
+        /**
+         * Creates a plain object from a UserMoneyInfo message. Also converts values to other types if specified.
+         * @param message UserMoneyInfo
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: pb.UserMoneyInfo, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this UserMoneyInfo to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a ReqUserInfo. */
+    interface IReqUserInfo {
+    }
+
+    /** Represents a ReqUserInfo. */
+    class ReqUserInfo implements IReqUserInfo {
+
+        /**
+         * Constructs a new ReqUserInfo.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: pb.IReqUserInfo);
+
+        /**
+         * Creates a new ReqUserInfo instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ReqUserInfo instance
+         */
+        public static create(properties?: pb.IReqUserInfo): pb.ReqUserInfo;
+
+        /**
+         * Encodes the specified ReqUserInfo message. Does not implicitly {@link pb.ReqUserInfo.verify|verify} messages.
+         * @param message ReqUserInfo message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: pb.IReqUserInfo, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ReqUserInfo message, length delimited. Does not implicitly {@link pb.ReqUserInfo.verify|verify} messages.
+         * @param message ReqUserInfo message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: pb.IReqUserInfo, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ReqUserInfo message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ReqUserInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.ReqUserInfo;
+
+        /**
+         * Decodes a ReqUserInfo message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ReqUserInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.ReqUserInfo;
+
+        /**
+         * Verifies a ReqUserInfo message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ReqUserInfo message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ReqUserInfo
+         */
+        public static fromObject(object: { [k: string]: any }): pb.ReqUserInfo;
+
+        /**
+         * Creates a plain object from a ReqUserInfo message. Also converts values to other types if specified.
+         * @param message ReqUserInfo
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: pb.ReqUserInfo, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ReqUserInfo to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a RespUserInfo. */
+    interface IRespUserInfo {
+
+        /** RespUserInfo BaseInfo */
+        BaseInfo?: (pb.IUserBaseInfo|null);
+
+        /** RespUserInfo MoneyInfo */
+        MoneyInfo?: (pb.IUserMoneyInfo|null);
+    }
+
+    /** Represents a RespUserInfo. */
+    class RespUserInfo implements IRespUserInfo {
+
+        /**
+         * Constructs a new RespUserInfo.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: pb.IRespUserInfo);
+
+        /** RespUserInfo BaseInfo. */
+        public BaseInfo?: (pb.IUserBaseInfo|null);
+
+        /** RespUserInfo MoneyInfo. */
+        public MoneyInfo?: (pb.IUserMoneyInfo|null);
+
+        /**
+         * Creates a new RespUserInfo instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RespUserInfo instance
+         */
+        public static create(properties?: pb.IRespUserInfo): pb.RespUserInfo;
+
+        /**
+         * Encodes the specified RespUserInfo message. Does not implicitly {@link pb.RespUserInfo.verify|verify} messages.
+         * @param message RespUserInfo message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: pb.IRespUserInfo, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified RespUserInfo message, length delimited. Does not implicitly {@link pb.RespUserInfo.verify|verify} messages.
+         * @param message RespUserInfo message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: pb.IRespUserInfo, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a RespUserInfo message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns RespUserInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.RespUserInfo;
+
+        /**
+         * Decodes a RespUserInfo message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns RespUserInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.RespUserInfo;
+
+        /**
+         * Verifies a RespUserInfo message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a RespUserInfo message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns RespUserInfo
+         */
+        public static fromObject(object: { [k: string]: any }): pb.RespUserInfo;
+
+        /**
+         * Creates a plain object from a RespUserInfo message. Also converts values to other types if specified.
+         * @param message RespUserInfo
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: pb.RespUserInfo, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this RespUserInfo to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };

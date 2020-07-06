@@ -2,7 +2,7 @@ syntax = "proto3";
 package pb;
 import "errorCode.proto";
 import "messageCommand.proto";
-
+import "enum.proto";
 
 //所有的客户端请求，都是这个数据结构
 message ReqPackage{
@@ -14,10 +14,35 @@ message ReqPackage{
 //所有的服务器响应，都是这个数据结构
 message RespPackage{
 	MessageCommand Cmd=1;   //message command
-	pb.ErrorCode ErrCode=2; //响应结果
+	ErrorCode ErrCode=2; 	//响应结果
 	bytes Msg=3;			//所有的回应，都在这里
 }
 
+//用户基本数据
+message UserBaseInfo{
+	string NickName=1;
+	EnumSex Sex=2;
+	uint32 Age=3;
+	uint32 Vip=4;
+	uint32 Lv=5;
+}
+
+//用户的货币数据
+message UserMoneyInfo{
+	uint32 Gold=1;
+	uint32 Diamond=2;
+}
+
+//请求用户信息
+message ReqUserInfo{
+	
+}
+
+//响应用户信息
+message RespUserInfo{
+	UserBaseInfo BaseInfo=1;
+	UserMoneyInfo MoneyInfo=2;
+}
 
 
 
