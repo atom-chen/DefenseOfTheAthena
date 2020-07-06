@@ -25,7 +25,7 @@ func (a *Auth) Handle(request ziface.IRequest) {
 
 	u := model.FindUserByToken(request.GetToken())
 	var resp = new(pb.RespPackage)
-	resp.Cmd = pb.MessageCommand_LinkAuth
+	resp.Cmd = pb.MessageCommand_CallLinkAuth
 	if u == nil {
 		resp.ErrCode = pb.ErrorCode_LoginAccountOrPasswordError
 		userLink.Conn.Stop()

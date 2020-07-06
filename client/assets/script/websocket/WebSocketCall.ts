@@ -6,6 +6,7 @@ import { pb } from "../other/proto";
 import { Session } from "../login/model/SessionData";
 import { UITip } from "../commonUI/UITip";
 import { ErrorCode } from "../other/ErrorCode";
+import { UserInfoData, MoneyInfo } from "../login/model/UserData";
 
 
 /**
@@ -20,7 +21,7 @@ export class WebSocketCall {
      * 心跳
      */
     public static async HeartBeat() {
-        await WebSocketController.Call(pb.MessageCommand.HeartBeat)
+        await WebSocketController.Call(pb.MessageCommand.CallHeartBeat)
         HeatBeat.OnHeatBeat()
     }
 
@@ -28,19 +29,24 @@ export class WebSocketCall {
      * 授权
      */
     public static async LongLinkAuth() {
-        let data = await WebSocketController.Call(pb.MessageCommand.LinkAuth)
+        let data = await WebSocketController.Call(pb.MessageCommand.CallLinkAuth)
     }
 
+    /**
+     * 获取用户信息
+     */
     public static async GetUserInfo() {
-        let resp = await WebSocketController.Call(pb.MessageCommand.GetUserInfo)
+        let resp = await WebSocketController.Call(pb.MessageCommand.CallGetUserInfo)
         if (resp.ErrCode != pb.ErrorCode.OK) {
             UITip.Info(ErrorCode.ToString(resp.ErrCode))
             return;
         }
         let msg: pb.RespUserInfo = pb.RespUserInfo.decode(resp.Msg)
         Clog.Trace(ClogKey.Net, "GetUserInfo:" + JSON.stringify(msg))
+        Session.UserInfo = new UserInfoData(msg.BaseInfo)
+        Session.MoneyInfo = new MoneyInfo(msg.MoneyInfo)
     }
 
-    
 
+    
 }

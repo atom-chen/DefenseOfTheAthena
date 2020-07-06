@@ -21,11 +21,13 @@ message RespPackage{
 //用户基本数据
 message UserBaseInfo{
 	string NickName=1;
-	EnumSex Sex=2;
-	uint32 Age=3;
-	uint32 Vip=4;
-	uint32 Lv=5;
+	string Icon=2;
+	EnumSex Sex=3;
+	uint32 Age=4;
+	uint32 Vip=5;
+	uint32 Lv=6;
 }
+
 
 //用户的货币数据
 message UserMoneyInfo{
@@ -44,5 +46,28 @@ message RespUserInfo{
 	UserMoneyInfo MoneyInfo=2;
 }
 
+//请求创建房间
+message ReqCreateRoom{
+
+}
+
+//响应创建房间
+message RespCreateRoom{
+	uint32 RoomId=1;	//房间Id
+	string RoomName=2;	//房间名称
+	string MapName=3;   //地图名称
+	uint32 MaxNum=4;	//最多人数
+	uint32 CurNum=5;	//当前人数	
+}
+
+//请求加入房间
+message ReqJoinRoom{
+	uint32 RoomId=1;
+}
+
+//响应加入房间
+message RespJoinRoom{
+	
+}
 
 

@@ -101,7 +101,7 @@ export class WebSocketController {
             let req = pb.ReqPackage.create({ Cmd: command, Token: Session.Token, Msg: msg });//构造对象
             let reqBuf = pb.ReqPackage.encode(req).finish(); //获取二进制数据，一定要注意使用finish函数
             this.OnSend(reqBuf)
-            if (req.Cmd != pb.MessageCommand.HeartBeat) {
+            if (req.Cmd != pb.MessageCommand.CallHeartBeat) {
                 Clog.Trace(ClogKey.Net, "[call req]:" + JSON.stringify(req))
             }
         })

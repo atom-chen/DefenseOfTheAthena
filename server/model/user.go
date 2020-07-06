@@ -12,6 +12,7 @@ type User struct {
 	Account  string     `bson:"Account"`
 	Password string     `bson:"Password"`
 	NickName string     `bson:"NickName"`
+	Icon     string     `bson:"Icon"`
 	Age      uint32     `bson:"Age"`
 	Sex      pb.EnumSex `bson:"Sex"`
 	Lv       uint32     `bson:"Lv"`

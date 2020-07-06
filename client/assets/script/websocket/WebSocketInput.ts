@@ -13,7 +13,7 @@ export class WebSocketInput {
         let postData = {
             content: content
         }
-        WebSocketController.Input(MessageCommand.Test, postData)
+        WebSocketController.Input(MessageCommand.Test)
     }
 
 }

@@ -3,12 +3,17 @@ import Http from "../../framework/net/Http";
 import { SystemInfo } from "../../entry/model/SystemInfo";
 import Clog, { ClogKey } from "../../framework/clog/Clog";
 import { UITip } from "../../commonUI/UITip";
-import { UserData } from "../model/UserData";
+import { UserInfoData } from "../model/UserData";
 import { Session } from "../model/SessionData";
 import { LinkWebsocket } from "./LinkWebsocket";
 import { ErrorCode } from "../../other/ErrorCode";
 import { UIManager } from "../../framework/ui/UIManager";
 import { pb } from "../../other/proto";
+import { WebSocketController } from "../../websocket/WebSocketController";
+import { HeatBeat } from "../../websocket/HeatBeat";
+import { WebSocketCall } from "../../websocket/WebSocketCall";
+import { UILobby } from "../../lobby/view/UILobby";
+import { UILogin } from "../view/UILogin";
 
 
 export class LoginController {
@@ -30,7 +35,12 @@ export class LoginController {
             return;
         }
         Session.Token = resp.Token
-        await LinkWebsocket.Start();
+        await WebSocketController.OnInit(SystemInfo.WebSocketUrl).catch(() => { Clog.Error("---- error link ws ----") })
+        HeatBeat.Start()
+        await WebSocketCall.LongLinkAuth();
+        await WebSocketCall.GetUserInfo();
+        UIManager.OpenUI(UILobby)
+        UIManager.CloseUI(UILogin)
     }
 
 

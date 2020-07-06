@@ -598,9 +598,11 @@ export namespace pb {
     /** MessageCommand enum. */
     enum MessageCommand {
         Unknown = 0,
-        LinkAuth = 1,
-        HeartBeat = 2,
-        GetUserInfo = 3
+        CallLinkAuth = 1,
+        CallHeartBeat = 2,
+        CallGetUserInfo = 3,
+        CallCreateRoom = 4,
+        CallJoinRoom = 5
     }
 
     /** Properties of a ReqPackage. */
@@ -813,6 +815,9 @@ export namespace pb {
         /** UserBaseInfo NickName */
         NickName?: (string|null);
 
+        /** UserBaseInfo Icon */
+        Icon?: (string|null);
+
         /** UserBaseInfo Sex */
         Sex?: (pb.EnumSex|null);
 
@@ -837,6 +842,9 @@ export namespace pb {
 
         /** UserBaseInfo NickName. */
         public NickName: string;
+
+        /** UserBaseInfo Icon. */
+        public Icon: string;
 
         /** UserBaseInfo Sex. */
         public Sex: pb.EnumSex;
@@ -1192,6 +1200,378 @@ export namespace pb {
 
         /**
          * Converts this RespUserInfo to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a ReqCreateRoom. */
+    interface IReqCreateRoom {
+    }
+
+    /** Represents a ReqCreateRoom. */
+    class ReqCreateRoom implements IReqCreateRoom {
+
+        /**
+         * Constructs a new ReqCreateRoom.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: pb.IReqCreateRoom);
+
+        /**
+         * Creates a new ReqCreateRoom instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ReqCreateRoom instance
+         */
+        public static create(properties?: pb.IReqCreateRoom): pb.ReqCreateRoom;
+
+        /**
+         * Encodes the specified ReqCreateRoom message. Does not implicitly {@link pb.ReqCreateRoom.verify|verify} messages.
+         * @param message ReqCreateRoom message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: pb.IReqCreateRoom, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ReqCreateRoom message, length delimited. Does not implicitly {@link pb.ReqCreateRoom.verify|verify} messages.
+         * @param message ReqCreateRoom message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: pb.IReqCreateRoom, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ReqCreateRoom message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ReqCreateRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.ReqCreateRoom;
+
+        /**
+         * Decodes a ReqCreateRoom message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ReqCreateRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.ReqCreateRoom;
+
+        /**
+         * Verifies a ReqCreateRoom message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ReqCreateRoom message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ReqCreateRoom
+         */
+        public static fromObject(object: { [k: string]: any }): pb.ReqCreateRoom;
+
+        /**
+         * Creates a plain object from a ReqCreateRoom message. Also converts values to other types if specified.
+         * @param message ReqCreateRoom
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: pb.ReqCreateRoom, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ReqCreateRoom to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a RespCreateRoom. */
+    interface IRespCreateRoom {
+
+        /** RespCreateRoom RoomId */
+        RoomId?: (number|null);
+
+        /** RespCreateRoom RoomName */
+        RoomName?: (string|null);
+
+        /** RespCreateRoom MapName */
+        MapName?: (string|null);
+
+        /** RespCreateRoom MaxNum */
+        MaxNum?: (number|null);
+
+        /** RespCreateRoom CurNum */
+        CurNum?: (number|null);
+    }
+
+    /** Represents a RespCreateRoom. */
+    class RespCreateRoom implements IRespCreateRoom {
+
+        /**
+         * Constructs a new RespCreateRoom.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: pb.IRespCreateRoom);
+
+        /** RespCreateRoom RoomId. */
+        public RoomId: number;
+
+        /** RespCreateRoom RoomName. */
+        public RoomName: string;
+
+        /** RespCreateRoom MapName. */
+        public MapName: string;
+
+        /** RespCreateRoom MaxNum. */
+        public MaxNum: number;
+
+        /** RespCreateRoom CurNum. */
+        public CurNum: number;
+
+        /**
+         * Creates a new RespCreateRoom instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RespCreateRoom instance
+         */
+        public static create(properties?: pb.IRespCreateRoom): pb.RespCreateRoom;
+
+        /**
+         * Encodes the specified RespCreateRoom message. Does not implicitly {@link pb.RespCreateRoom.verify|verify} messages.
+         * @param message RespCreateRoom message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: pb.IRespCreateRoom, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified RespCreateRoom message, length delimited. Does not implicitly {@link pb.RespCreateRoom.verify|verify} messages.
+         * @param message RespCreateRoom message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: pb.IRespCreateRoom, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a RespCreateRoom message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns RespCreateRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.RespCreateRoom;
+
+        /**
+         * Decodes a RespCreateRoom message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns RespCreateRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.RespCreateRoom;
+
+        /**
+         * Verifies a RespCreateRoom message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a RespCreateRoom message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns RespCreateRoom
+         */
+        public static fromObject(object: { [k: string]: any }): pb.RespCreateRoom;
+
+        /**
+         * Creates a plain object from a RespCreateRoom message. Also converts values to other types if specified.
+         * @param message RespCreateRoom
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: pb.RespCreateRoom, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this RespCreateRoom to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a ReqJoinRoom. */
+    interface IReqJoinRoom {
+
+        /** ReqJoinRoom RoomId */
+        RoomId?: (number|null);
+    }
+
+    /** Represents a ReqJoinRoom. */
+    class ReqJoinRoom implements IReqJoinRoom {
+
+        /**
+         * Constructs a new ReqJoinRoom.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: pb.IReqJoinRoom);
+
+        /** ReqJoinRoom RoomId. */
+        public RoomId: number;
+
+        /**
+         * Creates a new ReqJoinRoom instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ReqJoinRoom instance
+         */
+        public static create(properties?: pb.IReqJoinRoom): pb.ReqJoinRoom;
+
+        /**
+         * Encodes the specified ReqJoinRoom message. Does not implicitly {@link pb.ReqJoinRoom.verify|verify} messages.
+         * @param message ReqJoinRoom message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: pb.IReqJoinRoom, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ReqJoinRoom message, length delimited. Does not implicitly {@link pb.ReqJoinRoom.verify|verify} messages.
+         * @param message ReqJoinRoom message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: pb.IReqJoinRoom, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ReqJoinRoom message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ReqJoinRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.ReqJoinRoom;
+
+        /**
+         * Decodes a ReqJoinRoom message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ReqJoinRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.ReqJoinRoom;
+
+        /**
+         * Verifies a ReqJoinRoom message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ReqJoinRoom message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ReqJoinRoom
+         */
+        public static fromObject(object: { [k: string]: any }): pb.ReqJoinRoom;
+
+        /**
+         * Creates a plain object from a ReqJoinRoom message. Also converts values to other types if specified.
+         * @param message ReqJoinRoom
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: pb.ReqJoinRoom, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ReqJoinRoom to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a RespJoinRoom. */
+    interface IRespJoinRoom {
+    }
+
+    /** Represents a RespJoinRoom. */
+    class RespJoinRoom implements IRespJoinRoom {
+
+        /**
+         * Constructs a new RespJoinRoom.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: pb.IRespJoinRoom);
+
+        /**
+         * Creates a new RespJoinRoom instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RespJoinRoom instance
+         */
+        public static create(properties?: pb.IRespJoinRoom): pb.RespJoinRoom;
+
+        /**
+         * Encodes the specified RespJoinRoom message. Does not implicitly {@link pb.RespJoinRoom.verify|verify} messages.
+         * @param message RespJoinRoom message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: pb.IRespJoinRoom, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified RespJoinRoom message, length delimited. Does not implicitly {@link pb.RespJoinRoom.verify|verify} messages.
+         * @param message RespJoinRoom message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: pb.IRespJoinRoom, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a RespJoinRoom message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns RespJoinRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.RespJoinRoom;
+
+        /**
+         * Decodes a RespJoinRoom message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns RespJoinRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.RespJoinRoom;
+
+        /**
+         * Verifies a RespJoinRoom message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a RespJoinRoom message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns RespJoinRoom
+         */
+        public static fromObject(object: { [k: string]: any }): pb.RespJoinRoom;
+
+        /**
+         * Creates a plain object from a RespJoinRoom message. Also converts values to other types if specified.
+         * @param message RespJoinRoom
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: pb.RespJoinRoom, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this RespJoinRoom to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };

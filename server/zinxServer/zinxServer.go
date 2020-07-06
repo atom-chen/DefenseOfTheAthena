@@ -49,9 +49,11 @@ func Init() {
 	s.SetOnConnStart(OnConnectionAdd)
 	s.SetOnConnStop(OnConnectionLost)
 	//注册路由
-	s.AddRouter(uint32(pb.MessageCommand_LinkAuth), &api.Auth{})
-	s.AddRouter(uint32(pb.MessageCommand_HeartBeat), &api.HeartBeat{})
-	s.AddRouter(uint32(pb.MessageCommand_GetUserInfo), &api.UserInfo{})
+	s.AddRouter(uint32(pb.MessageCommand_CallLinkAuth), &api.Auth{})
+	s.AddRouter(uint32(pb.MessageCommand_CallHeartBeat), &api.HeartBeat{})
+	s.AddRouter(uint32(pb.MessageCommand_CallGetUserInfo), &api.UserInfo{})
+	s.AddRouter(uint32(pb.MessageCommand_CallCreateRoom), &api.CreateRoom{})
+	s.AddRouter(uint32(pb.MessageCommand_CallJoinRoom), &api.JoinRoom{})
 	//启动服务
 	s.Serve()
 }

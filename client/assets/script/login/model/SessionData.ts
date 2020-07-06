@@ -1,10 +1,12 @@
-import { UserData } from "./UserData";
+import { UserInfoData as UserInfoData, MoneyInfo as MoneyInfoData } from "./UserData";
 
 export class SessionData {
     
     public Token:string;
   
+    public UserInfo:UserInfoData
 
+    public MoneyInfo:MoneyInfoData
 
 }
 

@@ -24,30 +24,31 @@ func (a *UserInfo) Handle(request ziface.IRequest) {
 
 	u := model.FindUserByToken(request.GetToken())
 	var resp = new(pb.RespPackage)
-	resp.Cmd = pb.MessageCommand_LinkAuth
+	resp.Cmd = pb.MessageCommand_CallGetUserInfo
 	if u == nil {
 		resp.ErrCode = pb.ErrorCode_AuthFailed
 		userLink.Conn.Stop()
-	} else {
-		resp.Cmd = pb.MessageCommand_GetUserInfo
-		resp.ErrCode = pb.ErrorCode_OK
-		userInfo := &pb.RespUserInfo{
-			BaseInfo: &pb.UserBaseInfo{
-				NickName: u.NickName,
-				Age:      u.Age,
-				Lv:       u.Lv,
-			},
-			MoneyInfo: &pb.UserMoneyInfo{
-				Gold:    u.Gold,
-				Diamond: u.Diamond,
-			},
-		}
-		userInfoBuf, err := proto.Marshal(userInfo)
-		if err != nil {
-			return
-		}
-		resp.Msg = userInfoBuf
+		return
 	}
+	resp.ErrCode = pb.ErrorCode_OK
+	userInfo := &pb.RespUserInfo{
+		BaseInfo: &pb.UserBaseInfo{
+			NickName: u.NickName,
+			Age:      u.Age,
+			Lv:       u.Lv,
+			Sex:      u.Sex,
+			Icon:     u.Icon,
+		},
+		MoneyInfo: &pb.UserMoneyInfo{
+			Gold:    u.Gold,
+			Diamond: u.Diamond,
+		},
+	}
+	userInfoBuf, err := proto.Marshal(userInfo)
+	if err != nil {
+		return
+	}
+	resp.Msg = userInfoBuf
 
 	respBuf, err := proto.Marshal(resp)
 	if err != nil {
@@ -57,6 +58,6 @@ func (a *UserInfo) Handle(request ziface.IRequest) {
 		log.Println("[获取用户信息] error !")
 		return
 	}
-	fmt.Printf("[获取用户信息],connId=%d, resp=%v\n", userLink.Conn.GetConnId(), resp)
+	fmt.Printf("[获取用户信息],connId=%d, cmd=%d, errcode=%s, msg=%v\n", userLink.Conn.GetConnId(), resp.Cmd, resp.ErrCode, userInfo)
 	return
 }
