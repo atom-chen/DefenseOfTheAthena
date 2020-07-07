@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"github.com/golang/protobuf/proto"
 	"log"
 	"server/game/room"
@@ -31,20 +32,28 @@ func (t *CreateRoom) Handle(request ziface.IRequest) {
 	}
 	userLink.CurRoom.AddUser(userLink.User)
 
-	resp := &pb.RespPackage{
-		Cmd:     pb.MessageCommand_CreateRoom,
-		ErrCode: pb.ErrorCode_OK,
+	resp := &pb.RespCreateRoom{
+		PreGame: userLink.GetPreGameState(),
 	}
-
-	pbBuf, err := proto.Marshal(resp)
+	respBuf, err := proto.Marshal(resp)
 	if err != nil {
 		return
 	}
-	if err := userLink.Conn.WriteMessage(pbBuf); err != nil {
+
+	pkg := &pb.RespPackage{
+		Cmd:     pb.MessageCommand_CreateRoom,
+		ErrCode: pb.ErrorCode_OK,
+		Msg:     respBuf,
+	}
+
+	pkgBuf, err := proto.Marshal(pkg)
+	if err != nil {
+		return
+	}
+	if err := userLink.Conn.WriteMessage(pkgBuf); err != nil {
 		log.Println("CreateRoom error !")
 		return
 	}
-
-	userLink.SyncPreGame()
+	fmt.Printf("[创建房间],connId=%d, cmd=%d, errcode=%s pkg=%v\n", userLink.Conn.GetConnId(), pkg.Cmd, pkg.ErrCode, resp)
 	return
 }

@@ -21,14 +21,14 @@ func (a *UserInfo) Handle(request ziface.IRequest) {
 	linkId := l.(uint32)
 	userLink := link.Manager.Find(linkId)
 	u := db.FindUserByToken(request.GetToken())
-	var resp = new(pb.RespPackage)
+	var pkg = new(pb.RespPackage)
 	if u == nil {
-		resp.Cmd = pb.MessageCommand_GetUserInfo
-		resp.ErrCode = pb.ErrorCode_AuthFailed
+		pkg.Cmd = pb.MessageCommand_GetUserInfo
+		pkg.ErrCode = pb.ErrorCode_AuthFailed
 		userLink.Conn.Stop()
 		return
 	}
-	userInfo := &pb.RespUserInfo{
+	resp := &pb.RespUserInfo{
 		BaseInfo: &pb.UserBaseInfo{
 			NickName: u.NickName,
 			Age:      u.Age,
@@ -41,23 +41,23 @@ func (a *UserInfo) Handle(request ziface.IRequest) {
 			Diamond: u.Diamond,
 		},
 	}
-	userInfoBuf, err := proto.Marshal(userInfo)
+	userInfoBuf, err := proto.Marshal(resp)
 	if err != nil {
 		return
 	}
 
-	resp.Cmd = pb.MessageCommand_GetUserInfo
-	resp.Msg = userInfoBuf
-	resp.ErrCode = pb.ErrorCode_OK
+	pkg.Cmd = pb.MessageCommand_GetUserInfo
+	pkg.ErrCode = pb.ErrorCode_OK
+	pkg.Msg = userInfoBuf
 
-	respBuf, err := proto.Marshal(resp)
+	pkgBuf, err := proto.Marshal(pkg)
 	if err != nil {
 		return
 	}
-	if err := userLink.Conn.WriteMessage(respBuf); err != nil {
+	if err := userLink.Conn.WriteMessage(pkgBuf); err != nil {
 		log.Println("[获取用户信息] error !")
 		return
 	}
-	fmt.Printf("[获取用户信息],connId=%d, cmd=%d, errcode=%s, msg=%v\n", userLink.Conn.GetConnId(), resp.Cmd, resp.ErrCode, userInfo)
+	fmt.Printf("[获取用户信息],connId=%d, cmd=%d, errcode=%s, msg=%v\n", userLink.Conn.GetConnId(), pkg.Cmd, pkg.ErrCode, resp)
 	return
 }

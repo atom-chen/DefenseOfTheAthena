@@ -28,27 +28,51 @@ func (t *JoinRoom) Handle(request ziface.IRequest) {
 	}
 	fmt.Println("req join roomId:", req.RoomId)
 	targetRoom := room.Manager.GetRoomById(req.RoomId)
-	targetRoom.AddUser(userLink.User)
-	userLink.CurRoom = targetRoom
-	resp := new(pb.RespPackage)
+
+	pkg := new(pb.RespPackage)
+	//房间不存在
 	if targetRoom == nil {
-		resp = &pb.RespPackage{
+		pkg = &pb.RespPackage{
 			Cmd:     pb.MessageCommand_JoinRoom,
 			ErrCode: pb.ErrorCode_RoomUnExistent,
 		}
-	} else {
-		resp = &pb.RespPackage{
-			Cmd:     pb.MessageCommand_JoinRoom,
-			ErrCode: pb.ErrorCode_OK,
+		pkgBuf, err := proto.Marshal(pkg)
+		if err != nil {
+			return
 		}
+		if err := userLink.Conn.WriteMessage(pkgBuf); err != nil {
+			log.Println("JoinRoom error !")
+			return
+		}
+		fmt.Printf("[加入房间],connId=%d, cmd=%d, errcode=%s\n", userLink.Conn.GetConnId(), pkg.Cmd, pkg.ErrCode)
+		return
 	}
-	pbBuf, err := proto.Marshal(resp)
+
+	//加入房间
+	targetRoom.AddUser(userLink.User)
+	userLink.CurRoom = targetRoom
+
+	//回复结果
+	resp := &pb.RespJoinRoom{
+		PreGame: userLink.GetPreGameState(),
+	}
+	respBuf, err := proto.Marshal(resp)
 	if err != nil {
 		return
 	}
-	if err := userLink.Conn.WriteMessage(pbBuf); err != nil {
+	pkg = &pb.RespPackage{
+		Cmd:     pb.MessageCommand_JoinRoom,
+		ErrCode: pb.ErrorCode_OK,
+		Msg:     respBuf,
+	}
+	pkgBuf, err := proto.Marshal(pkg)
+	if err != nil {
+		return
+	}
+	if err := userLink.Conn.WriteMessage(pkgBuf); err != nil {
 		log.Println("JoinRoom error !")
 		return
 	}
+	fmt.Printf("[加入房间],connId=%d, cmd=%d, errcode=%s\n", userLink.Conn.GetConnId(), pkg.Cmd, pkg.ErrCode)
 	return
 }

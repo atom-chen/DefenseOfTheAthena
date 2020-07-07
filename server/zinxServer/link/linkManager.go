@@ -65,7 +65,6 @@ func (m *manager) Clear() {
 	//保护共享资源Map 加写锁
 	Manager.Lock.Lock()
 	defer Manager.Lock.Unlock()
-
 	//停止并删除全部的玩家信息
 	for lindId, userLink := range Manager.UserLink {
 		//清空玩家信息，踢掉在线的玩家

@@ -51,6 +51,21 @@ message ReqCreateRoom{
 	uint32 MapId=2;   					//地图Id
 }
 
+//响应创建房间
+message RespCreateRoom{
+	SyncPreGame PreGame=1;				//房间的状态
+}
+
+//请求加入房间
+message ReqJoinRoom{
+	uint32 RoomId=1;				    //房间Id
+}
+
+//响应加入房间
+message RespJoinRoom{
+	SyncPreGame PreGame=1;				//房间的状态
+}
+
 //同步游戏开始前状态
 message SyncPreGame{
 	//子proto
@@ -58,17 +73,15 @@ message SyncPreGame{
 		uint32 UserId=1;
 		string UserNickName =2;	 			//用户昵称
 		uint32 GameRoleId=3;     			//玩家角色
-		bool IsReady=4;	         			//是否已准备好
+		uint32 TotalNum=4;					//该地图玩家总计游戏次数
+		uint32 PassNum=5;					//该地图通关次数
+		uint32 MapLv=6;						//地图等级
+		bool IsReady=7;	         			//是否已准备好
 	}
 	uint32 RoomId=1;					 //房间Id
 	string RoomName=2;					 //房间名称
 	uint32 MapId=3;  				     //地图名称
 	repeated ProGameState States = 4;      //游戏开始前的状态	
-}
-
-//请求加入房间
-message ReqJoinRoom{
-	uint32 RoomId=1;				    //房间Id
 }
 
 //发送玩家选择游戏角色

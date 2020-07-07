@@ -1,6 +1,7 @@
 import { WebSocketController } from "./WebSocketController";
 import Clog from "../framework/clog/Clog";
 import { LoginController } from "../login/controller/LoginController";
+import { LobbyController } from "../lobby/controller/LobbyController";
 
 
 /**
@@ -39,7 +40,7 @@ export class HeatBeat {
         }
 
         //发送心跳
-        LoginController.HeartBeat();
+        LobbyController.HeartBeat();
         //计时器累加
         this.heatBeatTimer += this.heatBeatInterval;
     }

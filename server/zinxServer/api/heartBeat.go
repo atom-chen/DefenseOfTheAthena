@@ -19,18 +19,18 @@ func (t *HeartBeat) Handle(request ziface.IRequest) {
 	l, _ := request.GetConnection().GetProperty("linkId")
 	linkId := l.(uint32)
 	userLink := link.Manager.Find(linkId)
-	resp := &pb.RespPackage{
+	pkg := &pb.RespPackage{
 		Cmd: pb.MessageCommand_HeartBeat,
 	}
-	pbBuf, err := proto.Marshal(resp)
+	pkgBuf, err := proto.Marshal(pkg)
 	if err != nil {
 		return
 	}
 	//心跳特殊处理
-	if err := userLink.Conn.WriteMessage(pbBuf); err != nil {
+	if err := userLink.Conn.WriteMessage(pkgBuf); err != nil {
 		log.Println("userLink HeartBeat error !")
 		return
 	}
-	//log.Printf("[心跳],connId=%d, resp=%v\n", userLink.Conn.GetConnId(), resp)
+	//log.Printf("[心跳],connId=%d, pkg=%v\n", userLink.Conn.GetConnId(), pkg)
 	return
 }

@@ -446,6 +446,150 @@ func (m *ReqCreateRoom) GetMapId() uint32 {
 	return 0
 }
 
+//响应创建房间
+type RespCreateRoom struct {
+	PreGame              *SyncPreGame `protobuf:"bytes,1,opt,name=PreGame,proto3" json:"PreGame,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
+}
+
+func (m *RespCreateRoom) Reset()         { *m = RespCreateRoom{} }
+func (m *RespCreateRoom) String() string { return proto.CompactTextString(m) }
+func (*RespCreateRoom) ProtoMessage()    {}
+func (*RespCreateRoom) Descriptor() ([]byte, []int) {
+	return fileDescriptor_928d6fde112007a2, []int{7}
+}
+func (m *RespCreateRoom) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RespCreateRoom) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RespCreateRoom.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RespCreateRoom) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RespCreateRoom.Merge(m, src)
+}
+func (m *RespCreateRoom) XXX_Size() int {
+	return m.Size()
+}
+func (m *RespCreateRoom) XXX_DiscardUnknown() {
+	xxx_messageInfo_RespCreateRoom.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RespCreateRoom proto.InternalMessageInfo
+
+func (m *RespCreateRoom) GetPreGame() *SyncPreGame {
+	if m != nil {
+		return m.PreGame
+	}
+	return nil
+}
+
+//请求加入房间
+type ReqJoinRoom struct {
+	RoomId               uint32   `protobuf:"varint,1,opt,name=RoomId,proto3" json:"RoomId,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ReqJoinRoom) Reset()         { *m = ReqJoinRoom{} }
+func (m *ReqJoinRoom) String() string { return proto.CompactTextString(m) }
+func (*ReqJoinRoom) ProtoMessage()    {}
+func (*ReqJoinRoom) Descriptor() ([]byte, []int) {
+	return fileDescriptor_928d6fde112007a2, []int{8}
+}
+func (m *ReqJoinRoom) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ReqJoinRoom) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ReqJoinRoom.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ReqJoinRoom) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReqJoinRoom.Merge(m, src)
+}
+func (m *ReqJoinRoom) XXX_Size() int {
+	return m.Size()
+}
+func (m *ReqJoinRoom) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReqJoinRoom.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ReqJoinRoom proto.InternalMessageInfo
+
+func (m *ReqJoinRoom) GetRoomId() uint32 {
+	if m != nil {
+		return m.RoomId
+	}
+	return 0
+}
+
+//响应加入房间
+type RespJoinRoom struct {
+	PreGame              *SyncPreGame `protobuf:"bytes,1,opt,name=PreGame,proto3" json:"PreGame,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
+}
+
+func (m *RespJoinRoom) Reset()         { *m = RespJoinRoom{} }
+func (m *RespJoinRoom) String() string { return proto.CompactTextString(m) }
+func (*RespJoinRoom) ProtoMessage()    {}
+func (*RespJoinRoom) Descriptor() ([]byte, []int) {
+	return fileDescriptor_928d6fde112007a2, []int{9}
+}
+func (m *RespJoinRoom) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RespJoinRoom) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RespJoinRoom.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RespJoinRoom) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RespJoinRoom.Merge(m, src)
+}
+func (m *RespJoinRoom) XXX_Size() int {
+	return m.Size()
+}
+func (m *RespJoinRoom) XXX_DiscardUnknown() {
+	xxx_messageInfo_RespJoinRoom.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RespJoinRoom proto.InternalMessageInfo
+
+func (m *RespJoinRoom) GetPreGame() *SyncPreGame {
+	if m != nil {
+		return m.PreGame
+	}
+	return nil
+}
+
 //同步游戏开始前状态
 type SyncPreGame struct {
 	RoomId               uint32                      `protobuf:"varint,1,opt,name=RoomId,proto3" json:"RoomId,omitempty"`
@@ -461,7 +605,7 @@ func (m *SyncPreGame) Reset()         { *m = SyncPreGame{} }
 func (m *SyncPreGame) String() string { return proto.CompactTextString(m) }
 func (*SyncPreGame) ProtoMessage()    {}
 func (*SyncPreGame) Descriptor() ([]byte, []int) {
-	return fileDescriptor_928d6fde112007a2, []int{7}
+	return fileDescriptor_928d6fde112007a2, []int{10}
 }
 func (m *SyncPreGame) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -523,7 +667,10 @@ type SyncPreGame_ProGameState struct {
 	UserId               uint32   `protobuf:"varint,1,opt,name=UserId,proto3" json:"UserId,omitempty"`
 	UserNickName         string   `protobuf:"bytes,2,opt,name=UserNickName,proto3" json:"UserNickName,omitempty"`
 	GameRoleId           uint32   `protobuf:"varint,3,opt,name=GameRoleId,proto3" json:"GameRoleId,omitempty"`
-	IsReady              bool     `protobuf:"varint,4,opt,name=IsReady,proto3" json:"IsReady,omitempty"`
+	TotalNum             uint32   `protobuf:"varint,4,opt,name=TotalNum,proto3" json:"TotalNum,omitempty"`
+	PassNum              uint32   `protobuf:"varint,5,opt,name=PassNum,proto3" json:"PassNum,omitempty"`
+	MapLv                uint32   `protobuf:"varint,6,opt,name=MapLv,proto3" json:"MapLv,omitempty"`
+	IsReady              bool     `protobuf:"varint,7,opt,name=IsReady,proto3" json:"IsReady,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -533,7 +680,7 @@ func (m *SyncPreGame_ProGameState) Reset()         { *m = SyncPreGame_ProGameSta
 func (m *SyncPreGame_ProGameState) String() string { return proto.CompactTextString(m) }
 func (*SyncPreGame_ProGameState) ProtoMessage()    {}
 func (*SyncPreGame_ProGameState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_928d6fde112007a2, []int{7, 0}
+	return fileDescriptor_928d6fde112007a2, []int{10, 0}
 }
 func (m *SyncPreGame_ProGameState) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -583,59 +730,32 @@ func (m *SyncPreGame_ProGameState) GetGameRoleId() uint32 {
 	return 0
 }
 
+func (m *SyncPreGame_ProGameState) GetTotalNum() uint32 {
+	if m != nil {
+		return m.TotalNum
+	}
+	return 0
+}
+
+func (m *SyncPreGame_ProGameState) GetPassNum() uint32 {
+	if m != nil {
+		return m.PassNum
+	}
+	return 0
+}
+
+func (m *SyncPreGame_ProGameState) GetMapLv() uint32 {
+	if m != nil {
+		return m.MapLv
+	}
+	return 0
+}
+
 func (m *SyncPreGame_ProGameState) GetIsReady() bool {
 	if m != nil {
 		return m.IsReady
 	}
 	return false
-}
-
-//请求加入房间
-type ReqJoinRoom struct {
-	RoomId               uint32   `protobuf:"varint,1,opt,name=RoomId,proto3" json:"RoomId,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *ReqJoinRoom) Reset()         { *m = ReqJoinRoom{} }
-func (m *ReqJoinRoom) String() string { return proto.CompactTextString(m) }
-func (*ReqJoinRoom) ProtoMessage()    {}
-func (*ReqJoinRoom) Descriptor() ([]byte, []int) {
-	return fileDescriptor_928d6fde112007a2, []int{8}
-}
-func (m *ReqJoinRoom) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *ReqJoinRoom) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_ReqJoinRoom.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *ReqJoinRoom) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReqJoinRoom.Merge(m, src)
-}
-func (m *ReqJoinRoom) XXX_Size() int {
-	return m.Size()
-}
-func (m *ReqJoinRoom) XXX_DiscardUnknown() {
-	xxx_messageInfo_ReqJoinRoom.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_ReqJoinRoom proto.InternalMessageInfo
-
-func (m *ReqJoinRoom) GetRoomId() uint32 {
-	if m != nil {
-		return m.RoomId
-	}
-	return 0
 }
 
 //发送玩家选择游戏角色
@@ -650,7 +770,7 @@ func (m *InputGameRole) Reset()         { *m = InputGameRole{} }
 func (m *InputGameRole) String() string { return proto.CompactTextString(m) }
 func (*InputGameRole) ProtoMessage()    {}
 func (*InputGameRole) Descriptor() ([]byte, []int) {
-	return fileDescriptor_928d6fde112007a2, []int{9}
+	return fileDescriptor_928d6fde112007a2, []int{11}
 }
 func (m *InputGameRole) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -698,7 +818,7 @@ func (m *InputReadyState) Reset()         { *m = InputReadyState{} }
 func (m *InputReadyState) String() string { return proto.CompactTextString(m) }
 func (*InputReadyState) ProtoMessage()    {}
 func (*InputReadyState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_928d6fde112007a2, []int{10}
+	return fileDescriptor_928d6fde112007a2, []int{12}
 }
 func (m *InputReadyState) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -742,9 +862,11 @@ func init() {
 	proto.RegisterType((*ReqUserInfo)(nil), "pb.ReqUserInfo")
 	proto.RegisterType((*RespUserInfo)(nil), "pb.RespUserInfo")
 	proto.RegisterType((*ReqCreateRoom)(nil), "pb.ReqCreateRoom")
+	proto.RegisterType((*RespCreateRoom)(nil), "pb.RespCreateRoom")
+	proto.RegisterType((*ReqJoinRoom)(nil), "pb.ReqJoinRoom")
+	proto.RegisterType((*RespJoinRoom)(nil), "pb.RespJoinRoom")
 	proto.RegisterType((*SyncPreGame)(nil), "pb.SyncPreGame")
 	proto.RegisterType((*SyncPreGame_ProGameState)(nil), "pb.SyncPreGame.ProGameState")
-	proto.RegisterType((*ReqJoinRoom)(nil), "pb.ReqJoinRoom")
 	proto.RegisterType((*InputGameRole)(nil), "pb.InputGameRole")
 	proto.RegisterType((*InputReadyState)(nil), "pb.InputReadyState")
 }
@@ -752,44 +874,47 @@ func init() {
 func init() { proto.RegisterFile("websocket.proto", fileDescriptor_928d6fde112007a2) }
 
 var fileDescriptor_928d6fde112007a2 = []byte{
-	// 580 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x54, 0xc1, 0x6e, 0xd3, 0x40,
-	0x10, 0xc5, 0x76, 0x9a, 0xb6, 0xe3, 0x38, 0x09, 0xab, 0x0a, 0x59, 0x11, 0x44, 0x91, 0x05, 0x22,
-	0x12, 0x28, 0x48, 0x2e, 0x57, 0x0e, 0x6d, 0xa8, 0x2a, 0xa3, 0xa6, 0x8a, 0x36, 0xd0, 0x03, 0xb7,
-	0x4d, 0x32, 0x44, 0x51, 0x62, 0xaf, 0x63, 0x3b, 0xa5, 0xb9, 0xf3, 0x03, 0x48, 0x1c, 0xf8, 0x24,
-	0x8e, 0x7c, 0x02, 0x0a, 0x3f, 0x82, 0x66, 0x9d, 0x35, 0x8e, 0x44, 0x0f, 0x9c, 0x32, 0xef, 0xed,
-	0xec, 0x9b, 0x37, 0xcf, 0xab, 0x40, 0xe3, 0x33, 0x8e, 0x53, 0x39, 0x59, 0x60, 0xd6, 0x8b, 0x13,
-	0x99, 0x49, 0x66, 0xc6, 0xe3, 0x56, 0x03, 0x93, 0x44, 0x26, 0x7d, 0x39, 0xc5, 0x9c, 0x6c, 0x9d,
-	0x84, 0x98, 0xa6, 0x62, 0x86, 0x7d, 0x19, 0x86, 0x22, 0x9a, 0xee, 0x58, 0xc0, 0x68, 0x1d, 0xe6,
-	0xb5, 0xf7, 0x11, 0x80, 0xe3, 0x6a, 0x28, 0x26, 0x0b, 0x31, 0x43, 0xf6, 0x14, 0xac, 0x7e, 0x38,
-	0x75, 0x8d, 0x8e, 0xd1, 0xad, 0xfb, 0xac, 0x17, 0x8f, 0x7b, 0x83, 0x3d, 0x01, 0x4e, 0xc7, 0xec,
-	0x04, 0x0e, 0xde, 0xcb, 0x05, 0x46, 0xae, 0xd9, 0x31, 0xba, 0xc7, 0x3c, 0x07, 0xac, 0x09, 0xd6,
-	0x20, 0x9d, 0xb9, 0x56, 0xc7, 0xe8, 0xd6, 0x38, 0x95, 0x5e, 0x04, 0x36, 0xc7, 0x34, 0xfe, 0x3f,
-	0xf1, 0xe7, 0x70, 0x78, 0x91, 0xa8, 0x1d, 0x94, 0x7c, 0xdd, 0x77, 0xa8, 0xf3, 0x42, 0x2f, 0xc6,
-	0xf5, 0xe9, 0x3f, 0xe6, 0x7d, 0x35, 0xa0, 0xf6, 0x21, 0xc5, 0xe4, 0x5c, 0xa4, 0x18, 0x44, 0x9f,
-	0x24, 0x6b, 0xc1, 0xd1, 0xf5, 0x7c, 0xb2, 0xb8, 0x16, 0x21, 0xaa, 0xb1, 0xc7, 0xbc, 0xc0, 0x8c,
-	0x41, 0x25, 0x98, 0x48, 0xbd, 0x83, 0xaa, 0xd9, 0x13, 0xb0, 0x46, 0x78, 0xa7, 0x24, 0xeb, 0xbe,
-	0xad, 0xe6, 0x46, 0xeb, 0x70, 0x84, 0x77, 0x9c, 0x78, 0x9a, 0x78, 0x36, 0x43, 0xb7, 0xd2, 0x31,
-	0xba, 0x0e, 0xa7, 0x92, 0x98, 0x9b, 0x79, 0xec, 0x1e, 0xe4, 0xcc, 0xcd, 0x3c, 0x66, 0x75, 0x30,
-	0xaf, 0x6e, 0xdd, 0xaa, 0x22, 0xcc, 0xab, 0x5b, 0xef, 0x0d, 0x38, 0x64, 0x69, 0x20, 0x23, 0xdc,
-	0x28, 0x4f, 0x0c, 0x2a, 0x97, 0x72, 0x99, 0xc7, 0xe0, 0x70, 0x55, 0x33, 0x17, 0x0e, 0xdf, 0xce,
-	0x45, 0x28, 0xa3, 0xa9, 0xb2, 0xe3, 0x70, 0x0d, 0x3d, 0x87, 0x22, 0x5c, 0x91, 0x02, 0x5d, 0xf6,
-	0x42, 0xa8, 0x51, 0xa2, 0x1a, 0xb3, 0x97, 0x70, 0xa4, 0x97, 0x55, 0x82, 0xb6, 0xdf, 0x24, 0xd7,
-	0xe5, 0x10, 0x78, 0xd1, 0xc1, 0x5e, 0xc1, 0x71, 0xe1, 0x43, 0x0d, 0xb2, 0xfd, 0x87, 0xba, 0xbd,
-	0x38, 0xe0, 0x7f, 0x7b, 0xbc, 0x33, 0x70, 0x38, 0xae, 0xfa, 0x09, 0x8a, 0x0c, 0xb9, 0x94, 0x21,
-	0x05, 0x4a, 0xbf, 0xe5, 0x40, 0x35, 0xa6, 0x57, 0x31, 0x10, 0x71, 0xa0, 0x57, 0xc8, 0x81, 0xf7,
-	0xcd, 0x04, 0x7b, 0xb4, 0x89, 0x26, 0xc3, 0x04, 0x2f, 0xa9, 0xeb, 0x11, 0x54, 0xe9, 0x46, 0xa0,
-	0x03, 0xd8, 0xa1, 0x3d, 0x65, 0xf3, 0x3e, 0x65, 0xab, 0xa4, 0xcc, 0x5e, 0x43, 0x75, 0x94, 0x89,
-	0x0c, 0x53, 0xb7, 0xd2, 0xb1, 0xba, 0xb6, 0xff, 0x98, 0x56, 0x29, 0x8d, 0xea, 0x0d, 0x13, 0x49,
-	0xbf, 0xaa, 0x89, 0xef, 0x7a, 0x5b, 0x5f, 0x0c, 0xa8, 0x95, 0x0f, 0xc8, 0x90, 0x8a, 0xb3, 0x30,
-	0x94, 0x23, 0xe6, 0xe5, 0x6f, 0xa9, 0x78, 0x3f, 0xb9, 0xa9, 0x3d, 0x8e, 0xb5, 0x01, 0x48, 0x88,
-	0xcb, 0x25, 0x16, 0xee, 0x4a, 0x0c, 0x7d, 0xd7, 0x20, 0xe5, 0x28, 0xa6, 0x1b, 0xf5, 0x68, 0x8e,
-	0xb8, 0x86, 0xde, 0x33, 0xf5, 0x5d, 0xdf, 0xc9, 0x79, 0xa4, 0x72, 0xbd, 0x27, 0x15, 0xef, 0x14,
-	0x9c, 0x20, 0x8a, 0xd7, 0x99, 0xd6, 0x24, 0x57, 0xc3, 0xa5, 0xd8, 0x60, 0xb2, 0x9b, 0x99, 0xb7,
-	0xef, 0x71, 0xde, 0x0b, 0x68, 0xa8, 0x4b, 0x6a, 0x52, 0xbe, 0x64, 0xc9, 0x88, 0xb1, 0x67, 0xe4,
-	0xbc, 0xf9, 0x63, 0xdb, 0x36, 0x7e, 0x6e, 0xdb, 0xc6, 0xaf, 0x6d, 0xdb, 0xf8, 0xfe, 0xbb, 0xfd,
-	0x60, 0x5c, 0x55, 0x7f, 0x0c, 0xa7, 0x7f, 0x02, 0x00, 0x00, 0xff, 0xff, 0x08, 0x92, 0x1f, 0x33,
-	0x62, 0x04, 0x00, 0x00,
+	// 635 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x54, 0xc1, 0x6e, 0xda, 0x4c,
+	0x10, 0xfe, 0x0d, 0x04, 0x92, 0x31, 0x86, 0xfc, 0xab, 0xe8, 0x97, 0x85, 0xfe, 0x22, 0x64, 0xb5,
+	0x2a, 0x55, 0x2b, 0x2a, 0x39, 0xbd, 0x54, 0x55, 0x0f, 0x09, 0x8d, 0x22, 0xaa, 0x10, 0xa1, 0x25,
+	0xcd, 0xa1, 0xb7, 0x05, 0xa6, 0x08, 0x81, 0xbd, 0x8e, 0x6d, 0xd2, 0xf0, 0x18, 0xbd, 0xf5, 0x91,
+	0x7a, 0xcc, 0x23, 0x44, 0xe9, 0x8b, 0x54, 0xb3, 0xeb, 0x75, 0x4d, 0xd5, 0x1c, 0x72, 0xf2, 0x7c,
+	0x33, 0xb3, 0xf3, 0x7d, 0xdf, 0x30, 0x02, 0x9a, 0x5f, 0x71, 0x92, 0xc8, 0xe9, 0x12, 0xd3, 0x5e,
+	0x14, 0xcb, 0x54, 0xb2, 0x52, 0x34, 0x69, 0x35, 0x31, 0x8e, 0x65, 0xdc, 0x97, 0x33, 0xd4, 0xc9,
+	0xd6, 0x41, 0x80, 0x49, 0x22, 0xe6, 0xd8, 0x97, 0x41, 0x20, 0xc2, 0x59, 0x96, 0x05, 0x0c, 0xd7,
+	0x81, 0x8e, 0xbd, 0xcf, 0x00, 0x1c, 0xaf, 0x46, 0x62, 0xba, 0x14, 0x73, 0x64, 0x4f, 0xa1, 0xdc,
+	0x0f, 0x66, 0xae, 0xd5, 0xb1, 0xba, 0x0d, 0x9f, 0xf5, 0xa2, 0x49, 0x6f, 0xb8, 0x35, 0x80, 0x53,
+	0x99, 0x1d, 0xc0, 0xce, 0x85, 0x5c, 0x62, 0xe8, 0x96, 0x3a, 0x56, 0x77, 0x8f, 0x6b, 0xc0, 0xf6,
+	0xa1, 0x3c, 0x4c, 0xe6, 0x6e, 0xb9, 0x63, 0x75, 0xeb, 0x9c, 0x42, 0x2f, 0x04, 0x9b, 0x63, 0x12,
+	0x3d, 0x6e, 0xf8, 0x73, 0xa8, 0x9d, 0xc4, 0xca, 0x83, 0x1a, 0xdf, 0xf0, 0x1d, 0xea, 0x3c, 0x31,
+	0xc6, 0xb8, 0xa9, 0xfe, 0x85, 0xef, 0x9b, 0x05, 0xf5, 0x4f, 0x09, 0xc6, 0xc7, 0x22, 0xc1, 0x41,
+	0xf8, 0x45, 0xb2, 0x16, 0xec, 0x9e, 0x2f, 0xa6, 0xcb, 0x73, 0x11, 0xa0, 0xa2, 0xdd, 0xe3, 0x39,
+	0x66, 0x0c, 0x2a, 0x83, 0xa9, 0x34, 0x1e, 0x54, 0xcc, 0x9e, 0x40, 0x79, 0x8c, 0x37, 0x6a, 0x64,
+	0xc3, 0xb7, 0x15, 0x6f, 0xb8, 0x0e, 0xc6, 0x78, 0xc3, 0x29, 0x4f, 0x8c, 0x47, 0x73, 0x74, 0x2b,
+	0x1d, 0xab, 0xeb, 0x70, 0x0a, 0x29, 0x73, 0xb9, 0x88, 0xdc, 0x1d, 0x9d, 0xb9, 0x5c, 0x44, 0xac,
+	0x01, 0xa5, 0xb3, 0x6b, 0xb7, 0xaa, 0x12, 0xa5, 0xb3, 0x6b, 0xef, 0x3d, 0x38, 0x24, 0x69, 0x28,
+	0x43, 0xdc, 0x28, 0x4d, 0x0c, 0x2a, 0xa7, 0x72, 0xa5, 0xd7, 0xe0, 0x70, 0x15, 0x33, 0x17, 0x6a,
+	0x1f, 0x16, 0x22, 0x90, 0xe1, 0x4c, 0xc9, 0x71, 0xb8, 0x81, 0x9e, 0x43, 0x2b, 0xbc, 0xa2, 0x09,
+	0xf4, 0xd8, 0x0b, 0xa0, 0x4e, 0x1b, 0x35, 0x98, 0xbd, 0x82, 0x5d, 0x63, 0x56, 0x0d, 0xb4, 0xfd,
+	0x7d, 0x52, 0x5d, 0x5c, 0x02, 0xcf, 0x3b, 0xd8, 0x6b, 0xd8, 0xcb, 0x75, 0x28, 0x22, 0xdb, 0xff,
+	0xd7, 0xb4, 0xe7, 0x05, 0xfe, 0xbb, 0xc7, 0x3b, 0x02, 0x87, 0xe3, 0x55, 0x3f, 0x46, 0x91, 0x22,
+	0x97, 0x32, 0xa0, 0x85, 0xd2, 0xb7, 0xb8, 0x50, 0x83, 0xe9, 0x2a, 0x86, 0x22, 0x1a, 0x18, 0x0b,
+	0x1a, 0x78, 0xef, 0xa0, 0x41, 0x8a, 0x0b, 0x33, 0x5e, 0x40, 0x6d, 0x14, 0xe3, 0xa9, 0x19, 0x61,
+	0xfb, 0x4d, 0xd2, 0x30, 0xde, 0x84, 0xd3, 0x2c, 0xcd, 0x4d, 0xdd, 0x7b, 0xa6, 0xdc, 0x7f, 0x94,
+	0x8b, 0x50, 0xbd, 0xfc, 0x0f, 0xaa, 0xf4, 0x1d, 0x98, 0xe5, 0x65, 0xc8, 0x7b, 0xab, 0xb7, 0x92,
+	0xf7, 0x3d, 0x82, 0xe1, 0xae, 0x04, 0x76, 0xa1, 0xf0, 0x10, 0xc5, 0x96, 0xf1, 0xd2, 0x43, 0xc6,
+	0xcb, 0x05, 0xe3, 0xec, 0x0d, 0x54, 0xc7, 0xa9, 0x48, 0x31, 0x71, 0x2b, 0x9d, 0x72, 0xd7, 0xf6,
+	0xff, 0xff, 0x43, 0x43, 0x6f, 0x14, 0x4b, 0xfa, 0xaa, 0x26, 0x9e, 0xf5, 0xb6, 0x6e, 0x2d, 0xa8,
+	0x17, 0x0b, 0x24, 0x48, 0xfd, 0xda, 0xb9, 0x20, 0x8d, 0x98, 0xa7, 0x4f, 0x3d, 0x3f, 0x6f, 0x2d,
+	0x6a, 0x2b, 0xc7, 0xda, 0x00, 0xca, 0xad, 0x5c, 0x61, 0xae, 0xae, 0x90, 0x21, 0x53, 0x17, 0x32,
+	0x15, 0xab, 0xf3, 0x75, 0x90, 0x1d, 0x75, 0x8e, 0xe9, 0x24, 0x47, 0x22, 0x49, 0xa8, 0xa4, 0xaf,
+	0xdb, 0xc0, 0xcc, 0x6e, 0x7e, 0xe4, 0x1a, 0x50, 0xff, 0x20, 0xe1, 0x28, 0x66, 0x1b, 0xb7, 0xd6,
+	0xb1, 0xba, 0xbb, 0xdc, 0x40, 0xef, 0x10, 0x9c, 0x41, 0x18, 0xad, 0x53, 0x43, 0x4c, 0xd2, 0x47,
+	0x2b, 0xb1, 0xc1, 0x38, 0x13, 0xa6, 0x8d, 0x6d, 0xe5, 0xbc, 0x97, 0xd0, 0x54, 0x8f, 0xd4, 0x08,
+	0xbd, 0x89, 0x02, 0x83, 0xb5, 0xc5, 0x70, 0xbc, 0xff, 0xe3, 0xbe, 0x6d, 0xdd, 0xde, 0xb7, 0xad,
+	0xbb, 0xfb, 0xb6, 0xf5, 0xfd, 0x67, 0xfb, 0x9f, 0x49, 0x55, 0xfd, 0xb9, 0x1d, 0xfe, 0x0a, 0x00,
+	0x00, 0xff, 0xff, 0x6a, 0xe9, 0x58, 0x6d, 0x26, 0x05, 0x00, 0x00,
 }
 
 func (m *ReqPackage) Marshal() (dAtA []byte, err error) {
@@ -1097,6 +1222,116 @@ func (m *ReqCreateRoom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *RespCreateRoom) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RespCreateRoom) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RespCreateRoom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.PreGame != nil {
+		{
+			size, err := m.PreGame.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintWebsocket(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ReqJoinRoom) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ReqJoinRoom) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ReqJoinRoom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.RoomId != 0 {
+		i = encodeVarintWebsocket(dAtA, i, uint64(m.RoomId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *RespJoinRoom) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RespJoinRoom) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RespJoinRoom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.PreGame != nil {
+		{
+			size, err := m.PreGame.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintWebsocket(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *SyncPreGame) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1187,6 +1422,21 @@ func (m *SyncPreGame_ProGameState) MarshalToSizedBuffer(dAtA []byte) (int, error
 			dAtA[i] = 0
 		}
 		i--
+		dAtA[i] = 0x38
+	}
+	if m.MapLv != 0 {
+		i = encodeVarintWebsocket(dAtA, i, uint64(m.MapLv))
+		i--
+		dAtA[i] = 0x30
+	}
+	if m.PassNum != 0 {
+		i = encodeVarintWebsocket(dAtA, i, uint64(m.PassNum))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.TotalNum != 0 {
+		i = encodeVarintWebsocket(dAtA, i, uint64(m.TotalNum))
+		i--
 		dAtA[i] = 0x20
 	}
 	if m.GameRoleId != 0 {
@@ -1203,38 +1453,6 @@ func (m *SyncPreGame_ProGameState) MarshalToSizedBuffer(dAtA []byte) (int, error
 	}
 	if m.UserId != 0 {
 		i = encodeVarintWebsocket(dAtA, i, uint64(m.UserId))
-		i--
-		dAtA[i] = 0x8
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *ReqJoinRoom) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *ReqJoinRoom) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ReqJoinRoom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.RoomId != 0 {
-		i = encodeVarintWebsocket(dAtA, i, uint64(m.RoomId))
 		i--
 		dAtA[i] = 0x8
 	}
@@ -1467,6 +1685,53 @@ func (m *ReqCreateRoom) Size() (n int) {
 	return n
 }
 
+func (m *RespCreateRoom) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.PreGame != nil {
+		l = m.PreGame.Size()
+		n += 1 + l + sovWebsocket(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ReqJoinRoom) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.RoomId != 0 {
+		n += 1 + sovWebsocket(uint64(m.RoomId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *RespJoinRoom) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.PreGame != nil {
+		l = m.PreGame.Size()
+		n += 1 + l + sovWebsocket(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *SyncPreGame) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1511,23 +1776,17 @@ func (m *SyncPreGame_ProGameState) Size() (n int) {
 	if m.GameRoleId != 0 {
 		n += 1 + sovWebsocket(uint64(m.GameRoleId))
 	}
+	if m.TotalNum != 0 {
+		n += 1 + sovWebsocket(uint64(m.TotalNum))
+	}
+	if m.PassNum != 0 {
+		n += 1 + sovWebsocket(uint64(m.PassNum))
+	}
+	if m.MapLv != 0 {
+		n += 1 + sovWebsocket(uint64(m.MapLv))
+	}
 	if m.IsReady {
 		n += 2
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *ReqJoinRoom) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.RoomId != 0 {
-		n += 1 + sovWebsocket(uint64(m.RoomId))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -2407,6 +2666,259 @@ func (m *ReqCreateRoom) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *RespCreateRoom) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowWebsocket
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RespCreateRoom: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RespCreateRoom: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PreGame", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWebsocket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.PreGame == nil {
+				m.PreGame = &SyncPreGame{}
+			}
+			if err := m.PreGame.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipWebsocket(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ReqJoinRoom) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowWebsocket
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ReqJoinRoom: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ReqJoinRoom: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RoomId", wireType)
+			}
+			m.RoomId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWebsocket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.RoomId |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipWebsocket(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *RespJoinRoom) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowWebsocket
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RespJoinRoom: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RespJoinRoom: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PreGame", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWebsocket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.PreGame == nil {
+				m.PreGame = &SyncPreGame{}
+			}
+			if err := m.PreGame.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipWebsocket(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *SyncPreGame) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2666,6 +3178,63 @@ func (m *SyncPreGame_ProGameState) Unmarshal(dAtA []byte) error {
 			}
 		case 4:
 			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TotalNum", wireType)
+			}
+			m.TotalNum = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWebsocket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.TotalNum |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PassNum", wireType)
+			}
+			m.PassNum = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWebsocket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.PassNum |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MapLv", wireType)
+			}
+			m.MapLv = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWebsocket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.MapLv |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 7:
+			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field IsReady", wireType)
 			}
 			var v int
@@ -2684,79 +3253,6 @@ func (m *SyncPreGame_ProGameState) Unmarshal(dAtA []byte) error {
 				}
 			}
 			m.IsReady = bool(v != 0)
-		default:
-			iNdEx = preIndex
-			skippy, err := skipWebsocket(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthWebsocket
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthWebsocket
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *ReqJoinRoom) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowWebsocket
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: ReqJoinRoom: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ReqJoinRoom: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RoomId", wireType)
-			}
-			m.RoomId = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowWebsocket
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.RoomId |= uint32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipWebsocket(dAtA[iNdEx:])

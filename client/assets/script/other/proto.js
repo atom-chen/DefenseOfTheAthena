@@ -3178,6 +3178,577 @@ $root.pb = (function() {
         return ReqCreateRoom;
     })();
 
+    pb.RespCreateRoom = (function() {
+
+        /**
+         * Properties of a RespCreateRoom.
+         * @memberof pb
+         * @interface IRespCreateRoom
+         * @property {pb.ISyncPreGame|null} [PreGame] RespCreateRoom PreGame
+         */
+
+        /**
+         * Constructs a new RespCreateRoom.
+         * @memberof pb
+         * @classdesc Represents a RespCreateRoom.
+         * @implements IRespCreateRoom
+         * @constructor
+         * @param {pb.IRespCreateRoom=} [properties] Properties to set
+         */
+        function RespCreateRoom(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RespCreateRoom PreGame.
+         * @member {pb.ISyncPreGame|null|undefined} PreGame
+         * @memberof pb.RespCreateRoom
+         * @instance
+         */
+        RespCreateRoom.prototype.PreGame = null;
+
+        /**
+         * Creates a new RespCreateRoom instance using the specified properties.
+         * @function create
+         * @memberof pb.RespCreateRoom
+         * @static
+         * @param {pb.IRespCreateRoom=} [properties] Properties to set
+         * @returns {pb.RespCreateRoom} RespCreateRoom instance
+         */
+        RespCreateRoom.create = function create(properties) {
+            return new RespCreateRoom(properties);
+        };
+
+        /**
+         * Encodes the specified RespCreateRoom message. Does not implicitly {@link pb.RespCreateRoom.verify|verify} messages.
+         * @function encode
+         * @memberof pb.RespCreateRoom
+         * @static
+         * @param {pb.IRespCreateRoom} message RespCreateRoom message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RespCreateRoom.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.PreGame != null && Object.hasOwnProperty.call(message, "PreGame"))
+                $root.pb.SyncPreGame.encode(message.PreGame, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RespCreateRoom message, length delimited. Does not implicitly {@link pb.RespCreateRoom.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof pb.RespCreateRoom
+         * @static
+         * @param {pb.IRespCreateRoom} message RespCreateRoom message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RespCreateRoom.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RespCreateRoom message from the specified reader or buffer.
+         * @function decode
+         * @memberof pb.RespCreateRoom
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {pb.RespCreateRoom} RespCreateRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RespCreateRoom.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.pb.RespCreateRoom();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.PreGame = $root.pb.SyncPreGame.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RespCreateRoom message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof pb.RespCreateRoom
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {pb.RespCreateRoom} RespCreateRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RespCreateRoom.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RespCreateRoom message.
+         * @function verify
+         * @memberof pb.RespCreateRoom
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RespCreateRoom.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.PreGame != null && message.hasOwnProperty("PreGame")) {
+                var error = $root.pb.SyncPreGame.verify(message.PreGame);
+                if (error)
+                    return "PreGame." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a RespCreateRoom message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof pb.RespCreateRoom
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {pb.RespCreateRoom} RespCreateRoom
+         */
+        RespCreateRoom.fromObject = function fromObject(object) {
+            if (object instanceof $root.pb.RespCreateRoom)
+                return object;
+            var message = new $root.pb.RespCreateRoom();
+            if (object.PreGame != null) {
+                if (typeof object.PreGame !== "object")
+                    throw TypeError(".pb.RespCreateRoom.PreGame: object expected");
+                message.PreGame = $root.pb.SyncPreGame.fromObject(object.PreGame);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RespCreateRoom message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof pb.RespCreateRoom
+         * @static
+         * @param {pb.RespCreateRoom} message RespCreateRoom
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RespCreateRoom.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.PreGame = null;
+            if (message.PreGame != null && message.hasOwnProperty("PreGame"))
+                object.PreGame = $root.pb.SyncPreGame.toObject(message.PreGame, options);
+            return object;
+        };
+
+        /**
+         * Converts this RespCreateRoom to JSON.
+         * @function toJSON
+         * @memberof pb.RespCreateRoom
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RespCreateRoom.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return RespCreateRoom;
+    })();
+
+    pb.ReqJoinRoom = (function() {
+
+        /**
+         * Properties of a ReqJoinRoom.
+         * @memberof pb
+         * @interface IReqJoinRoom
+         * @property {number|null} [RoomId] ReqJoinRoom RoomId
+         */
+
+        /**
+         * Constructs a new ReqJoinRoom.
+         * @memberof pb
+         * @classdesc Represents a ReqJoinRoom.
+         * @implements IReqJoinRoom
+         * @constructor
+         * @param {pb.IReqJoinRoom=} [properties] Properties to set
+         */
+        function ReqJoinRoom(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ReqJoinRoom RoomId.
+         * @member {number} RoomId
+         * @memberof pb.ReqJoinRoom
+         * @instance
+         */
+        ReqJoinRoom.prototype.RoomId = 0;
+
+        /**
+         * Creates a new ReqJoinRoom instance using the specified properties.
+         * @function create
+         * @memberof pb.ReqJoinRoom
+         * @static
+         * @param {pb.IReqJoinRoom=} [properties] Properties to set
+         * @returns {pb.ReqJoinRoom} ReqJoinRoom instance
+         */
+        ReqJoinRoom.create = function create(properties) {
+            return new ReqJoinRoom(properties);
+        };
+
+        /**
+         * Encodes the specified ReqJoinRoom message. Does not implicitly {@link pb.ReqJoinRoom.verify|verify} messages.
+         * @function encode
+         * @memberof pb.ReqJoinRoom
+         * @static
+         * @param {pb.IReqJoinRoom} message ReqJoinRoom message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ReqJoinRoom.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.RoomId != null && Object.hasOwnProperty.call(message, "RoomId"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.RoomId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ReqJoinRoom message, length delimited. Does not implicitly {@link pb.ReqJoinRoom.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof pb.ReqJoinRoom
+         * @static
+         * @param {pb.IReqJoinRoom} message ReqJoinRoom message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ReqJoinRoom.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ReqJoinRoom message from the specified reader or buffer.
+         * @function decode
+         * @memberof pb.ReqJoinRoom
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {pb.ReqJoinRoom} ReqJoinRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ReqJoinRoom.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.pb.ReqJoinRoom();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.RoomId = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ReqJoinRoom message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof pb.ReqJoinRoom
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {pb.ReqJoinRoom} ReqJoinRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ReqJoinRoom.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ReqJoinRoom message.
+         * @function verify
+         * @memberof pb.ReqJoinRoom
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ReqJoinRoom.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.RoomId != null && message.hasOwnProperty("RoomId"))
+                if (!$util.isInteger(message.RoomId))
+                    return "RoomId: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a ReqJoinRoom message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof pb.ReqJoinRoom
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {pb.ReqJoinRoom} ReqJoinRoom
+         */
+        ReqJoinRoom.fromObject = function fromObject(object) {
+            if (object instanceof $root.pb.ReqJoinRoom)
+                return object;
+            var message = new $root.pb.ReqJoinRoom();
+            if (object.RoomId != null)
+                message.RoomId = object.RoomId >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ReqJoinRoom message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof pb.ReqJoinRoom
+         * @static
+         * @param {pb.ReqJoinRoom} message ReqJoinRoom
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ReqJoinRoom.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.RoomId = 0;
+            if (message.RoomId != null && message.hasOwnProperty("RoomId"))
+                object.RoomId = message.RoomId;
+            return object;
+        };
+
+        /**
+         * Converts this ReqJoinRoom to JSON.
+         * @function toJSON
+         * @memberof pb.ReqJoinRoom
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ReqJoinRoom.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return ReqJoinRoom;
+    })();
+
+    pb.RespJoinRoom = (function() {
+
+        /**
+         * Properties of a RespJoinRoom.
+         * @memberof pb
+         * @interface IRespJoinRoom
+         * @property {pb.ISyncPreGame|null} [PreGame] RespJoinRoom PreGame
+         */
+
+        /**
+         * Constructs a new RespJoinRoom.
+         * @memberof pb
+         * @classdesc Represents a RespJoinRoom.
+         * @implements IRespJoinRoom
+         * @constructor
+         * @param {pb.IRespJoinRoom=} [properties] Properties to set
+         */
+        function RespJoinRoom(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RespJoinRoom PreGame.
+         * @member {pb.ISyncPreGame|null|undefined} PreGame
+         * @memberof pb.RespJoinRoom
+         * @instance
+         */
+        RespJoinRoom.prototype.PreGame = null;
+
+        /**
+         * Creates a new RespJoinRoom instance using the specified properties.
+         * @function create
+         * @memberof pb.RespJoinRoom
+         * @static
+         * @param {pb.IRespJoinRoom=} [properties] Properties to set
+         * @returns {pb.RespJoinRoom} RespJoinRoom instance
+         */
+        RespJoinRoom.create = function create(properties) {
+            return new RespJoinRoom(properties);
+        };
+
+        /**
+         * Encodes the specified RespJoinRoom message. Does not implicitly {@link pb.RespJoinRoom.verify|verify} messages.
+         * @function encode
+         * @memberof pb.RespJoinRoom
+         * @static
+         * @param {pb.IRespJoinRoom} message RespJoinRoom message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RespJoinRoom.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.PreGame != null && Object.hasOwnProperty.call(message, "PreGame"))
+                $root.pb.SyncPreGame.encode(message.PreGame, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RespJoinRoom message, length delimited. Does not implicitly {@link pb.RespJoinRoom.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof pb.RespJoinRoom
+         * @static
+         * @param {pb.IRespJoinRoom} message RespJoinRoom message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RespJoinRoom.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RespJoinRoom message from the specified reader or buffer.
+         * @function decode
+         * @memberof pb.RespJoinRoom
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {pb.RespJoinRoom} RespJoinRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RespJoinRoom.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.pb.RespJoinRoom();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.PreGame = $root.pb.SyncPreGame.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RespJoinRoom message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof pb.RespJoinRoom
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {pb.RespJoinRoom} RespJoinRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RespJoinRoom.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RespJoinRoom message.
+         * @function verify
+         * @memberof pb.RespJoinRoom
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RespJoinRoom.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.PreGame != null && message.hasOwnProperty("PreGame")) {
+                var error = $root.pb.SyncPreGame.verify(message.PreGame);
+                if (error)
+                    return "PreGame." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a RespJoinRoom message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof pb.RespJoinRoom
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {pb.RespJoinRoom} RespJoinRoom
+         */
+        RespJoinRoom.fromObject = function fromObject(object) {
+            if (object instanceof $root.pb.RespJoinRoom)
+                return object;
+            var message = new $root.pb.RespJoinRoom();
+            if (object.PreGame != null) {
+                if (typeof object.PreGame !== "object")
+                    throw TypeError(".pb.RespJoinRoom.PreGame: object expected");
+                message.PreGame = $root.pb.SyncPreGame.fromObject(object.PreGame);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RespJoinRoom message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof pb.RespJoinRoom
+         * @static
+         * @param {pb.RespJoinRoom} message RespJoinRoom
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RespJoinRoom.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.PreGame = null;
+            if (message.PreGame != null && message.hasOwnProperty("PreGame"))
+                object.PreGame = $root.pb.SyncPreGame.toObject(message.PreGame, options);
+            return object;
+        };
+
+        /**
+         * Converts this RespJoinRoom to JSON.
+         * @function toJSON
+         * @memberof pb.RespJoinRoom
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RespJoinRoom.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return RespJoinRoom;
+    })();
+
     pb.SyncPreGame = (function() {
 
         /**
@@ -3460,6 +4031,9 @@ $root.pb = (function() {
              * @property {number|null} [UserId] ProGameState UserId
              * @property {string|null} [UserNickName] ProGameState UserNickName
              * @property {number|null} [GameRoleId] ProGameState GameRoleId
+             * @property {number|null} [TotalNum] ProGameState TotalNum
+             * @property {number|null} [PassNum] ProGameState PassNum
+             * @property {number|null} [MapLv] ProGameState MapLv
              * @property {boolean|null} [IsReady] ProGameState IsReady
              */
 
@@ -3503,6 +4077,30 @@ $root.pb = (function() {
             ProGameState.prototype.GameRoleId = 0;
 
             /**
+             * ProGameState TotalNum.
+             * @member {number} TotalNum
+             * @memberof pb.SyncPreGame.ProGameState
+             * @instance
+             */
+            ProGameState.prototype.TotalNum = 0;
+
+            /**
+             * ProGameState PassNum.
+             * @member {number} PassNum
+             * @memberof pb.SyncPreGame.ProGameState
+             * @instance
+             */
+            ProGameState.prototype.PassNum = 0;
+
+            /**
+             * ProGameState MapLv.
+             * @member {number} MapLv
+             * @memberof pb.SyncPreGame.ProGameState
+             * @instance
+             */
+            ProGameState.prototype.MapLv = 0;
+
+            /**
              * ProGameState IsReady.
              * @member {boolean} IsReady
              * @memberof pb.SyncPreGame.ProGameState
@@ -3540,8 +4138,14 @@ $root.pb = (function() {
                     writer.uint32(/* id 2, wireType 2 =*/18).string(message.UserNickName);
                 if (message.GameRoleId != null && Object.hasOwnProperty.call(message, "GameRoleId"))
                     writer.uint32(/* id 3, wireType 0 =*/24).uint32(message.GameRoleId);
+                if (message.TotalNum != null && Object.hasOwnProperty.call(message, "TotalNum"))
+                    writer.uint32(/* id 4, wireType 0 =*/32).uint32(message.TotalNum);
+                if (message.PassNum != null && Object.hasOwnProperty.call(message, "PassNum"))
+                    writer.uint32(/* id 5, wireType 0 =*/40).uint32(message.PassNum);
+                if (message.MapLv != null && Object.hasOwnProperty.call(message, "MapLv"))
+                    writer.uint32(/* id 6, wireType 0 =*/48).uint32(message.MapLv);
                 if (message.IsReady != null && Object.hasOwnProperty.call(message, "IsReady"))
-                    writer.uint32(/* id 4, wireType 0 =*/32).bool(message.IsReady);
+                    writer.uint32(/* id 7, wireType 0 =*/56).bool(message.IsReady);
                 return writer;
             };
 
@@ -3586,6 +4190,15 @@ $root.pb = (function() {
                         message.GameRoleId = reader.uint32();
                         break;
                     case 4:
+                        message.TotalNum = reader.uint32();
+                        break;
+                    case 5:
+                        message.PassNum = reader.uint32();
+                        break;
+                    case 6:
+                        message.MapLv = reader.uint32();
+                        break;
+                    case 7:
                         message.IsReady = reader.bool();
                         break;
                     default:
@@ -3632,6 +4245,15 @@ $root.pb = (function() {
                 if (message.GameRoleId != null && message.hasOwnProperty("GameRoleId"))
                     if (!$util.isInteger(message.GameRoleId))
                         return "GameRoleId: integer expected";
+                if (message.TotalNum != null && message.hasOwnProperty("TotalNum"))
+                    if (!$util.isInteger(message.TotalNum))
+                        return "TotalNum: integer expected";
+                if (message.PassNum != null && message.hasOwnProperty("PassNum"))
+                    if (!$util.isInteger(message.PassNum))
+                        return "PassNum: integer expected";
+                if (message.MapLv != null && message.hasOwnProperty("MapLv"))
+                    if (!$util.isInteger(message.MapLv))
+                        return "MapLv: integer expected";
                 if (message.IsReady != null && message.hasOwnProperty("IsReady"))
                     if (typeof message.IsReady !== "boolean")
                         return "IsReady: boolean expected";
@@ -3656,6 +4278,12 @@ $root.pb = (function() {
                     message.UserNickName = String(object.UserNickName);
                 if (object.GameRoleId != null)
                     message.GameRoleId = object.GameRoleId >>> 0;
+                if (object.TotalNum != null)
+                    message.TotalNum = object.TotalNum >>> 0;
+                if (object.PassNum != null)
+                    message.PassNum = object.PassNum >>> 0;
+                if (object.MapLv != null)
+                    message.MapLv = object.MapLv >>> 0;
                 if (object.IsReady != null)
                     message.IsReady = Boolean(object.IsReady);
                 return message;
@@ -3678,6 +4306,9 @@ $root.pb = (function() {
                     object.UserId = 0;
                     object.UserNickName = "";
                     object.GameRoleId = 0;
+                    object.TotalNum = 0;
+                    object.PassNum = 0;
+                    object.MapLv = 0;
                     object.IsReady = false;
                 }
                 if (message.UserId != null && message.hasOwnProperty("UserId"))
@@ -3686,6 +4317,12 @@ $root.pb = (function() {
                     object.UserNickName = message.UserNickName;
                 if (message.GameRoleId != null && message.hasOwnProperty("GameRoleId"))
                     object.GameRoleId = message.GameRoleId;
+                if (message.TotalNum != null && message.hasOwnProperty("TotalNum"))
+                    object.TotalNum = message.TotalNum;
+                if (message.PassNum != null && message.hasOwnProperty("PassNum"))
+                    object.PassNum = message.PassNum;
+                if (message.MapLv != null && message.hasOwnProperty("MapLv"))
+                    object.MapLv = message.MapLv;
                 if (message.IsReady != null && message.hasOwnProperty("IsReady"))
                     object.IsReady = message.IsReady;
                 return object;
@@ -3706,193 +4343,6 @@ $root.pb = (function() {
         })();
 
         return SyncPreGame;
-    })();
-
-    pb.ReqJoinRoom = (function() {
-
-        /**
-         * Properties of a ReqJoinRoom.
-         * @memberof pb
-         * @interface IReqJoinRoom
-         * @property {number|null} [RoomId] ReqJoinRoom RoomId
-         */
-
-        /**
-         * Constructs a new ReqJoinRoom.
-         * @memberof pb
-         * @classdesc Represents a ReqJoinRoom.
-         * @implements IReqJoinRoom
-         * @constructor
-         * @param {pb.IReqJoinRoom=} [properties] Properties to set
-         */
-        function ReqJoinRoom(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * ReqJoinRoom RoomId.
-         * @member {number} RoomId
-         * @memberof pb.ReqJoinRoom
-         * @instance
-         */
-        ReqJoinRoom.prototype.RoomId = 0;
-
-        /**
-         * Creates a new ReqJoinRoom instance using the specified properties.
-         * @function create
-         * @memberof pb.ReqJoinRoom
-         * @static
-         * @param {pb.IReqJoinRoom=} [properties] Properties to set
-         * @returns {pb.ReqJoinRoom} ReqJoinRoom instance
-         */
-        ReqJoinRoom.create = function create(properties) {
-            return new ReqJoinRoom(properties);
-        };
-
-        /**
-         * Encodes the specified ReqJoinRoom message. Does not implicitly {@link pb.ReqJoinRoom.verify|verify} messages.
-         * @function encode
-         * @memberof pb.ReqJoinRoom
-         * @static
-         * @param {pb.IReqJoinRoom} message ReqJoinRoom message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        ReqJoinRoom.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.RoomId != null && Object.hasOwnProperty.call(message, "RoomId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.RoomId);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified ReqJoinRoom message, length delimited. Does not implicitly {@link pb.ReqJoinRoom.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof pb.ReqJoinRoom
-         * @static
-         * @param {pb.IReqJoinRoom} message ReqJoinRoom message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        ReqJoinRoom.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a ReqJoinRoom message from the specified reader or buffer.
-         * @function decode
-         * @memberof pb.ReqJoinRoom
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {pb.ReqJoinRoom} ReqJoinRoom
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        ReqJoinRoom.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.pb.ReqJoinRoom();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.RoomId = reader.uint32();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a ReqJoinRoom message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof pb.ReqJoinRoom
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {pb.ReqJoinRoom} ReqJoinRoom
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        ReqJoinRoom.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a ReqJoinRoom message.
-         * @function verify
-         * @memberof pb.ReqJoinRoom
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        ReqJoinRoom.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.RoomId != null && message.hasOwnProperty("RoomId"))
-                if (!$util.isInteger(message.RoomId))
-                    return "RoomId: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a ReqJoinRoom message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof pb.ReqJoinRoom
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {pb.ReqJoinRoom} ReqJoinRoom
-         */
-        ReqJoinRoom.fromObject = function fromObject(object) {
-            if (object instanceof $root.pb.ReqJoinRoom)
-                return object;
-            var message = new $root.pb.ReqJoinRoom();
-            if (object.RoomId != null)
-                message.RoomId = object.RoomId >>> 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a ReqJoinRoom message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof pb.ReqJoinRoom
-         * @static
-         * @param {pb.ReqJoinRoom} message ReqJoinRoom
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        ReqJoinRoom.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                object.RoomId = 0;
-            if (message.RoomId != null && message.hasOwnProperty("RoomId"))
-                object.RoomId = message.RoomId;
-            return object;
-        };
-
-        /**
-         * Converts this ReqJoinRoom to JSON.
-         * @function toJSON
-         * @memberof pb.ReqJoinRoom
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        ReqJoinRoom.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return ReqJoinRoom;
     })();
 
     pb.InputGameRole = (function() {

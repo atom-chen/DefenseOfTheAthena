@@ -2,7 +2,7 @@ import Clog, { ClogKey } from "../framework/clog/Clog";
 import { pb } from "../other/proto";
 import { Session } from "../login/model/SessionData";
 import protobuf = require("protobufjs");
-import { LobbyController } from "../lobby/controller/LobbyController";
+import { RoomController } from "../room/controller/RoomController";
 
 export class WebSocketController {
 
@@ -82,7 +82,7 @@ export class WebSocketController {
         this.ws.close();
     }
 
-
+    //服务器响应方法集
     private static funcMap: Map<number, (data: pb.RespPackage) => void> = new Map<number, (data: pb.RespPackage) => void>();
 
     /**
@@ -95,7 +95,7 @@ export class WebSocketController {
     }
 
     private static RegisterSyncFunc() {
-        this.Register(pb.MessageCommand.PreGame, (data: pb.RespPackage) => LobbyController.SyncPreGame(data))
+        this.Register(pb.MessageCommand.PreGame, (data: pb.RespPackage) => RoomController.SyncPreGame(data))
     }
 
     public static Call(command: pb.MessageCommand, msg?: (Uint8Array | null)): Promise<pb.RespPackage> {

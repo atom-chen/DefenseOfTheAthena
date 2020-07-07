@@ -22,24 +22,24 @@ func (a *Auth) Handle(request ziface.IRequest) {
 	linkId := l.(uint32)
 	userLink := link.Manager.Find(linkId)
 	u := db.FindUserByToken(request.GetToken())
-	var resp = new(pb.RespPackage)
-	resp.Cmd = pb.MessageCommand_LinkAuth
+	var pkg = new(pb.RespPackage)
+	pkg.Cmd = pb.MessageCommand_LinkAuth
 	if u == nil {
-		resp.ErrCode = pb.ErrorCode_LoginAccountOrPasswordError
+		pkg.ErrCode = pb.ErrorCode_LoginAccountOrPasswordError
 		userLink.Conn.Stop()
 	} else {
 		userLink.User = u
-		resp.ErrCode = pb.ErrorCode_OK
+		pkg.ErrCode = pb.ErrorCode_OK
 	}
-	pbBuf, err := proto.Marshal(resp)
+	pkgBuf, err := proto.Marshal(pkg)
 	if err != nil {
 		return
 	}
 	//心跳特殊处理
-	if err := userLink.Conn.WriteMessage(pbBuf); err != nil {
+	if err := userLink.Conn.WriteMessage(pkgBuf); err != nil {
 		log.Println("userLink HeartBeat error !")
 		return
 	}
-	fmt.Printf("[授权],connId=%d, resp=%v\n", userLink.Conn.GetConnId(), resp)
+	fmt.Printf("[授权],connId=%d, pkg=%v\n", userLink.Conn.GetConnId(), pkg)
 	return
 }

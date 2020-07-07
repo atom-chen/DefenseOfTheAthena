@@ -5,6 +5,7 @@ import { pb } from "../../other/proto";
 import { UIEventCenter } from "../../framework/util/UIEventCenter";
 import Clog, { ClogKey } from "../../framework/clog/Clog";
 import { LobbyController } from "../controller/LobbyController";
+import { RoomController } from "../../room/controller/RoomController";
 
 export class UILobby extends UIBase {
 
@@ -94,11 +95,11 @@ export class UILobby extends UIBase {
 
     private OnBtnJoinRoomClick() {
         Clog.Trace(ClogKey.UI, "OnBtnJoinRoomClick")
-        LobbyController.JoinRoom(10001);
+        RoomController.JoinRoom(10001);
     }
 
     private OnBtnCreateRoomClick() {
         Clog.Trace(ClogKey.UI, "OnBtnCreateRoomClick")
-        LobbyController.CreateRoom("替天行道",1);
+        RoomController.CreateRoom("替天行道",1);
     }
 }
