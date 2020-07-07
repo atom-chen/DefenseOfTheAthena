@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/golang/protobuf/proto"
 	"log"
-	"server/model"
+	"server/db"
 	"server/pb"
 	"server/zinx/ziface"
 	"server/zinx/znet"
@@ -19,18 +19,15 @@ func (a *UserInfo) Handle(request ziface.IRequest) {
 	//根据连接获取玩家
 	l, _ := request.GetConnection().GetProperty("linkId")
 	linkId := l.(uint32)
-
 	userLink := link.Manager.Find(linkId)
-
-	u := model.FindUserByToken(request.GetToken())
+	u := db.FindUserByToken(request.GetToken())
 	var resp = new(pb.RespPackage)
-	resp.Cmd = pb.MessageCommand_CallGetUserInfo
 	if u == nil {
+		resp.Cmd = pb.MessageCommand_GetUserInfo
 		resp.ErrCode = pb.ErrorCode_AuthFailed
 		userLink.Conn.Stop()
 		return
 	}
-	resp.ErrCode = pb.ErrorCode_OK
 	userInfo := &pb.RespUserInfo{
 		BaseInfo: &pb.UserBaseInfo{
 			NickName: u.NickName,
@@ -48,7 +45,10 @@ func (a *UserInfo) Handle(request ziface.IRequest) {
 	if err != nil {
 		return
 	}
+
+	resp.Cmd = pb.MessageCommand_GetUserInfo
 	resp.Msg = userInfoBuf
+	resp.ErrCode = pb.ErrorCode_OK
 
 	respBuf, err := proto.Marshal(resp)
 	if err != nil {

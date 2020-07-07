@@ -51,7 +51,7 @@ export default class UILoginFastRegister extends UIBase {
             UITip.Info('您两次出输入的密码不一致')
             return;
         }
-
-        
     }
+
+    
 }

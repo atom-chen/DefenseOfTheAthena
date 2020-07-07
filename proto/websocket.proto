@@ -28,7 +28,6 @@ message UserBaseInfo{
 	uint32 Lv=6;
 }
 
-
 //用户的货币数据
 message UserMoneyInfo{
 	uint32 Gold=1;
@@ -48,26 +47,39 @@ message RespUserInfo{
 
 //请求创建房间
 message ReqCreateRoom{
-
+	string RoomName=1;					//房间名称
+	uint32 MapId=2;   					//地图Id
 }
 
-//响应创建房间
-message RespCreateRoom{
-	uint32 RoomId=1;	//房间Id
-	string RoomName=2;	//房间名称
-	string MapName=3;   //地图名称
-	uint32 MaxNum=4;	//最多人数
-	uint32 CurNum=5;	//当前人数	
+//同步游戏开始前状态
+message SyncPreGame{
+	//子proto
+	message ProGameState{
+		uint32 UserId=1;
+		string UserNickName =2;	 			//用户昵称
+		uint32 GameRoleId=3;     			//玩家角色
+		bool IsReady=4;	         			//是否已准备好
+	}
+	uint32 RoomId=1;					 //房间Id
+	string RoomName=2;					 //房间名称
+	uint32 MapId=3;  				     //地图名称
+	repeated ProGameState States = 4;      //游戏开始前的状态	
 }
 
 //请求加入房间
 message ReqJoinRoom{
-	uint32 RoomId=1;
+	uint32 RoomId=1;				    //房间Id
 }
 
-//响应加入房间
-message RespJoinRoom{
-	
+//发送玩家选择游戏角色
+message InputGameRole{
+	uint32 PlayerRoleId=1;				//玩家选择的角色
 }
+
+//发送玩家请求状态
+message InputReadyState{
+	bool IsReady=1;						//是否已准备好
+}
+
 
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/golang/protobuf/proto"
 	"log"
-	"server/model"
+	"server/db"
 	"server/pb"
 	"server/zinx/ziface"
 	"server/zinx/znet"
@@ -20,12 +20,10 @@ func (a *Auth) Handle(request ziface.IRequest) {
 	//根据连接获取玩家
 	l, _ := request.GetConnection().GetProperty("linkId")
 	linkId := l.(uint32)
-
 	userLink := link.Manager.Find(linkId)
-
-	u := model.FindUserByToken(request.GetToken())
+	u := db.FindUserByToken(request.GetToken())
 	var resp = new(pb.RespPackage)
-	resp.Cmd = pb.MessageCommand_CallLinkAuth
+	resp.Cmd = pb.MessageCommand_LinkAuth
 	if u == nil {
 		resp.ErrCode = pb.ErrorCode_LoginAccountOrPasswordError
 		userLink.Conn.Stop()

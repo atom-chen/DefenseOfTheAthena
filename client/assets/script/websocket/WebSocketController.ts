@@ -2,6 +2,7 @@ import Clog, { ClogKey } from "../framework/clog/Clog";
 import { pb } from "../other/proto";
 import { Session } from "../login/model/SessionData";
 import protobuf = require("protobufjs");
+import { LobbyController } from "../lobby/controller/LobbyController";
 
 export class WebSocketController {
 
@@ -13,6 +14,7 @@ export class WebSocketController {
     //#region ----------- websocket 基础方法----------------------------
     //初始化
     public static async OnInit(url: string): Promise<void> {
+        this.RegisterSyncFunc();
         return new Promise((resolve, reject) => {
             this.linkIndex++;
             Clog.Purple(ClogKey.Net, "RoomSocket >>> OnInit >>>  url:" + url + ', linkIndex:' + this.linkIndex);
@@ -26,6 +28,7 @@ export class WebSocketController {
                     Clog.Trace(ClogKey.Net, 'Websocket 初始化成功，重连次数清零')
                     this.RerlinkTimer = 0;
                 }
+           
                 resolve()
             };
 
@@ -33,6 +36,9 @@ export class WebSocketController {
             this.ws.onmessage = (event: any) => {
                 let buff = new Uint8Array(event.data)
                 let resp: pb.RespPackage = pb.RespPackage.decode(buff)
+                if(resp.Cmd!=pb.MessageCommand.HeartBeat){
+                    Clog.Trace(ClogKey.Net, 'onMessage <<  cmd:' + resp.Cmd.toString())
+                }
                 let func = this.funcMap.get(resp.Cmd)
                 if (!func) {
                     Clog.Error("on message error! func is null, cmd =" + resp.Cmd)
@@ -84,15 +90,18 @@ export class WebSocketController {
      * @param messageCommand 消息命令
      * @param callback callback里有Promise,所以map每次都需要重新给新的callback
      */
-    public static Register(messageCommand: number, callback: (data: pb.RespPackage) => void) {
+    private static Register(messageCommand: number, callback: (data: pb.RespPackage) => void) {
         this.funcMap.set(messageCommand, callback)
+    }
+
+    private static RegisterSyncFunc() {
+        this.Register(pb.MessageCommand.PreGame, (data: pb.RespPackage) => LobbyController.SyncPreGame(data))
     }
 
     public static Call(command: pb.MessageCommand, msg?: (Uint8Array | null)): Promise<pb.RespPackage> {
         return new Promise((reslove, reject) => {
             this.Register(command, (resp: pb.RespPackage) => {
                 if (resp) {
-                   
                     reslove(resp)
                     return
                 }
@@ -101,7 +110,7 @@ export class WebSocketController {
             let req = pb.ReqPackage.create({ Cmd: command, Token: Session.Token, Msg: msg });//构造对象
             let reqBuf = pb.ReqPackage.encode(req).finish(); //获取二进制数据，一定要注意使用finish函数
             this.OnSend(reqBuf)
-            if (req.Cmd != pb.MessageCommand.CallHeartBeat) {
+            if (req.Cmd != pb.MessageCommand.HeartBeat) {
                 Clog.Trace(ClogKey.Net, "[call req]:" + JSON.stringify(req))
             }
         })

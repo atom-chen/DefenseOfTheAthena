@@ -392,6 +392,8 @@ func (m *RespUserInfo) GetMoneyInfo() *UserMoneyInfo {
 
 //请求创建房间
 type ReqCreateRoom struct {
+	RoomName             string   `protobuf:"bytes,1,opt,name=RoomName,proto3" json:"RoomName,omitempty"`
+	MapId                uint32   `protobuf:"varint,2,opt,name=MapId,proto3" json:"MapId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -430,30 +432,43 @@ func (m *ReqCreateRoom) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ReqCreateRoom proto.InternalMessageInfo
 
-//响应创建房间
-type RespCreateRoom struct {
-	RoomId               uint32   `protobuf:"varint,1,opt,name=RoomId,proto3" json:"RoomId,omitempty"`
-	RoomName             string   `protobuf:"bytes,2,opt,name=RoomName,proto3" json:"RoomName,omitempty"`
-	MapName              string   `protobuf:"bytes,3,opt,name=MapName,proto3" json:"MapName,omitempty"`
-	MaxNum               uint32   `protobuf:"varint,4,opt,name=MaxNum,proto3" json:"MaxNum,omitempty"`
-	CurNum               uint32   `protobuf:"varint,5,opt,name=CurNum,proto3" json:"CurNum,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+func (m *ReqCreateRoom) GetRoomName() string {
+	if m != nil {
+		return m.RoomName
+	}
+	return ""
 }
 
-func (m *RespCreateRoom) Reset()         { *m = RespCreateRoom{} }
-func (m *RespCreateRoom) String() string { return proto.CompactTextString(m) }
-func (*RespCreateRoom) ProtoMessage()    {}
-func (*RespCreateRoom) Descriptor() ([]byte, []int) {
+func (m *ReqCreateRoom) GetMapId() uint32 {
+	if m != nil {
+		return m.MapId
+	}
+	return 0
+}
+
+//同步游戏开始前状态
+type SyncPreGame struct {
+	RoomId               uint32                      `protobuf:"varint,1,opt,name=RoomId,proto3" json:"RoomId,omitempty"`
+	RoomName             string                      `protobuf:"bytes,2,opt,name=RoomName,proto3" json:"RoomName,omitempty"`
+	MapId                uint32                      `protobuf:"varint,3,opt,name=MapId,proto3" json:"MapId,omitempty"`
+	States               []*SyncPreGame_ProGameState `protobuf:"bytes,4,rep,name=States,proto3" json:"States,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                    `json:"-"`
+	XXX_unrecognized     []byte                      `json:"-"`
+	XXX_sizecache        int32                       `json:"-"`
+}
+
+func (m *SyncPreGame) Reset()         { *m = SyncPreGame{} }
+func (m *SyncPreGame) String() string { return proto.CompactTextString(m) }
+func (*SyncPreGame) ProtoMessage()    {}
+func (*SyncPreGame) Descriptor() ([]byte, []int) {
 	return fileDescriptor_928d6fde112007a2, []int{7}
 }
-func (m *RespCreateRoom) XXX_Unmarshal(b []byte) error {
+func (m *SyncPreGame) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *RespCreateRoom) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *SyncPreGame) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_RespCreateRoom.Marshal(b, m, deterministic)
+		return xxx_messageInfo_SyncPreGame.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -463,51 +478,116 @@ func (m *RespCreateRoom) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-func (m *RespCreateRoom) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RespCreateRoom.Merge(m, src)
+func (m *SyncPreGame) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SyncPreGame.Merge(m, src)
 }
-func (m *RespCreateRoom) XXX_Size() int {
+func (m *SyncPreGame) XXX_Size() int {
 	return m.Size()
 }
-func (m *RespCreateRoom) XXX_DiscardUnknown() {
-	xxx_messageInfo_RespCreateRoom.DiscardUnknown(m)
+func (m *SyncPreGame) XXX_DiscardUnknown() {
+	xxx_messageInfo_SyncPreGame.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_RespCreateRoom proto.InternalMessageInfo
+var xxx_messageInfo_SyncPreGame proto.InternalMessageInfo
 
-func (m *RespCreateRoom) GetRoomId() uint32 {
+func (m *SyncPreGame) GetRoomId() uint32 {
 	if m != nil {
 		return m.RoomId
 	}
 	return 0
 }
 
-func (m *RespCreateRoom) GetRoomName() string {
+func (m *SyncPreGame) GetRoomName() string {
 	if m != nil {
 		return m.RoomName
 	}
 	return ""
 }
 
-func (m *RespCreateRoom) GetMapName() string {
+func (m *SyncPreGame) GetMapId() uint32 {
 	if m != nil {
-		return m.MapName
+		return m.MapId
+	}
+	return 0
+}
+
+func (m *SyncPreGame) GetStates() []*SyncPreGame_ProGameState {
+	if m != nil {
+		return m.States
+	}
+	return nil
+}
+
+//子proto
+type SyncPreGame_ProGameState struct {
+	UserId               uint32   `protobuf:"varint,1,opt,name=UserId,proto3" json:"UserId,omitempty"`
+	UserNickName         string   `protobuf:"bytes,2,opt,name=UserNickName,proto3" json:"UserNickName,omitempty"`
+	GameRoleId           uint32   `protobuf:"varint,3,opt,name=GameRoleId,proto3" json:"GameRoleId,omitempty"`
+	IsReady              bool     `protobuf:"varint,4,opt,name=IsReady,proto3" json:"IsReady,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SyncPreGame_ProGameState) Reset()         { *m = SyncPreGame_ProGameState{} }
+func (m *SyncPreGame_ProGameState) String() string { return proto.CompactTextString(m) }
+func (*SyncPreGame_ProGameState) ProtoMessage()    {}
+func (*SyncPreGame_ProGameState) Descriptor() ([]byte, []int) {
+	return fileDescriptor_928d6fde112007a2, []int{7, 0}
+}
+func (m *SyncPreGame_ProGameState) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SyncPreGame_ProGameState) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SyncPreGame_ProGameState.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SyncPreGame_ProGameState) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SyncPreGame_ProGameState.Merge(m, src)
+}
+func (m *SyncPreGame_ProGameState) XXX_Size() int {
+	return m.Size()
+}
+func (m *SyncPreGame_ProGameState) XXX_DiscardUnknown() {
+	xxx_messageInfo_SyncPreGame_ProGameState.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SyncPreGame_ProGameState proto.InternalMessageInfo
+
+func (m *SyncPreGame_ProGameState) GetUserId() uint32 {
+	if m != nil {
+		return m.UserId
+	}
+	return 0
+}
+
+func (m *SyncPreGame_ProGameState) GetUserNickName() string {
+	if m != nil {
+		return m.UserNickName
 	}
 	return ""
 }
 
-func (m *RespCreateRoom) GetMaxNum() uint32 {
+func (m *SyncPreGame_ProGameState) GetGameRoleId() uint32 {
 	if m != nil {
-		return m.MaxNum
+		return m.GameRoleId
 	}
 	return 0
 }
 
-func (m *RespCreateRoom) GetCurNum() uint32 {
+func (m *SyncPreGame_ProGameState) GetIsReady() bool {
 	if m != nil {
-		return m.CurNum
+		return m.IsReady
 	}
-	return 0
+	return false
 }
 
 //请求加入房间
@@ -558,25 +638,26 @@ func (m *ReqJoinRoom) GetRoomId() uint32 {
 	return 0
 }
 
-//响应加入房间
-type RespJoinRoom struct {
+//发送玩家选择游戏角色
+type InputGameRole struct {
+	PlayerRoleId         uint32   `protobuf:"varint,1,opt,name=PlayerRoleId,proto3" json:"PlayerRoleId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *RespJoinRoom) Reset()         { *m = RespJoinRoom{} }
-func (m *RespJoinRoom) String() string { return proto.CompactTextString(m) }
-func (*RespJoinRoom) ProtoMessage()    {}
-func (*RespJoinRoom) Descriptor() ([]byte, []int) {
+func (m *InputGameRole) Reset()         { *m = InputGameRole{} }
+func (m *InputGameRole) String() string { return proto.CompactTextString(m) }
+func (*InputGameRole) ProtoMessage()    {}
+func (*InputGameRole) Descriptor() ([]byte, []int) {
 	return fileDescriptor_928d6fde112007a2, []int{9}
 }
-func (m *RespJoinRoom) XXX_Unmarshal(b []byte) error {
+func (m *InputGameRole) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *RespJoinRoom) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *InputGameRole) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_RespJoinRoom.Marshal(b, m, deterministic)
+		return xxx_messageInfo_InputGameRole.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -586,17 +667,72 @@ func (m *RespJoinRoom) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)
 		return b[:n], nil
 	}
 }
-func (m *RespJoinRoom) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RespJoinRoom.Merge(m, src)
+func (m *InputGameRole) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InputGameRole.Merge(m, src)
 }
-func (m *RespJoinRoom) XXX_Size() int {
+func (m *InputGameRole) XXX_Size() int {
 	return m.Size()
 }
-func (m *RespJoinRoom) XXX_DiscardUnknown() {
-	xxx_messageInfo_RespJoinRoom.DiscardUnknown(m)
+func (m *InputGameRole) XXX_DiscardUnknown() {
+	xxx_messageInfo_InputGameRole.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_RespJoinRoom proto.InternalMessageInfo
+var xxx_messageInfo_InputGameRole proto.InternalMessageInfo
+
+func (m *InputGameRole) GetPlayerRoleId() uint32 {
+	if m != nil {
+		return m.PlayerRoleId
+	}
+	return 0
+}
+
+//发送玩家请求状态
+type InputReadyState struct {
+	IsReady              bool     `protobuf:"varint,1,opt,name=IsReady,proto3" json:"IsReady,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *InputReadyState) Reset()         { *m = InputReadyState{} }
+func (m *InputReadyState) String() string { return proto.CompactTextString(m) }
+func (*InputReadyState) ProtoMessage()    {}
+func (*InputReadyState) Descriptor() ([]byte, []int) {
+	return fileDescriptor_928d6fde112007a2, []int{10}
+}
+func (m *InputReadyState) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *InputReadyState) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_InputReadyState.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *InputReadyState) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InputReadyState.Merge(m, src)
+}
+func (m *InputReadyState) XXX_Size() int {
+	return m.Size()
+}
+func (m *InputReadyState) XXX_DiscardUnknown() {
+	xxx_messageInfo_InputReadyState.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_InputReadyState proto.InternalMessageInfo
+
+func (m *InputReadyState) GetIsReady() bool {
+	if m != nil {
+		return m.IsReady
+	}
+	return false
+}
 
 func init() {
 	proto.RegisterType((*ReqPackage)(nil), "pb.ReqPackage")
@@ -606,45 +742,54 @@ func init() {
 	proto.RegisterType((*ReqUserInfo)(nil), "pb.ReqUserInfo")
 	proto.RegisterType((*RespUserInfo)(nil), "pb.RespUserInfo")
 	proto.RegisterType((*ReqCreateRoom)(nil), "pb.ReqCreateRoom")
-	proto.RegisterType((*RespCreateRoom)(nil), "pb.RespCreateRoom")
+	proto.RegisterType((*SyncPreGame)(nil), "pb.SyncPreGame")
+	proto.RegisterType((*SyncPreGame_ProGameState)(nil), "pb.SyncPreGame.ProGameState")
 	proto.RegisterType((*ReqJoinRoom)(nil), "pb.ReqJoinRoom")
-	proto.RegisterType((*RespJoinRoom)(nil), "pb.RespJoinRoom")
+	proto.RegisterType((*InputGameRole)(nil), "pb.InputGameRole")
+	proto.RegisterType((*InputReadyState)(nil), "pb.InputReadyState")
 }
 
 func init() { proto.RegisterFile("websocket.proto", fileDescriptor_928d6fde112007a2) }
 
 var fileDescriptor_928d6fde112007a2 = []byte{
-	// 480 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x53, 0xd1, 0x8a, 0xd3, 0x40,
-	0x14, 0x75, 0x9a, 0x6e, 0x77, 0x7b, 0xdb, 0xa4, 0x75, 0x58, 0x24, 0x14, 0x2c, 0x25, 0x28, 0xf6,
-	0x41, 0x2a, 0xc4, 0x67, 0x1f, 0xdc, 0xb8, 0x48, 0x65, 0x53, 0x64, 0x56, 0xf7, 0xc1, 0xb7, 0x69,
-	0x7b, 0x2d, 0xa1, 0x4e, 0x26, 0x4d, 0xda, 0xb5, 0xfe, 0x84, 0xe0, 0x9b, 0x9f, 0xe4, 0xa3, 0x9f,
-	0x20, 0xf5, 0x47, 0xe4, 0x4e, 0x32, 0xa9, 0x82, 0x08, 0x3e, 0xe5, 0x9e, 0x73, 0x6f, 0xce, 0x3d,
-	0xf7, 0xc0, 0x40, 0xef, 0x23, 0xce, 0x0b, 0xbd, 0x58, 0xe3, 0x76, 0x92, 0xe5, 0x7a, 0xab, 0x79,
-	0x23, 0x9b, 0x0f, 0x7a, 0x98, 0xe7, 0x3a, 0x8f, 0xf4, 0x12, 0x4b, 0x72, 0x70, 0xae, 0xb0, 0x28,
-	0xe4, 0x0a, 0x23, 0xad, 0x94, 0x4c, 0x97, 0x15, 0x0b, 0x98, 0xee, 0x54, 0x59, 0x07, 0xef, 0x00,
-	0x04, 0x6e, 0x5e, 0xcb, 0xc5, 0x5a, 0xae, 0x90, 0x3f, 0x00, 0x27, 0x52, 0x4b, 0x9f, 0x8d, 0xd8,
-	0xd8, 0x0b, 0xf9, 0x24, 0x9b, 0x4f, 0xe2, 0x3f, 0x04, 0x04, 0xb5, 0xf9, 0x39, 0x9c, 0xbc, 0xd1,
-	0x6b, 0x4c, 0xfd, 0xc6, 0x88, 0x8d, 0xdb, 0xa2, 0x04, 0xbc, 0x0f, 0x4e, 0x5c, 0xac, 0x7c, 0x67,
-	0xc4, 0xc6, 0x5d, 0x41, 0x65, 0x90, 0x42, 0x47, 0x60, 0x91, 0xfd, 0x9f, 0xf8, 0x23, 0x38, 0xbd,
-	0xcc, 0xcd, 0x0d, 0x46, 0xde, 0x0b, 0x5d, 0x9a, 0xbc, 0xb4, 0x87, 0x09, 0xdb, 0xfd, 0xcb, 0xbe,
-	0x2f, 0x0c, 0xba, 0x6f, 0x0b, 0xcc, 0x2f, 0x64, 0x81, 0xd3, 0xf4, 0xbd, 0xe6, 0x03, 0x38, 0x9b,
-	0x25, 0x8b, 0xf5, 0x4c, 0x2a, 0x34, 0x6b, 0xdb, 0xa2, 0xc6, 0x9c, 0x43, 0x73, 0xba, 0xd0, 0xf6,
-	0x06, 0x53, 0xf3, 0xfb, 0xe0, 0x5c, 0xe3, 0xde, 0x48, 0x7a, 0x61, 0xc7, 0xec, 0x4d, 0x77, 0xea,
-	0x1a, 0xf7, 0x82, 0x78, 0xda, 0xf8, 0x7c, 0x85, 0x7e, 0x73, 0xc4, 0xc6, 0xae, 0xa0, 0x92, 0x98,
-	0x9b, 0x24, 0xf3, 0x4f, 0x4a, 0xe6, 0x26, 0xc9, 0xb8, 0x07, 0x8d, 0xab, 0x5b, 0xbf, 0x65, 0x88,
-	0xc6, 0xd5, 0x6d, 0xf0, 0x0c, 0x5c, 0xb2, 0x14, 0xeb, 0x14, 0x3f, 0x19, 0x4f, 0x1c, 0x9a, 0x2f,
-	0xf5, 0x87, 0x32, 0x06, 0x57, 0x98, 0x9a, 0xfb, 0x70, 0xfa, 0x22, 0x91, 0x4a, 0xa7, 0x4b, 0x63,
-	0xc7, 0x15, 0x16, 0x06, 0x2e, 0x45, 0xb8, 0x21, 0x05, 0xfa, 0x39, 0x50, 0xd0, 0xa5, 0x44, 0x2d,
-	0xe6, 0x8f, 0xe1, 0xcc, 0x1e, 0x6b, 0x04, 0x3b, 0x61, 0x9f, 0x5c, 0xff, 0x1e, 0x82, 0xa8, 0x27,
-	0xf8, 0x13, 0x68, 0xd7, 0x3e, 0xcc, 0xa2, 0x4e, 0x78, 0xd7, 0x8e, 0xd7, 0x0d, 0x71, 0x9c, 0x09,
-	0x7a, 0xe0, 0x0a, 0xdc, 0x44, 0x39, 0xca, 0x2d, 0x0a, 0xad, 0x55, 0xf0, 0x99, 0x81, 0x47, 0x06,
-	0x8e, 0x14, 0xbf, 0x07, 0x2d, 0xfa, 0x4e, 0xed, 0x45, 0x15, 0xa2, 0xec, 0xa9, 0x32, 0xd9, 0x97,
-	0x19, 0xd7, 0x98, 0xee, 0x8d, 0x65, 0x66, 0x5a, 0x8e, 0x69, 0x59, 0x48, 0x6a, 0xb1, 0xdc, 0xcf,
-	0x76, 0xaa, 0x4a, 0xb9, 0x42, 0xc4, 0x47, 0xbb, 0x9c, 0xf8, 0x32, 0xeb, 0x0a, 0x05, 0x0f, 0x4d,
-	0x3e, 0xaf, 0x74, 0x92, 0xfe, 0xcb, 0x4c, 0xe0, 0x95, 0xb9, 0xd9, 0xb9, 0x8b, 0xfe, 0xb7, 0xc3,
-	0x90, 0x7d, 0x3f, 0x0c, 0xd9, 0x8f, 0xc3, 0x90, 0x7d, 0xfd, 0x39, 0xbc, 0x33, 0x6f, 0x99, 0xe7,
-	0xf0, 0xf4, 0x57, 0x00, 0x00, 0x00, 0xff, 0xff, 0x6a, 0xad, 0xe8, 0x4e, 0x58, 0x03, 0x00, 0x00,
+	// 580 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x54, 0xc1, 0x6e, 0xd3, 0x40,
+	0x10, 0xc5, 0x76, 0x9a, 0xb6, 0xe3, 0x38, 0x09, 0xab, 0x0a, 0x59, 0x11, 0x44, 0x91, 0x05, 0x22,
+	0x12, 0x28, 0x48, 0x2e, 0x57, 0x0e, 0x6d, 0xa8, 0x2a, 0xa3, 0xa6, 0x8a, 0x36, 0xd0, 0x03, 0xb7,
+	0x4d, 0x32, 0x44, 0x51, 0x62, 0xaf, 0x63, 0x3b, 0xa5, 0xb9, 0xf3, 0x03, 0x48, 0x1c, 0xf8, 0x24,
+	0x8e, 0x7c, 0x02, 0x0a, 0x3f, 0x82, 0x66, 0x9d, 0x35, 0x8e, 0x44, 0x0f, 0x9c, 0x32, 0xef, 0xed,
+	0xec, 0x9b, 0x37, 0xcf, 0xab, 0x40, 0xe3, 0x33, 0x8e, 0x53, 0x39, 0x59, 0x60, 0xd6, 0x8b, 0x13,
+	0x99, 0x49, 0x66, 0xc6, 0xe3, 0x56, 0x03, 0x93, 0x44, 0x26, 0x7d, 0x39, 0xc5, 0x9c, 0x6c, 0x9d,
+	0x84, 0x98, 0xa6, 0x62, 0x86, 0x7d, 0x19, 0x86, 0x22, 0x9a, 0xee, 0x58, 0xc0, 0x68, 0x1d, 0xe6,
+	0xb5, 0xf7, 0x11, 0x80, 0xe3, 0x6a, 0x28, 0x26, 0x0b, 0x31, 0x43, 0xf6, 0x14, 0xac, 0x7e, 0x38,
+	0x75, 0x8d, 0x8e, 0xd1, 0xad, 0xfb, 0xac, 0x17, 0x8f, 0x7b, 0x83, 0x3d, 0x01, 0x4e, 0xc7, 0xec,
+	0x04, 0x0e, 0xde, 0xcb, 0x05, 0x46, 0xae, 0xd9, 0x31, 0xba, 0xc7, 0x3c, 0x07, 0xac, 0x09, 0xd6,
+	0x20, 0x9d, 0xb9, 0x56, 0xc7, 0xe8, 0xd6, 0x38, 0x95, 0x5e, 0x04, 0x36, 0xc7, 0x34, 0xfe, 0x3f,
+	0xf1, 0xe7, 0x70, 0x78, 0x91, 0xa8, 0x1d, 0x94, 0x7c, 0xdd, 0x77, 0xa8, 0xf3, 0x42, 0x2f, 0xc6,
+	0xf5, 0xe9, 0x3f, 0xe6, 0x7d, 0x35, 0xa0, 0xf6, 0x21, 0xc5, 0xe4, 0x5c, 0xa4, 0x18, 0x44, 0x9f,
+	0x24, 0x6b, 0xc1, 0xd1, 0xf5, 0x7c, 0xb2, 0xb8, 0x16, 0x21, 0xaa, 0xb1, 0xc7, 0xbc, 0xc0, 0x8c,
+	0x41, 0x25, 0x98, 0x48, 0xbd, 0x83, 0xaa, 0xd9, 0x13, 0xb0, 0x46, 0x78, 0xa7, 0x24, 0xeb, 0xbe,
+	0xad, 0xe6, 0x46, 0xeb, 0x70, 0x84, 0x77, 0x9c, 0x78, 0x9a, 0x78, 0x36, 0x43, 0xb7, 0xd2, 0x31,
+	0xba, 0x0e, 0xa7, 0x92, 0x98, 0x9b, 0x79, 0xec, 0x1e, 0xe4, 0xcc, 0xcd, 0x3c, 0x66, 0x75, 0x30,
+	0xaf, 0x6e, 0xdd, 0xaa, 0x22, 0xcc, 0xab, 0x5b, 0xef, 0x0d, 0x38, 0x64, 0x69, 0x20, 0x23, 0xdc,
+	0x28, 0x4f, 0x0c, 0x2a, 0x97, 0x72, 0x99, 0xc7, 0xe0, 0x70, 0x55, 0x33, 0x17, 0x0e, 0xdf, 0xce,
+	0x45, 0x28, 0xa3, 0xa9, 0xb2, 0xe3, 0x70, 0x0d, 0x3d, 0x87, 0x22, 0x5c, 0x91, 0x02, 0x5d, 0xf6,
+	0x42, 0xa8, 0x51, 0xa2, 0x1a, 0xb3, 0x97, 0x70, 0xa4, 0x97, 0x55, 0x82, 0xb6, 0xdf, 0x24, 0xd7,
+	0xe5, 0x10, 0x78, 0xd1, 0xc1, 0x5e, 0xc1, 0x71, 0xe1, 0x43, 0x0d, 0xb2, 0xfd, 0x87, 0xba, 0xbd,
+	0x38, 0xe0, 0x7f, 0x7b, 0xbc, 0x33, 0x70, 0x38, 0xae, 0xfa, 0x09, 0x8a, 0x0c, 0xb9, 0x94, 0x21,
+	0x05, 0x4a, 0xbf, 0xe5, 0x40, 0x35, 0xa6, 0x57, 0x31, 0x10, 0x71, 0xa0, 0x57, 0xc8, 0x81, 0xf7,
+	0xcd, 0x04, 0x7b, 0xb4, 0x89, 0x26, 0xc3, 0x04, 0x2f, 0xa9, 0xeb, 0x11, 0x54, 0xe9, 0x46, 0xa0,
+	0x03, 0xd8, 0xa1, 0x3d, 0x65, 0xf3, 0x3e, 0x65, 0xab, 0xa4, 0xcc, 0x5e, 0x43, 0x75, 0x94, 0x89,
+	0x0c, 0x53, 0xb7, 0xd2, 0xb1, 0xba, 0xb6, 0xff, 0x98, 0x56, 0x29, 0x8d, 0xea, 0x0d, 0x13, 0x49,
+	0xbf, 0xaa, 0x89, 0xef, 0x7a, 0x5b, 0x5f, 0x0c, 0xa8, 0x95, 0x0f, 0xc8, 0x90, 0x8a, 0xb3, 0x30,
+	0x94, 0x23, 0xe6, 0xe5, 0x6f, 0xa9, 0x78, 0x3f, 0xb9, 0xa9, 0x3d, 0x8e, 0xb5, 0x01, 0x48, 0x88,
+	0xcb, 0x25, 0x16, 0xee, 0x4a, 0x0c, 0x7d, 0xd7, 0x20, 0xe5, 0x28, 0xa6, 0x1b, 0xf5, 0x68, 0x8e,
+	0xb8, 0x86, 0xde, 0x33, 0xf5, 0x5d, 0xdf, 0xc9, 0x79, 0xa4, 0x72, 0xbd, 0x27, 0x15, 0xef, 0x14,
+	0x9c, 0x20, 0x8a, 0xd7, 0x99, 0xd6, 0x24, 0x57, 0xc3, 0xa5, 0xd8, 0x60, 0xb2, 0x9b, 0x99, 0xb7,
+	0xef, 0x71, 0xde, 0x0b, 0x68, 0xa8, 0x4b, 0x6a, 0x52, 0xbe, 0x64, 0xc9, 0x88, 0xb1, 0x67, 0xe4,
+	0xbc, 0xf9, 0x63, 0xdb, 0x36, 0x7e, 0x6e, 0xdb, 0xc6, 0xaf, 0x6d, 0xdb, 0xf8, 0xfe, 0xbb, 0xfd,
+	0x60, 0x5c, 0x55, 0x7f, 0x0c, 0xa7, 0x7f, 0x02, 0x00, 0x00, 0xff, 0xff, 0x08, 0x92, 0x1f, 0x33,
+	0x62, 0x04, 0x00, 0x00,
 }
 
 func (m *ReqPackage) Marshal() (dAtA []byte, err error) {
@@ -937,10 +1082,22 @@ func (m *ReqCreateRoom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.MapId != 0 {
+		i = encodeVarintWebsocket(dAtA, i, uint64(m.MapId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.RoomName) > 0 {
+		i -= len(m.RoomName)
+		copy(dAtA[i:], m.RoomName)
+		i = encodeVarintWebsocket(dAtA, i, uint64(len(m.RoomName)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
-func (m *RespCreateRoom) Marshal() (dAtA []byte, err error) {
+func (m *SyncPreGame) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -950,12 +1107,12 @@ func (m *RespCreateRoom) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *RespCreateRoom) MarshalTo(dAtA []byte) (int, error) {
+func (m *SyncPreGame) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *RespCreateRoom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *SyncPreGame) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -964,22 +1121,24 @@ func (m *RespCreateRoom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if m.CurNum != 0 {
-		i = encodeVarintWebsocket(dAtA, i, uint64(m.CurNum))
-		i--
-		dAtA[i] = 0x28
+	if len(m.States) > 0 {
+		for iNdEx := len(m.States) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.States[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintWebsocket(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x22
+		}
 	}
-	if m.MaxNum != 0 {
-		i = encodeVarintWebsocket(dAtA, i, uint64(m.MaxNum))
+	if m.MapId != 0 {
+		i = encodeVarintWebsocket(dAtA, i, uint64(m.MapId))
 		i--
-		dAtA[i] = 0x20
-	}
-	if len(m.MapName) > 0 {
-		i -= len(m.MapName)
-		copy(dAtA[i:], m.MapName)
-		i = encodeVarintWebsocket(dAtA, i, uint64(len(m.MapName)))
-		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x18
 	}
 	if len(m.RoomName) > 0 {
 		i -= len(m.RoomName)
@@ -990,6 +1149,60 @@ func (m *RespCreateRoom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	if m.RoomId != 0 {
 		i = encodeVarintWebsocket(dAtA, i, uint64(m.RoomId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SyncPreGame_ProGameState) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SyncPreGame_ProGameState) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SyncPreGame_ProGameState) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.IsReady {
+		i--
+		if m.IsReady {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.GameRoleId != 0 {
+		i = encodeVarintWebsocket(dAtA, i, uint64(m.GameRoleId))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.UserNickName) > 0 {
+		i -= len(m.UserNickName)
+		copy(dAtA[i:], m.UserNickName)
+		i = encodeVarintWebsocket(dAtA, i, uint64(len(m.UserNickName)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.UserId != 0 {
+		i = encodeVarintWebsocket(dAtA, i, uint64(m.UserId))
 		i--
 		dAtA[i] = 0x8
 	}
@@ -1028,7 +1241,7 @@ func (m *ReqJoinRoom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *RespJoinRoom) Marshal() (dAtA []byte, err error) {
+func (m *InputGameRole) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1038,12 +1251,12 @@ func (m *RespJoinRoom) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *RespJoinRoom) MarshalTo(dAtA []byte) (int, error) {
+func (m *InputGameRole) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *RespJoinRoom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *InputGameRole) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1051,6 +1264,48 @@ func (m *RespJoinRoom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.PlayerRoleId != 0 {
+		i = encodeVarintWebsocket(dAtA, i, uint64(m.PlayerRoleId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *InputReadyState) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *InputReadyState) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *InputReadyState) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.IsReady {
+		i--
+		if m.IsReady {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
@@ -1199,13 +1454,20 @@ func (m *ReqCreateRoom) Size() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.RoomName)
+	if l > 0 {
+		n += 1 + l + sovWebsocket(uint64(l))
+	}
+	if m.MapId != 0 {
+		n += 1 + sovWebsocket(uint64(m.MapId))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
-func (m *RespCreateRoom) Size() (n int) {
+func (m *SyncPreGame) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1218,15 +1480,39 @@ func (m *RespCreateRoom) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovWebsocket(uint64(l))
 	}
-	l = len(m.MapName)
+	if m.MapId != 0 {
+		n += 1 + sovWebsocket(uint64(m.MapId))
+	}
+	if len(m.States) > 0 {
+		for _, e := range m.States {
+			l = e.Size()
+			n += 1 + l + sovWebsocket(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SyncPreGame_ProGameState) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.UserId != 0 {
+		n += 1 + sovWebsocket(uint64(m.UserId))
+	}
+	l = len(m.UserNickName)
 	if l > 0 {
 		n += 1 + l + sovWebsocket(uint64(l))
 	}
-	if m.MaxNum != 0 {
-		n += 1 + sovWebsocket(uint64(m.MaxNum))
+	if m.GameRoleId != 0 {
+		n += 1 + sovWebsocket(uint64(m.GameRoleId))
 	}
-	if m.CurNum != 0 {
-		n += 1 + sovWebsocket(uint64(m.CurNum))
+	if m.IsReady {
+		n += 2
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1249,12 +1535,30 @@ func (m *ReqJoinRoom) Size() (n int) {
 	return n
 }
 
-func (m *RespJoinRoom) Size() (n int) {
+func (m *InputGameRole) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
+	if m.PlayerRoleId != 0 {
+		n += 1 + sovWebsocket(uint64(m.PlayerRoleId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *InputReadyState) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.IsReady {
+		n += 2
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -2027,6 +2331,57 @@ func (m *ReqCreateRoom) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: ReqCreateRoom: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RoomName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWebsocket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RoomName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MapId", wireType)
+			}
+			m.MapId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWebsocket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.MapId |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipWebsocket(dAtA[iNdEx:])
@@ -2052,7 +2407,7 @@ func (m *ReqCreateRoom) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *RespCreateRoom) Unmarshal(dAtA []byte) error {
+func (m *SyncPreGame) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2075,10 +2430,10 @@ func (m *RespCreateRoom) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: RespCreateRoom: wiretype end group for non-group")
+			return fmt.Errorf("proto: SyncPreGame: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: RespCreateRoom: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: SyncPreGame: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -2133,8 +2488,134 @@ func (m *RespCreateRoom) Unmarshal(dAtA []byte) error {
 			m.RoomName = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MapId", wireType)
+			}
+			m.MapId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWebsocket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.MapId |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field MapName", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field States", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWebsocket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.States = append(m.States, &SyncPreGame_ProGameState{})
+			if err := m.States[len(m.States)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipWebsocket(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SyncPreGame_ProGameState) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowWebsocket
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ProGameState: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ProGameState: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UserId", wireType)
+			}
+			m.UserId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWebsocket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.UserId |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UserNickName", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2162,13 +2643,32 @@ func (m *RespCreateRoom) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.MapName = string(dAtA[iNdEx:postIndex])
+			m.UserNickName = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field GameRoleId", wireType)
+			}
+			m.GameRoleId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWebsocket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.GameRoleId |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		case 4:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field MaxNum", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field IsReady", wireType)
 			}
-			m.MaxNum = 0
+			var v int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowWebsocket
@@ -2178,30 +2678,12 @@ func (m *RespCreateRoom) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.MaxNum |= uint32(b&0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-		case 5:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CurNum", wireType)
-			}
-			m.CurNum = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowWebsocket
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.CurNum |= uint32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
+			m.IsReady = bool(v != 0)
 		default:
 			iNdEx = preIndex
 			skippy, err := skipWebsocket(dAtA[iNdEx:])
@@ -2300,7 +2782,7 @@ func (m *ReqJoinRoom) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *RespJoinRoom) Unmarshal(dAtA []byte) error {
+func (m *InputGameRole) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2323,12 +2805,105 @@ func (m *RespJoinRoom) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: RespJoinRoom: wiretype end group for non-group")
+			return fmt.Errorf("proto: InputGameRole: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: RespJoinRoom: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: InputGameRole: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PlayerRoleId", wireType)
+			}
+			m.PlayerRoleId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWebsocket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.PlayerRoleId |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipWebsocket(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthWebsocket
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *InputReadyState) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowWebsocket
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: InputReadyState: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: InputReadyState: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IsReady", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWebsocket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.IsReady = bool(v != 0)
 		default:
 			iNdEx = preIndex
 			skippy, err := skipWebsocket(dAtA[iNdEx:])

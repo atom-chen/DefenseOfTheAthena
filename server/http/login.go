@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"server/model"
+	"server/db"
 	"server/pb"
 	"server/util"
 )
@@ -16,7 +16,7 @@ func onLogin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Printf("onLogin account=%s, password=%s\n", req.Account, req.Password)
-	u := model.FindUserByAccountAndPassword(req.Account, req.Password)
+	u := db.FindUserByAccountAndPassword(req.Account, req.Password)
 
 	//回写Login数据
 	resp := new(pb.RespLogin)

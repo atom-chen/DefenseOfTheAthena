@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/golang/protobuf/proto"
 	"log"
+	"server/game/room"
 	"server/pb"
 	"server/zinx/ziface"
 	"server/zinx/znet"
@@ -19,21 +20,28 @@ func (t *JoinRoom) Handle(request ziface.IRequest) {
 	l, _ := request.GetConnection().GetProperty("linkId")
 	linkId := l.(uint32)
 	userLink := link.Manager.Find(linkId)
-
 	reqMsg := request.GetMsg()
 	var req pb.ReqJoinRoom
-
 	err := proto.Unmarshal(reqMsg, &req)
 	if err != nil {
 		return
 	}
 	fmt.Println("req join roomId:", req.RoomId)
-
-	resp := &pb.RespPackage{
-		Cmd:     pb.MessageCommand_CallJoinRoom,
-		ErrCode: pb.ErrorCode_OK,
+	targetRoom := room.Manager.GetRoomById(req.RoomId)
+	targetRoom.AddUser(userLink.User)
+	userLink.CurRoom = targetRoom
+	resp := new(pb.RespPackage)
+	if targetRoom == nil {
+		resp = &pb.RespPackage{
+			Cmd:     pb.MessageCommand_JoinRoom,
+			ErrCode: pb.ErrorCode_RoomUnExistent,
+		}
+	} else {
+		resp = &pb.RespPackage{
+			Cmd:     pb.MessageCommand_JoinRoom,
+			ErrCode: pb.ErrorCode_OK,
+		}
 	}
-
 	pbBuf, err := proto.Marshal(resp)
 	if err != nil {
 		return
@@ -42,6 +50,5 @@ func (t *JoinRoom) Handle(request ziface.IRequest) {
 		log.Println("JoinRoom error !")
 		return
 	}
-	//log.Printf("[心跳],connId=%d, resp=%v\n", userLink.Conn.GetConnId(), resp)
 	return
 }

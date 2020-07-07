@@ -1,6 +1,5 @@
 import { UIBase } from "../../framework/ui/UIBase";
 import Clog, { ClogKey } from "../../framework/clog/Clog";
-import { AudioManager } from "../../framework/audio/AudioManager";
 import { UIEventCenter } from "../../framework/util/UIEventCenter";
 import { UIManager } from "../../framework/ui/UIManager";
 import { UILoginFast } from "./UILoginFast";

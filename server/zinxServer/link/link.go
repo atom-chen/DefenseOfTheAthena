@@ -1,18 +1,20 @@
 package link
 
 import (
+	"server/db"
 	"server/enum"
-	"server/model"
+	"server/game/room"
 	"server/zinx/ziface"
 	"sync"
 )
 
 //单个用户的长连接
 type UserLink struct {
-	User   *model.User          //玩家的数据
-	LinkId uint32               //该连接的Id
-	Conn   ziface.IWSConnection //当前玩家的ws连接
-	Status enum.LinkStatus      //玩家的连接状态
+	User    *db.User             //玩家的数据
+	LinkId  uint32               //该连接的Id
+	Conn    ziface.IWSConnection //当前玩家的ws连接
+	CurRoom *room.Room           //当前玩家所在的房间
+	Status  enum.LinkStatus      //玩家的连接状态
 }
 
 var Gen uint32 = 1    //用来生成玩家ID的计数器
@@ -40,6 +42,5 @@ func (l *UserLink) LostConnection() {
 	//下线时清掉token
 	l.User.Token = ""
 	l.User.UpdateUser()
-
 	Manager.Remove(l.LinkId)
 }

@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/golang/protobuf/proto"
 	"log"
+	"server/game/room"
 	"server/pb"
 	"server/zinx/ziface"
 	"server/zinx/znet"
@@ -18,24 +19,22 @@ func (t *CreateRoom) Handle(request ziface.IRequest) {
 	l, _ := request.GetConnection().GetProperty("linkId")
 	linkId := l.(uint32)
 	userLink := link.Manager.Find(linkId)
-	resp := &pb.RespPackage{
-		Cmd:     pb.MessageCommand_CallCreateRoom,
-		ErrCode: pb.ErrorCode_OK,
-	}
-
-	msg := &pb.RespCreateRoom{
-		RoomId:   10001,
-		RoomName: "替天行道",
-		MapName:  "守卫水泊梁山",
-		MaxNum:   6,
-		CurNum:   1,
-	}
-
-	msgBuf, err := proto.Marshal(msg)
+	var req pb.ReqCreateRoom
+	err := proto.Unmarshal(request.GetMsg(), &req)
 	if err != nil {
 		return
 	}
-	resp.Msg = msgBuf
+	curRoom := userLink.CurRoom
+	if curRoom == nil {
+		newRoom := room.NewRoom(req.RoomName, req.MapId)
+		userLink.CurRoom = newRoom
+	}
+	userLink.CurRoom.AddUser(userLink.User)
+
+	resp := &pb.RespPackage{
+		Cmd:     pb.MessageCommand_CreateRoom,
+		ErrCode: pb.ErrorCode_OK,
+	}
 
 	pbBuf, err := proto.Marshal(resp)
 	if err != nil {
@@ -45,6 +44,7 @@ func (t *CreateRoom) Handle(request ziface.IRequest) {
 		log.Println("CreateRoom error !")
 		return
 	}
-	//log.Printf("[心跳],connId=%d, resp=%v\n", userLink.Conn.GetConnId(), resp)
+
+	userLink.SyncPreGame()
 	return
 }

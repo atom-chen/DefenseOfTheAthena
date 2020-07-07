@@ -94,11 +94,11 @@ export class UILobby extends UIBase {
 
     private OnBtnJoinRoomClick() {
         Clog.Trace(ClogKey.UI, "OnBtnJoinRoomClick")
-        LobbyController.JoinRoom();
+        LobbyController.JoinRoom(10001);
     }
 
     private OnBtnCreateRoomClick() {
         Clog.Trace(ClogKey.UI, "OnBtnCreateRoomClick")
-        LobbyController.CreateRoom();
+        LobbyController.CreateRoom("替天行道",1);
     }
 }

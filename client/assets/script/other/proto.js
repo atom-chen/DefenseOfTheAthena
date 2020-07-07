@@ -44,6 +44,7 @@ $root.pb = (function() {
      * @property {number} LoginAccountOrPasswordError=3 LoginAccountOrPasswordError value
      * @property {number} RegisterAccountExit=4 RegisterAccountExit value
      * @property {number} AuthFailed=5 AuthFailed value
+     * @property {number} RoomUnExistent=6 RoomUnExistent value
      */
     pb.ErrorCode = (function() {
         var valuesById = {}, values = Object.create(valuesById);
@@ -53,6 +54,7 @@ $root.pb = (function() {
         values[valuesById[3] = "LoginAccountOrPasswordError"] = 3;
         values[valuesById[4] = "RegisterAccountExit"] = 4;
         values[valuesById[5] = "AuthFailed"] = 5;
+        values[valuesById[6] = "RoomUnExistent"] = 6;
         return values;
     })();
 
@@ -425,6 +427,7 @@ $root.pb = (function() {
                 case 3:
                 case 4:
                 case 5:
+                case 6:
                     break;
                 }
             if (message.LoginUrl != null && message.hasOwnProperty("LoginUrl"))
@@ -475,6 +478,10 @@ $root.pb = (function() {
             case "AuthFailed":
             case 5:
                 message.ErrCode = 5;
+                break;
+            case "RoomUnExistent":
+            case 6:
+                message.ErrCode = 6;
                 break;
             }
             if (object.LoginUrl != null)
@@ -894,6 +901,7 @@ $root.pb = (function() {
                 case 3:
                 case 4:
                 case 5:
+                case 6:
                     break;
                 }
             if (message.Token != null && message.hasOwnProperty("Token"))
@@ -938,6 +946,10 @@ $root.pb = (function() {
             case "AuthFailed":
             case 5:
                 message.ErrCode = 5;
+                break;
+            case "RoomUnExistent":
+            case 6:
+                message.ErrCode = 6;
                 break;
             }
             if (object.Token != null)
@@ -1333,6 +1345,7 @@ $root.pb = (function() {
                 case 3:
                 case 4:
                 case 5:
+                case 6:
                     break;
                 }
             return null;
@@ -1374,6 +1387,10 @@ $root.pb = (function() {
             case "AuthFailed":
             case 5:
                 message.ErrCode = 5;
+                break;
+            case "RoomUnExistent":
+            case 6:
+                message.ErrCode = 6;
                 break;
             }
             return message;
@@ -1418,20 +1435,24 @@ $root.pb = (function() {
      * @name pb.MessageCommand
      * @enum {number}
      * @property {number} Unknown=0 Unknown value
-     * @property {number} CallLinkAuth=1 CallLinkAuth value
-     * @property {number} CallHeartBeat=2 CallHeartBeat value
-     * @property {number} CallGetUserInfo=3 CallGetUserInfo value
-     * @property {number} CallCreateRoom=4 CallCreateRoom value
-     * @property {number} CallJoinRoom=5 CallJoinRoom value
+     * @property {number} LinkAuth=1 LinkAuth value
+     * @property {number} HeartBeat=2 HeartBeat value
+     * @property {number} GetUserInfo=3 GetUserInfo value
+     * @property {number} CreateRoom=4 CreateRoom value
+     * @property {number} JoinRoom=5 JoinRoom value
+     * @property {number} PreGame=6 PreGame value
+     * @property {number} ReadyState=7 ReadyState value
      */
     pb.MessageCommand = (function() {
         var valuesById = {}, values = Object.create(valuesById);
         values[valuesById[0] = "Unknown"] = 0;
-        values[valuesById[1] = "CallLinkAuth"] = 1;
-        values[valuesById[2] = "CallHeartBeat"] = 2;
-        values[valuesById[3] = "CallGetUserInfo"] = 3;
-        values[valuesById[4] = "CallCreateRoom"] = 4;
-        values[valuesById[5] = "CallJoinRoom"] = 5;
+        values[valuesById[1] = "LinkAuth"] = 1;
+        values[valuesById[2] = "HeartBeat"] = 2;
+        values[valuesById[3] = "GetUserInfo"] = 3;
+        values[valuesById[4] = "CreateRoom"] = 4;
+        values[valuesById[5] = "JoinRoom"] = 5;
+        values[valuesById[6] = "PreGame"] = 6;
+        values[valuesById[7] = "ReadyState"] = 7;
         return values;
     })();
 
@@ -1603,6 +1624,8 @@ $root.pb = (function() {
                 case 3:
                 case 4:
                 case 5:
+                case 6:
+                case 7:
                     break;
                 }
             if (message.Token != null && message.hasOwnProperty("Token"))
@@ -1631,25 +1654,33 @@ $root.pb = (function() {
             case 0:
                 message.Cmd = 0;
                 break;
-            case "CallLinkAuth":
+            case "LinkAuth":
             case 1:
                 message.Cmd = 1;
                 break;
-            case "CallHeartBeat":
+            case "HeartBeat":
             case 2:
                 message.Cmd = 2;
                 break;
-            case "CallGetUserInfo":
+            case "GetUserInfo":
             case 3:
                 message.Cmd = 3;
                 break;
-            case "CallCreateRoom":
+            case "CreateRoom":
             case 4:
                 message.Cmd = 4;
                 break;
-            case "CallJoinRoom":
+            case "JoinRoom":
             case 5:
                 message.Cmd = 5;
+                break;
+            case "PreGame":
+            case 6:
+                message.Cmd = 6;
+                break;
+            case "ReadyState":
+            case 7:
+                message.Cmd = 7;
                 break;
             }
             if (object.Token != null)
@@ -1877,6 +1908,8 @@ $root.pb = (function() {
                 case 3:
                 case 4:
                 case 5:
+                case 6:
+                case 7:
                     break;
                 }
             if (message.ErrCode != null && message.hasOwnProperty("ErrCode"))
@@ -1889,6 +1922,7 @@ $root.pb = (function() {
                 case 3:
                 case 4:
                 case 5:
+                case 6:
                     break;
                 }
             if (message.Msg != null && message.hasOwnProperty("Msg"))
@@ -1914,25 +1948,33 @@ $root.pb = (function() {
             case 0:
                 message.Cmd = 0;
                 break;
-            case "CallLinkAuth":
+            case "LinkAuth":
             case 1:
                 message.Cmd = 1;
                 break;
-            case "CallHeartBeat":
+            case "HeartBeat":
             case 2:
                 message.Cmd = 2;
                 break;
-            case "CallGetUserInfo":
+            case "GetUserInfo":
             case 3:
                 message.Cmd = 3;
                 break;
-            case "CallCreateRoom":
+            case "CreateRoom":
             case 4:
                 message.Cmd = 4;
                 break;
-            case "CallJoinRoom":
+            case "JoinRoom":
             case 5:
                 message.Cmd = 5;
+                break;
+            case "PreGame":
+            case 6:
+                message.Cmd = 6;
+                break;
+            case "ReadyState":
+            case 7:
+                message.Cmd = 7;
                 break;
             }
             switch (object.ErrCode) {
@@ -1959,6 +2001,10 @@ $root.pb = (function() {
             case "AuthFailed":
             case 5:
                 message.ErrCode = 5;
+                break;
+            case "RoomUnExistent":
+            case 6:
+                message.ErrCode = 6;
                 break;
             }
             if (object.Msg != null)
@@ -2928,6 +2974,8 @@ $root.pb = (function() {
          * Properties of a ReqCreateRoom.
          * @memberof pb
          * @interface IReqCreateRoom
+         * @property {string|null} [RoomName] ReqCreateRoom RoomName
+         * @property {number|null} [MapId] ReqCreateRoom MapId
          */
 
         /**
@@ -2944,6 +2992,22 @@ $root.pb = (function() {
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
+
+        /**
+         * ReqCreateRoom RoomName.
+         * @member {string} RoomName
+         * @memberof pb.ReqCreateRoom
+         * @instance
+         */
+        ReqCreateRoom.prototype.RoomName = "";
+
+        /**
+         * ReqCreateRoom MapId.
+         * @member {number} MapId
+         * @memberof pb.ReqCreateRoom
+         * @instance
+         */
+        ReqCreateRoom.prototype.MapId = 0;
 
         /**
          * Creates a new ReqCreateRoom instance using the specified properties.
@@ -2969,6 +3033,10 @@ $root.pb = (function() {
         ReqCreateRoom.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
+            if (message.RoomName != null && Object.hasOwnProperty.call(message, "RoomName"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.RoomName);
+            if (message.MapId != null && Object.hasOwnProperty.call(message, "MapId"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.MapId);
             return writer;
         };
 
@@ -3003,6 +3071,12 @@ $root.pb = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
+                case 1:
+                    message.RoomName = reader.string();
+                    break;
+                case 2:
+                    message.MapId = reader.uint32();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -3038,6 +3112,12 @@ $root.pb = (function() {
         ReqCreateRoom.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
+            if (message.RoomName != null && message.hasOwnProperty("RoomName"))
+                if (!$util.isString(message.RoomName))
+                    return "RoomName: string expected";
+            if (message.MapId != null && message.hasOwnProperty("MapId"))
+                if (!$util.isInteger(message.MapId))
+                    return "MapId: integer expected";
             return null;
         };
 
@@ -3052,7 +3132,12 @@ $root.pb = (function() {
         ReqCreateRoom.fromObject = function fromObject(object) {
             if (object instanceof $root.pb.ReqCreateRoom)
                 return object;
-            return new $root.pb.ReqCreateRoom();
+            var message = new $root.pb.ReqCreateRoom();
+            if (object.RoomName != null)
+                message.RoomName = String(object.RoomName);
+            if (object.MapId != null)
+                message.MapId = object.MapId >>> 0;
+            return message;
         };
 
         /**
@@ -3064,8 +3149,19 @@ $root.pb = (function() {
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        ReqCreateRoom.toObject = function toObject() {
-            return {};
+        ReqCreateRoom.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.RoomName = "";
+                object.MapId = 0;
+            }
+            if (message.RoomName != null && message.hasOwnProperty("RoomName"))
+                object.RoomName = message.RoomName;
+            if (message.MapId != null && message.hasOwnProperty("MapId"))
+                object.MapId = message.MapId;
+            return object;
         };
 
         /**
@@ -3082,28 +3178,28 @@ $root.pb = (function() {
         return ReqCreateRoom;
     })();
 
-    pb.RespCreateRoom = (function() {
+    pb.SyncPreGame = (function() {
 
         /**
-         * Properties of a RespCreateRoom.
+         * Properties of a SyncPreGame.
          * @memberof pb
-         * @interface IRespCreateRoom
-         * @property {number|null} [RoomId] RespCreateRoom RoomId
-         * @property {string|null} [RoomName] RespCreateRoom RoomName
-         * @property {string|null} [MapName] RespCreateRoom MapName
-         * @property {number|null} [MaxNum] RespCreateRoom MaxNum
-         * @property {number|null} [CurNum] RespCreateRoom CurNum
+         * @interface ISyncPreGame
+         * @property {number|null} [RoomId] SyncPreGame RoomId
+         * @property {string|null} [RoomName] SyncPreGame RoomName
+         * @property {number|null} [MapId] SyncPreGame MapId
+         * @property {Array.<pb.SyncPreGame.IProGameState>|null} [States] SyncPreGame States
          */
 
         /**
-         * Constructs a new RespCreateRoom.
+         * Constructs a new SyncPreGame.
          * @memberof pb
-         * @classdesc Represents a RespCreateRoom.
-         * @implements IRespCreateRoom
+         * @classdesc Represents a SyncPreGame.
+         * @implements ISyncPreGame
          * @constructor
-         * @param {pb.IRespCreateRoom=} [properties] Properties to set
+         * @param {pb.ISyncPreGame=} [properties] Properties to set
          */
-        function RespCreateRoom(properties) {
+        function SyncPreGame(properties) {
+            this.States = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -3111,110 +3207,101 @@ $root.pb = (function() {
         }
 
         /**
-         * RespCreateRoom RoomId.
+         * SyncPreGame RoomId.
          * @member {number} RoomId
-         * @memberof pb.RespCreateRoom
+         * @memberof pb.SyncPreGame
          * @instance
          */
-        RespCreateRoom.prototype.RoomId = 0;
+        SyncPreGame.prototype.RoomId = 0;
 
         /**
-         * RespCreateRoom RoomName.
+         * SyncPreGame RoomName.
          * @member {string} RoomName
-         * @memberof pb.RespCreateRoom
+         * @memberof pb.SyncPreGame
          * @instance
          */
-        RespCreateRoom.prototype.RoomName = "";
+        SyncPreGame.prototype.RoomName = "";
 
         /**
-         * RespCreateRoom MapName.
-         * @member {string} MapName
-         * @memberof pb.RespCreateRoom
+         * SyncPreGame MapId.
+         * @member {number} MapId
+         * @memberof pb.SyncPreGame
          * @instance
          */
-        RespCreateRoom.prototype.MapName = "";
+        SyncPreGame.prototype.MapId = 0;
 
         /**
-         * RespCreateRoom MaxNum.
-         * @member {number} MaxNum
-         * @memberof pb.RespCreateRoom
+         * SyncPreGame States.
+         * @member {Array.<pb.SyncPreGame.IProGameState>} States
+         * @memberof pb.SyncPreGame
          * @instance
          */
-        RespCreateRoom.prototype.MaxNum = 0;
+        SyncPreGame.prototype.States = $util.emptyArray;
 
         /**
-         * RespCreateRoom CurNum.
-         * @member {number} CurNum
-         * @memberof pb.RespCreateRoom
-         * @instance
-         */
-        RespCreateRoom.prototype.CurNum = 0;
-
-        /**
-         * Creates a new RespCreateRoom instance using the specified properties.
+         * Creates a new SyncPreGame instance using the specified properties.
          * @function create
-         * @memberof pb.RespCreateRoom
+         * @memberof pb.SyncPreGame
          * @static
-         * @param {pb.IRespCreateRoom=} [properties] Properties to set
-         * @returns {pb.RespCreateRoom} RespCreateRoom instance
+         * @param {pb.ISyncPreGame=} [properties] Properties to set
+         * @returns {pb.SyncPreGame} SyncPreGame instance
          */
-        RespCreateRoom.create = function create(properties) {
-            return new RespCreateRoom(properties);
+        SyncPreGame.create = function create(properties) {
+            return new SyncPreGame(properties);
         };
 
         /**
-         * Encodes the specified RespCreateRoom message. Does not implicitly {@link pb.RespCreateRoom.verify|verify} messages.
+         * Encodes the specified SyncPreGame message. Does not implicitly {@link pb.SyncPreGame.verify|verify} messages.
          * @function encode
-         * @memberof pb.RespCreateRoom
+         * @memberof pb.SyncPreGame
          * @static
-         * @param {pb.IRespCreateRoom} message RespCreateRoom message or plain object to encode
+         * @param {pb.ISyncPreGame} message SyncPreGame message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        RespCreateRoom.encode = function encode(message, writer) {
+        SyncPreGame.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.RoomId != null && Object.hasOwnProperty.call(message, "RoomId"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.RoomId);
             if (message.RoomName != null && Object.hasOwnProperty.call(message, "RoomName"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.RoomName);
-            if (message.MapName != null && Object.hasOwnProperty.call(message, "MapName"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.MapName);
-            if (message.MaxNum != null && Object.hasOwnProperty.call(message, "MaxNum"))
-                writer.uint32(/* id 4, wireType 0 =*/32).uint32(message.MaxNum);
-            if (message.CurNum != null && Object.hasOwnProperty.call(message, "CurNum"))
-                writer.uint32(/* id 5, wireType 0 =*/40).uint32(message.CurNum);
+            if (message.MapId != null && Object.hasOwnProperty.call(message, "MapId"))
+                writer.uint32(/* id 3, wireType 0 =*/24).uint32(message.MapId);
+            if (message.States != null && message.States.length)
+                for (var i = 0; i < message.States.length; ++i)
+                    $root.pb.SyncPreGame.ProGameState.encode(message.States[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
             return writer;
         };
 
         /**
-         * Encodes the specified RespCreateRoom message, length delimited. Does not implicitly {@link pb.RespCreateRoom.verify|verify} messages.
+         * Encodes the specified SyncPreGame message, length delimited. Does not implicitly {@link pb.SyncPreGame.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof pb.RespCreateRoom
+         * @memberof pb.SyncPreGame
          * @static
-         * @param {pb.IRespCreateRoom} message RespCreateRoom message or plain object to encode
+         * @param {pb.ISyncPreGame} message SyncPreGame message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        RespCreateRoom.encodeDelimited = function encodeDelimited(message, writer) {
+        SyncPreGame.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a RespCreateRoom message from the specified reader or buffer.
+         * Decodes a SyncPreGame message from the specified reader or buffer.
          * @function decode
-         * @memberof pb.RespCreateRoom
+         * @memberof pb.SyncPreGame
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {pb.RespCreateRoom} RespCreateRoom
+         * @returns {pb.SyncPreGame} SyncPreGame
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        RespCreateRoom.decode = function decode(reader, length) {
+        SyncPreGame.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.pb.RespCreateRoom();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.pb.SyncPreGame();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
@@ -3225,13 +3312,12 @@ $root.pb = (function() {
                     message.RoomName = reader.string();
                     break;
                 case 3:
-                    message.MapName = reader.string();
+                    message.MapId = reader.uint32();
                     break;
                 case 4:
-                    message.MaxNum = reader.uint32();
-                    break;
-                case 5:
-                    message.CurNum = reader.uint32();
+                    if (!(message.States && message.States.length))
+                        message.States = [];
+                    message.States.push($root.pb.SyncPreGame.ProGameState.decode(reader, reader.uint32()));
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -3242,30 +3328,30 @@ $root.pb = (function() {
         };
 
         /**
-         * Decodes a RespCreateRoom message from the specified reader or buffer, length delimited.
+         * Decodes a SyncPreGame message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof pb.RespCreateRoom
+         * @memberof pb.SyncPreGame
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {pb.RespCreateRoom} RespCreateRoom
+         * @returns {pb.SyncPreGame} SyncPreGame
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        RespCreateRoom.decodeDelimited = function decodeDelimited(reader) {
+        SyncPreGame.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a RespCreateRoom message.
+         * Verifies a SyncPreGame message.
          * @function verify
-         * @memberof pb.RespCreateRoom
+         * @memberof pb.SyncPreGame
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        RespCreateRoom.verify = function verify(message) {
+        SyncPreGame.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.RoomId != null && message.hasOwnProperty("RoomId"))
@@ -3274,88 +3360,352 @@ $root.pb = (function() {
             if (message.RoomName != null && message.hasOwnProperty("RoomName"))
                 if (!$util.isString(message.RoomName))
                     return "RoomName: string expected";
-            if (message.MapName != null && message.hasOwnProperty("MapName"))
-                if (!$util.isString(message.MapName))
-                    return "MapName: string expected";
-            if (message.MaxNum != null && message.hasOwnProperty("MaxNum"))
-                if (!$util.isInteger(message.MaxNum))
-                    return "MaxNum: integer expected";
-            if (message.CurNum != null && message.hasOwnProperty("CurNum"))
-                if (!$util.isInteger(message.CurNum))
-                    return "CurNum: integer expected";
+            if (message.MapId != null && message.hasOwnProperty("MapId"))
+                if (!$util.isInteger(message.MapId))
+                    return "MapId: integer expected";
+            if (message.States != null && message.hasOwnProperty("States")) {
+                if (!Array.isArray(message.States))
+                    return "States: array expected";
+                for (var i = 0; i < message.States.length; ++i) {
+                    var error = $root.pb.SyncPreGame.ProGameState.verify(message.States[i]);
+                    if (error)
+                        return "States." + error;
+                }
+            }
             return null;
         };
 
         /**
-         * Creates a RespCreateRoom message from a plain object. Also converts values to their respective internal types.
+         * Creates a SyncPreGame message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof pb.RespCreateRoom
+         * @memberof pb.SyncPreGame
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {pb.RespCreateRoom} RespCreateRoom
+         * @returns {pb.SyncPreGame} SyncPreGame
          */
-        RespCreateRoom.fromObject = function fromObject(object) {
-            if (object instanceof $root.pb.RespCreateRoom)
+        SyncPreGame.fromObject = function fromObject(object) {
+            if (object instanceof $root.pb.SyncPreGame)
                 return object;
-            var message = new $root.pb.RespCreateRoom();
+            var message = new $root.pb.SyncPreGame();
             if (object.RoomId != null)
                 message.RoomId = object.RoomId >>> 0;
             if (object.RoomName != null)
                 message.RoomName = String(object.RoomName);
-            if (object.MapName != null)
-                message.MapName = String(object.MapName);
-            if (object.MaxNum != null)
-                message.MaxNum = object.MaxNum >>> 0;
-            if (object.CurNum != null)
-                message.CurNum = object.CurNum >>> 0;
+            if (object.MapId != null)
+                message.MapId = object.MapId >>> 0;
+            if (object.States) {
+                if (!Array.isArray(object.States))
+                    throw TypeError(".pb.SyncPreGame.States: array expected");
+                message.States = [];
+                for (var i = 0; i < object.States.length; ++i) {
+                    if (typeof object.States[i] !== "object")
+                        throw TypeError(".pb.SyncPreGame.States: object expected");
+                    message.States[i] = $root.pb.SyncPreGame.ProGameState.fromObject(object.States[i]);
+                }
+            }
             return message;
         };
 
         /**
-         * Creates a plain object from a RespCreateRoom message. Also converts values to other types if specified.
+         * Creates a plain object from a SyncPreGame message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof pb.RespCreateRoom
+         * @memberof pb.SyncPreGame
          * @static
-         * @param {pb.RespCreateRoom} message RespCreateRoom
+         * @param {pb.SyncPreGame} message SyncPreGame
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        RespCreateRoom.toObject = function toObject(message, options) {
+        SyncPreGame.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
+            if (options.arrays || options.defaults)
+                object.States = [];
             if (options.defaults) {
                 object.RoomId = 0;
                 object.RoomName = "";
-                object.MapName = "";
-                object.MaxNum = 0;
-                object.CurNum = 0;
+                object.MapId = 0;
             }
             if (message.RoomId != null && message.hasOwnProperty("RoomId"))
                 object.RoomId = message.RoomId;
             if (message.RoomName != null && message.hasOwnProperty("RoomName"))
                 object.RoomName = message.RoomName;
-            if (message.MapName != null && message.hasOwnProperty("MapName"))
-                object.MapName = message.MapName;
-            if (message.MaxNum != null && message.hasOwnProperty("MaxNum"))
-                object.MaxNum = message.MaxNum;
-            if (message.CurNum != null && message.hasOwnProperty("CurNum"))
-                object.CurNum = message.CurNum;
+            if (message.MapId != null && message.hasOwnProperty("MapId"))
+                object.MapId = message.MapId;
+            if (message.States && message.States.length) {
+                object.States = [];
+                for (var j = 0; j < message.States.length; ++j)
+                    object.States[j] = $root.pb.SyncPreGame.ProGameState.toObject(message.States[j], options);
+            }
             return object;
         };
 
         /**
-         * Converts this RespCreateRoom to JSON.
+         * Converts this SyncPreGame to JSON.
          * @function toJSON
-         * @memberof pb.RespCreateRoom
+         * @memberof pb.SyncPreGame
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        RespCreateRoom.prototype.toJSON = function toJSON() {
+        SyncPreGame.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return RespCreateRoom;
+        SyncPreGame.ProGameState = (function() {
+
+            /**
+             * Properties of a ProGameState.
+             * @memberof pb.SyncPreGame
+             * @interface IProGameState
+             * @property {number|null} [UserId] ProGameState UserId
+             * @property {string|null} [UserNickName] ProGameState UserNickName
+             * @property {number|null} [GameRoleId] ProGameState GameRoleId
+             * @property {boolean|null} [IsReady] ProGameState IsReady
+             */
+
+            /**
+             * Constructs a new ProGameState.
+             * @memberof pb.SyncPreGame
+             * @classdesc Represents a ProGameState.
+             * @implements IProGameState
+             * @constructor
+             * @param {pb.SyncPreGame.IProGameState=} [properties] Properties to set
+             */
+            function ProGameState(properties) {
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * ProGameState UserId.
+             * @member {number} UserId
+             * @memberof pb.SyncPreGame.ProGameState
+             * @instance
+             */
+            ProGameState.prototype.UserId = 0;
+
+            /**
+             * ProGameState UserNickName.
+             * @member {string} UserNickName
+             * @memberof pb.SyncPreGame.ProGameState
+             * @instance
+             */
+            ProGameState.prototype.UserNickName = "";
+
+            /**
+             * ProGameState GameRoleId.
+             * @member {number} GameRoleId
+             * @memberof pb.SyncPreGame.ProGameState
+             * @instance
+             */
+            ProGameState.prototype.GameRoleId = 0;
+
+            /**
+             * ProGameState IsReady.
+             * @member {boolean} IsReady
+             * @memberof pb.SyncPreGame.ProGameState
+             * @instance
+             */
+            ProGameState.prototype.IsReady = false;
+
+            /**
+             * Creates a new ProGameState instance using the specified properties.
+             * @function create
+             * @memberof pb.SyncPreGame.ProGameState
+             * @static
+             * @param {pb.SyncPreGame.IProGameState=} [properties] Properties to set
+             * @returns {pb.SyncPreGame.ProGameState} ProGameState instance
+             */
+            ProGameState.create = function create(properties) {
+                return new ProGameState(properties);
+            };
+
+            /**
+             * Encodes the specified ProGameState message. Does not implicitly {@link pb.SyncPreGame.ProGameState.verify|verify} messages.
+             * @function encode
+             * @memberof pb.SyncPreGame.ProGameState
+             * @static
+             * @param {pb.SyncPreGame.IProGameState} message ProGameState message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            ProGameState.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.UserId != null && Object.hasOwnProperty.call(message, "UserId"))
+                    writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.UserId);
+                if (message.UserNickName != null && Object.hasOwnProperty.call(message, "UserNickName"))
+                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.UserNickName);
+                if (message.GameRoleId != null && Object.hasOwnProperty.call(message, "GameRoleId"))
+                    writer.uint32(/* id 3, wireType 0 =*/24).uint32(message.GameRoleId);
+                if (message.IsReady != null && Object.hasOwnProperty.call(message, "IsReady"))
+                    writer.uint32(/* id 4, wireType 0 =*/32).bool(message.IsReady);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified ProGameState message, length delimited. Does not implicitly {@link pb.SyncPreGame.ProGameState.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof pb.SyncPreGame.ProGameState
+             * @static
+             * @param {pb.SyncPreGame.IProGameState} message ProGameState message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            ProGameState.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a ProGameState message from the specified reader or buffer.
+             * @function decode
+             * @memberof pb.SyncPreGame.ProGameState
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {pb.SyncPreGame.ProGameState} ProGameState
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            ProGameState.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.pb.SyncPreGame.ProGameState();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.UserId = reader.uint32();
+                        break;
+                    case 2:
+                        message.UserNickName = reader.string();
+                        break;
+                    case 3:
+                        message.GameRoleId = reader.uint32();
+                        break;
+                    case 4:
+                        message.IsReady = reader.bool();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a ProGameState message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof pb.SyncPreGame.ProGameState
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {pb.SyncPreGame.ProGameState} ProGameState
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            ProGameState.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a ProGameState message.
+             * @function verify
+             * @memberof pb.SyncPreGame.ProGameState
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            ProGameState.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.UserId != null && message.hasOwnProperty("UserId"))
+                    if (!$util.isInteger(message.UserId))
+                        return "UserId: integer expected";
+                if (message.UserNickName != null && message.hasOwnProperty("UserNickName"))
+                    if (!$util.isString(message.UserNickName))
+                        return "UserNickName: string expected";
+                if (message.GameRoleId != null && message.hasOwnProperty("GameRoleId"))
+                    if (!$util.isInteger(message.GameRoleId))
+                        return "GameRoleId: integer expected";
+                if (message.IsReady != null && message.hasOwnProperty("IsReady"))
+                    if (typeof message.IsReady !== "boolean")
+                        return "IsReady: boolean expected";
+                return null;
+            };
+
+            /**
+             * Creates a ProGameState message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof pb.SyncPreGame.ProGameState
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {pb.SyncPreGame.ProGameState} ProGameState
+             */
+            ProGameState.fromObject = function fromObject(object) {
+                if (object instanceof $root.pb.SyncPreGame.ProGameState)
+                    return object;
+                var message = new $root.pb.SyncPreGame.ProGameState();
+                if (object.UserId != null)
+                    message.UserId = object.UserId >>> 0;
+                if (object.UserNickName != null)
+                    message.UserNickName = String(object.UserNickName);
+                if (object.GameRoleId != null)
+                    message.GameRoleId = object.GameRoleId >>> 0;
+                if (object.IsReady != null)
+                    message.IsReady = Boolean(object.IsReady);
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a ProGameState message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof pb.SyncPreGame.ProGameState
+             * @static
+             * @param {pb.SyncPreGame.ProGameState} message ProGameState
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            ProGameState.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.defaults) {
+                    object.UserId = 0;
+                    object.UserNickName = "";
+                    object.GameRoleId = 0;
+                    object.IsReady = false;
+                }
+                if (message.UserId != null && message.hasOwnProperty("UserId"))
+                    object.UserId = message.UserId;
+                if (message.UserNickName != null && message.hasOwnProperty("UserNickName"))
+                    object.UserNickName = message.UserNickName;
+                if (message.GameRoleId != null && message.hasOwnProperty("GameRoleId"))
+                    object.GameRoleId = message.GameRoleId;
+                if (message.IsReady != null && message.hasOwnProperty("IsReady"))
+                    object.IsReady = message.IsReady;
+                return object;
+            };
+
+            /**
+             * Converts this ProGameState to JSON.
+             * @function toJSON
+             * @memberof pb.SyncPreGame.ProGameState
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            ProGameState.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return ProGameState;
+        })();
+
+        return SyncPreGame;
     })();
 
     pb.ReqJoinRoom = (function() {
@@ -3545,23 +3895,24 @@ $root.pb = (function() {
         return ReqJoinRoom;
     })();
 
-    pb.RespJoinRoom = (function() {
+    pb.InputGameRole = (function() {
 
         /**
-         * Properties of a RespJoinRoom.
+         * Properties of an InputGameRole.
          * @memberof pb
-         * @interface IRespJoinRoom
+         * @interface IInputGameRole
+         * @property {number|null} [PlayerRoleId] InputGameRole PlayerRoleId
          */
 
         /**
-         * Constructs a new RespJoinRoom.
+         * Constructs a new InputGameRole.
          * @memberof pb
-         * @classdesc Represents a RespJoinRoom.
-         * @implements IRespJoinRoom
+         * @classdesc Represents an InputGameRole.
+         * @implements IInputGameRole
          * @constructor
-         * @param {pb.IRespJoinRoom=} [properties] Properties to set
+         * @param {pb.IInputGameRole=} [properties] Properties to set
          */
-        function RespJoinRoom(properties) {
+        function InputGameRole(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -3569,63 +3920,76 @@ $root.pb = (function() {
         }
 
         /**
-         * Creates a new RespJoinRoom instance using the specified properties.
-         * @function create
-         * @memberof pb.RespJoinRoom
-         * @static
-         * @param {pb.IRespJoinRoom=} [properties] Properties to set
-         * @returns {pb.RespJoinRoom} RespJoinRoom instance
+         * InputGameRole PlayerRoleId.
+         * @member {number} PlayerRoleId
+         * @memberof pb.InputGameRole
+         * @instance
          */
-        RespJoinRoom.create = function create(properties) {
-            return new RespJoinRoom(properties);
+        InputGameRole.prototype.PlayerRoleId = 0;
+
+        /**
+         * Creates a new InputGameRole instance using the specified properties.
+         * @function create
+         * @memberof pb.InputGameRole
+         * @static
+         * @param {pb.IInputGameRole=} [properties] Properties to set
+         * @returns {pb.InputGameRole} InputGameRole instance
+         */
+        InputGameRole.create = function create(properties) {
+            return new InputGameRole(properties);
         };
 
         /**
-         * Encodes the specified RespJoinRoom message. Does not implicitly {@link pb.RespJoinRoom.verify|verify} messages.
+         * Encodes the specified InputGameRole message. Does not implicitly {@link pb.InputGameRole.verify|verify} messages.
          * @function encode
-         * @memberof pb.RespJoinRoom
+         * @memberof pb.InputGameRole
          * @static
-         * @param {pb.IRespJoinRoom} message RespJoinRoom message or plain object to encode
+         * @param {pb.IInputGameRole} message InputGameRole message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        RespJoinRoom.encode = function encode(message, writer) {
+        InputGameRole.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
+            if (message.PlayerRoleId != null && Object.hasOwnProperty.call(message, "PlayerRoleId"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.PlayerRoleId);
             return writer;
         };
 
         /**
-         * Encodes the specified RespJoinRoom message, length delimited. Does not implicitly {@link pb.RespJoinRoom.verify|verify} messages.
+         * Encodes the specified InputGameRole message, length delimited. Does not implicitly {@link pb.InputGameRole.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof pb.RespJoinRoom
+         * @memberof pb.InputGameRole
          * @static
-         * @param {pb.IRespJoinRoom} message RespJoinRoom message or plain object to encode
+         * @param {pb.IInputGameRole} message InputGameRole message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        RespJoinRoom.encodeDelimited = function encodeDelimited(message, writer) {
+        InputGameRole.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a RespJoinRoom message from the specified reader or buffer.
+         * Decodes an InputGameRole message from the specified reader or buffer.
          * @function decode
-         * @memberof pb.RespJoinRoom
+         * @memberof pb.InputGameRole
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {pb.RespJoinRoom} RespJoinRoom
+         * @returns {pb.InputGameRole} InputGameRole
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        RespJoinRoom.decode = function decode(reader, length) {
+        InputGameRole.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.pb.RespJoinRoom();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.pb.InputGameRole();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
+                case 1:
+                    message.PlayerRoleId = reader.uint32();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -3635,74 +3999,274 @@ $root.pb = (function() {
         };
 
         /**
-         * Decodes a RespJoinRoom message from the specified reader or buffer, length delimited.
+         * Decodes an InputGameRole message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof pb.RespJoinRoom
+         * @memberof pb.InputGameRole
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {pb.RespJoinRoom} RespJoinRoom
+         * @returns {pb.InputGameRole} InputGameRole
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        RespJoinRoom.decodeDelimited = function decodeDelimited(reader) {
+        InputGameRole.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a RespJoinRoom message.
+         * Verifies an InputGameRole message.
          * @function verify
-         * @memberof pb.RespJoinRoom
+         * @memberof pb.InputGameRole
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        RespJoinRoom.verify = function verify(message) {
+        InputGameRole.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
+            if (message.PlayerRoleId != null && message.hasOwnProperty("PlayerRoleId"))
+                if (!$util.isInteger(message.PlayerRoleId))
+                    return "PlayerRoleId: integer expected";
             return null;
         };
 
         /**
-         * Creates a RespJoinRoom message from a plain object. Also converts values to their respective internal types.
+         * Creates an InputGameRole message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof pb.RespJoinRoom
+         * @memberof pb.InputGameRole
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {pb.RespJoinRoom} RespJoinRoom
+         * @returns {pb.InputGameRole} InputGameRole
          */
-        RespJoinRoom.fromObject = function fromObject(object) {
-            if (object instanceof $root.pb.RespJoinRoom)
+        InputGameRole.fromObject = function fromObject(object) {
+            if (object instanceof $root.pb.InputGameRole)
                 return object;
-            return new $root.pb.RespJoinRoom();
+            var message = new $root.pb.InputGameRole();
+            if (object.PlayerRoleId != null)
+                message.PlayerRoleId = object.PlayerRoleId >>> 0;
+            return message;
         };
 
         /**
-         * Creates a plain object from a RespJoinRoom message. Also converts values to other types if specified.
+         * Creates a plain object from an InputGameRole message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof pb.RespJoinRoom
+         * @memberof pb.InputGameRole
          * @static
-         * @param {pb.RespJoinRoom} message RespJoinRoom
+         * @param {pb.InputGameRole} message InputGameRole
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        RespJoinRoom.toObject = function toObject() {
-            return {};
+        InputGameRole.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.PlayerRoleId = 0;
+            if (message.PlayerRoleId != null && message.hasOwnProperty("PlayerRoleId"))
+                object.PlayerRoleId = message.PlayerRoleId;
+            return object;
         };
 
         /**
-         * Converts this RespJoinRoom to JSON.
+         * Converts this InputGameRole to JSON.
          * @function toJSON
-         * @memberof pb.RespJoinRoom
+         * @memberof pb.InputGameRole
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        RespJoinRoom.prototype.toJSON = function toJSON() {
+        InputGameRole.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return RespJoinRoom;
+        return InputGameRole;
+    })();
+
+    pb.InputReadyState = (function() {
+
+        /**
+         * Properties of an InputReadyState.
+         * @memberof pb
+         * @interface IInputReadyState
+         * @property {boolean|null} [IsReady] InputReadyState IsReady
+         */
+
+        /**
+         * Constructs a new InputReadyState.
+         * @memberof pb
+         * @classdesc Represents an InputReadyState.
+         * @implements IInputReadyState
+         * @constructor
+         * @param {pb.IInputReadyState=} [properties] Properties to set
+         */
+        function InputReadyState(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * InputReadyState IsReady.
+         * @member {boolean} IsReady
+         * @memberof pb.InputReadyState
+         * @instance
+         */
+        InputReadyState.prototype.IsReady = false;
+
+        /**
+         * Creates a new InputReadyState instance using the specified properties.
+         * @function create
+         * @memberof pb.InputReadyState
+         * @static
+         * @param {pb.IInputReadyState=} [properties] Properties to set
+         * @returns {pb.InputReadyState} InputReadyState instance
+         */
+        InputReadyState.create = function create(properties) {
+            return new InputReadyState(properties);
+        };
+
+        /**
+         * Encodes the specified InputReadyState message. Does not implicitly {@link pb.InputReadyState.verify|verify} messages.
+         * @function encode
+         * @memberof pb.InputReadyState
+         * @static
+         * @param {pb.IInputReadyState} message InputReadyState message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        InputReadyState.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.IsReady != null && Object.hasOwnProperty.call(message, "IsReady"))
+                writer.uint32(/* id 1, wireType 0 =*/8).bool(message.IsReady);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified InputReadyState message, length delimited. Does not implicitly {@link pb.InputReadyState.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof pb.InputReadyState
+         * @static
+         * @param {pb.IInputReadyState} message InputReadyState message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        InputReadyState.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an InputReadyState message from the specified reader or buffer.
+         * @function decode
+         * @memberof pb.InputReadyState
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {pb.InputReadyState} InputReadyState
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        InputReadyState.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.pb.InputReadyState();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.IsReady = reader.bool();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an InputReadyState message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof pb.InputReadyState
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {pb.InputReadyState} InputReadyState
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        InputReadyState.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an InputReadyState message.
+         * @function verify
+         * @memberof pb.InputReadyState
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        InputReadyState.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.IsReady != null && message.hasOwnProperty("IsReady"))
+                if (typeof message.IsReady !== "boolean")
+                    return "IsReady: boolean expected";
+            return null;
+        };
+
+        /**
+         * Creates an InputReadyState message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof pb.InputReadyState
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {pb.InputReadyState} InputReadyState
+         */
+        InputReadyState.fromObject = function fromObject(object) {
+            if (object instanceof $root.pb.InputReadyState)
+                return object;
+            var message = new $root.pb.InputReadyState();
+            if (object.IsReady != null)
+                message.IsReady = Boolean(object.IsReady);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an InputReadyState message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof pb.InputReadyState
+         * @static
+         * @param {pb.InputReadyState} message InputReadyState
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        InputReadyState.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.IsReady = false;
+            if (message.IsReady != null && message.hasOwnProperty("IsReady"))
+                object.IsReady = message.IsReady;
+            return object;
+        };
+
+        /**
+         * Converts this InputReadyState to JSON.
+         * @function toJSON
+         * @memberof pb.InputReadyState
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        InputReadyState.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return InputReadyState;
     })();
 
     return pb;

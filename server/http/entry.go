@@ -25,8 +25,6 @@ func onEntry(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Printf("[entry],secret=%s, req.Secret=%s\n", secret, req.Secret)
-	//回写Hello数据
-
 	resp := new(pb.RespEntry)
 	if secret == req.Secret {
 		resp.ErrCode = pb.ErrorCode_OK

@@ -4,9 +4,11 @@ package pb;
 enum MessageCommand
 { 
 	Unknown=0;
-	CallLinkAuth=1;
-    CallHeartBeat=2; 
-	CallGetUserInfo=3;
-	CallCreateRoom=4;
-	CallJoinRoom=5;
+	LinkAuth=1;
+    HeartBeat=2; 
+	GetUserInfo=3;
+	CreateRoom=4;
+	JoinRoom=5;
+	PreGame=6;
+	ReadyState=7;
 };
