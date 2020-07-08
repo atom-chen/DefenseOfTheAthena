@@ -1,8 +1,8 @@
 import Clog, { ClogKey } from "../framework/clog/Clog";
 import { pb } from "../other/proto";
 import { Session } from "../login/model/SessionData";
-import protobuf = require("protobufjs");
 import { RoomController } from "../room/controller/RoomController";
+import { Pb2String } from "../other/Pb2String";
 
 export class WebSocketController {
 
@@ -36,8 +36,8 @@ export class WebSocketController {
             this.ws.onmessage = (event: any) => {
                 let buff = new Uint8Array(event.data)
                 let resp: pb.RespPackage = pb.RespPackage.decode(buff)
-                if(resp.Cmd!=pb.MessageCommand.HeartBeat){
-                    Clog.Trace(ClogKey.Net, 'onMessage <<  cmd:' + resp.Cmd.toString())
+                if(resp.Cmd!=pb.MessageCommand.CallHeartBeat){
+                    Clog.Trace(ClogKey.Net, 'onMessage <<  cmd:' + Pb2String.MessageCmd(resp.Cmd))
                 }
                 let func = this.funcMap.get(resp.Cmd)
                 if (!func) {
@@ -95,7 +95,7 @@ export class WebSocketController {
     }
 
     private static RegisterSyncFunc() {
-        this.Register(pb.MessageCommand.PreGame, (data: pb.RespPackage) => RoomController.SyncPreGame(data))
+        this.Register(pb.MessageCommand.SyncRoomInfo, (data: pb.RespPackage) => RoomController.SyncRoomInfo(data))
     }
 
     public static Call(command: pb.MessageCommand, msg?: (Uint8Array | null)): Promise<pb.RespPackage> {
@@ -110,7 +110,7 @@ export class WebSocketController {
             let req = pb.ReqPackage.create({ Cmd: command, Token: Session.Token, Msg: msg });//构造对象
             let reqBuf = pb.ReqPackage.encode(req).finish(); //获取二进制数据，一定要注意使用finish函数
             this.OnSend(reqBuf)
-            if (req.Cmd != pb.MessageCommand.HeartBeat) {
+            if (req.Cmd != pb.MessageCommand.CallHeartBeat) {
                 Clog.Trace(ClogKey.Net, "[call req]:" + JSON.stringify(req))
             }
         })
@@ -120,7 +120,6 @@ export class WebSocketController {
         let req = pb.ReqPackage.create({ Cmd: command, Token: Session.Token, Msg: msg });   //构造对象
         let reqBuf = pb.ReqPackage.encode(req).finish();                                    //获取二进制数据，一定要注意使用finish函数
         this.OnSend(reqBuf)
-        Clog.Trace(ClogKey.Net, "[Input]:" + JSON.stringify(req))
     }
 
 }

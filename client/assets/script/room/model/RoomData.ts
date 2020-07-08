@@ -4,34 +4,30 @@ import { pb } from "../../other/proto";
 export class RoomData {
     public RoomId: number;
     public RoomName: string;
+    public Password: string;
     public MapId: number;
     public RoomUser: Array<RoomUser>
 
     //房间最大人数
     public get MaxUser() {
-        switch (this.MapId) {
-            default:
-                return 6
-        }
+        return 6
     }
 
     public get MapName(): string {
-        switch (this.MapId) {
-            default:
-                return "守卫雅典娜"
-        }
+        return "守卫雅典娜"
     }
 
-    constructor(data?: pb.ISyncPreGame) {
+    constructor(data?: pb.IRoomInfo) {
         if (data == null) {
             return;
         }
         this.RoomId = data.RoomId;
         this.RoomName = data.RoomName;
-        this.MapId = data.MapId;
+        this.Password = data.Password
+        // this.MapId = data.MapId;
         this.RoomUser = new Array<RoomUser>();
-        for (let index = 0; index < data.States.length; index++) {
-            const element = data.States[index];
+        for (let index = 0; index < data.Users.length; index++) {
+            const element = data.Users[index];
             let item = new RoomUser(element)
             this.RoomUser.push(item)
         }
@@ -41,15 +37,12 @@ export class RoomData {
 export class RoomUser {
     public UserId: number
     public UserNickName: string;
-    public GameRoleId: number;
-    public get GameRoleName(): string {
-        return "法师"
-    }
+    public GameRoleId: pb.EnumGameRole;
     public IsReady: boolean;
     public TotalNum: number;
     public PassNum: number;
     public MapLv: number
-    constructor(data: pb.SyncPreGame.IProGameState) {
+    constructor(data: pb.RoomInfo.IRoomUser) {
         if (data == null) {
             return;
         }

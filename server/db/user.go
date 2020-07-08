@@ -7,6 +7,7 @@ import (
 	"server/pb"
 )
 
+//执久层用户数据结构User
 type User struct {
 	Id       uint32     `bson:"Id"`
 	Account  string     `bson:"Account"`

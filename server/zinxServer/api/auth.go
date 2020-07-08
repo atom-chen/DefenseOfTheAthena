@@ -5,10 +5,10 @@ import (
 	"github.com/golang/protobuf/proto"
 	"log"
 	"server/db"
+	logic2 "server/logic"
 	"server/pb"
 	"server/zinx/ziface"
 	"server/zinx/znet"
-	"server/zinxServer/link"
 )
 
 //验证Websocket连接
@@ -20,10 +20,10 @@ func (a *Auth) Handle(request ziface.IRequest) {
 	//根据连接获取玩家
 	l, _ := request.GetConnection().GetProperty("linkId")
 	linkId := l.(uint32)
-	userLink := link.Manager.Find(linkId)
+	userLink := logic2.LinkManager.Find(linkId)
 	u := db.FindUserByToken(request.GetToken())
 	var pkg = new(pb.RespPackage)
-	pkg.Cmd = pb.MessageCommand_LinkAuth
+	pkg.Cmd = pb.MessageCommand_CallLinkAuth
 	if u == nil {
 		pkg.ErrCode = pb.ErrorCode_LoginAccountOrPasswordError
 		userLink.Conn.Stop()

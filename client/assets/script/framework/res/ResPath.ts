@@ -2,6 +2,8 @@ export let ResPath = {
 	DropDownBox : "prefab/common/DropDownBox",
 	P_UIMap : "prefab/map/P_UIMap",
 	P_UITip : "prefab/common/P_UITip",
+	PanelCreateRoom : "prefab/lobby/PanelCreateRoom",
+	PanelJoinRoom : "prefab/lobby/PanelJoinRoom",
 	PanelLobby : "prefab/lobby/PanelLobby",
 	PanelLogin : "prefab/login/PanelLogin",
 	PanelLoginFast : "prefab/login/loginFast/PanelLoginFast",

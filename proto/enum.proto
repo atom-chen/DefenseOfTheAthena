@@ -1,9 +1,25 @@
 syntax = "proto3";   
 package pb;
 
+//性别
 enum EnumSex
 { 
     Unknow = 0; 
 	Male=1;
 	Female=2;
 };
+
+//游戏角色
+enum EnumGameRole
+{
+	DefaultRole = 0;//默认值（无意义） 
+	Warrior=1; 		//战士
+	Rogue=2;   		//潜行者
+	Mage=3;			//法师
+	Hunter=4;		//猎人
+	Druid=5;		//德鲁伊
+	Paladin=6;		//圣骑士
+	Priest=7;		//牧师	
+	Warlock=8;		//术士
+	Shaman=9;		//萨满
+}

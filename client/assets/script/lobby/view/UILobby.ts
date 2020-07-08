@@ -6,6 +6,9 @@ import { UIEventCenter } from "../../framework/util/UIEventCenter";
 import Clog, { ClogKey } from "../../framework/clog/Clog";
 import { LobbyController } from "../controller/LobbyController";
 import { RoomController } from "../../room/controller/RoomController";
+import { UIManager } from "../../framework/ui/UIManager";
+import { UICreateRoom } from "../../room/view/UICreateRoom";
+import { UIJoinRoom } from "../../room/view/UIJoinRoom";
 
 export class UILobby extends UIBase {
 
@@ -95,11 +98,11 @@ export class UILobby extends UIBase {
 
     private OnBtnJoinRoomClick() {
         Clog.Trace(ClogKey.UI, "OnBtnJoinRoomClick")
-        RoomController.JoinRoom(10001);
+        UIManager.OpenUI(UIJoinRoom)
     }
 
     private OnBtnCreateRoomClick() {
         Clog.Trace(ClogKey.UI, "OnBtnCreateRoomClick")
-        RoomController.CreateRoom("替天行道",1);
+        UIManager.OpenUI(UICreateRoom)
     }
 }

@@ -2,11 +2,208 @@ import * as $protobuf from "protobufjs";
 /** Namespace pb. */
 export namespace pb {
 
-    /** EnumSex enum. */
-    enum EnumSex {
-        Unknow = 0,
-        Male = 1,
-        Female = 2
+    /** Properties of a ReqPackage. */
+    interface IReqPackage {
+
+        /** ReqPackage Cmd */
+        Cmd?: (pb.MessageCommand|null);
+
+        /** ReqPackage Token */
+        Token?: (string|null);
+
+        /** ReqPackage Msg */
+        Msg?: (Uint8Array|null);
+    }
+
+    /** Represents a ReqPackage. */
+    class ReqPackage implements IReqPackage {
+
+        /**
+         * Constructs a new ReqPackage.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: pb.IReqPackage);
+
+        /** ReqPackage Cmd. */
+        public Cmd: pb.MessageCommand;
+
+        /** ReqPackage Token. */
+        public Token: string;
+
+        /** ReqPackage Msg. */
+        public Msg: Uint8Array;
+
+        /**
+         * Creates a new ReqPackage instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ReqPackage instance
+         */
+        public static create(properties?: pb.IReqPackage): pb.ReqPackage;
+
+        /**
+         * Encodes the specified ReqPackage message. Does not implicitly {@link pb.ReqPackage.verify|verify} messages.
+         * @param message ReqPackage message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: pb.IReqPackage, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ReqPackage message, length delimited. Does not implicitly {@link pb.ReqPackage.verify|verify} messages.
+         * @param message ReqPackage message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: pb.IReqPackage, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ReqPackage message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ReqPackage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.ReqPackage;
+
+        /**
+         * Decodes a ReqPackage message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ReqPackage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.ReqPackage;
+
+        /**
+         * Verifies a ReqPackage message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ReqPackage message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ReqPackage
+         */
+        public static fromObject(object: { [k: string]: any }): pb.ReqPackage;
+
+        /**
+         * Creates a plain object from a ReqPackage message. Also converts values to other types if specified.
+         * @param message ReqPackage
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: pb.ReqPackage, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ReqPackage to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a RespPackage. */
+    interface IRespPackage {
+
+        /** RespPackage Cmd */
+        Cmd?: (pb.MessageCommand|null);
+
+        /** RespPackage ErrCode */
+        ErrCode?: (pb.ErrorCode|null);
+
+        /** RespPackage Msg */
+        Msg?: (Uint8Array|null);
+    }
+
+    /** Represents a RespPackage. */
+    class RespPackage implements IRespPackage {
+
+        /**
+         * Constructs a new RespPackage.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: pb.IRespPackage);
+
+        /** RespPackage Cmd. */
+        public Cmd: pb.MessageCommand;
+
+        /** RespPackage ErrCode. */
+        public ErrCode: pb.ErrorCode;
+
+        /** RespPackage Msg. */
+        public Msg: Uint8Array;
+
+        /**
+         * Creates a new RespPackage instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RespPackage instance
+         */
+        public static create(properties?: pb.IRespPackage): pb.RespPackage;
+
+        /**
+         * Encodes the specified RespPackage message. Does not implicitly {@link pb.RespPackage.verify|verify} messages.
+         * @param message RespPackage message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: pb.IRespPackage, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified RespPackage message, length delimited. Does not implicitly {@link pb.RespPackage.verify|verify} messages.
+         * @param message RespPackage message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: pb.IRespPackage, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a RespPackage message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns RespPackage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.RespPackage;
+
+        /**
+         * Decodes a RespPackage message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns RespPackage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.RespPackage;
+
+        /**
+         * Verifies a RespPackage message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a RespPackage message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns RespPackage
+         */
+        public static fromObject(object: { [k: string]: any }): pb.RespPackage;
+
+        /**
+         * Creates a plain object from a RespPackage message. Also converts values to other types if specified.
+         * @param message RespPackage
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: pb.RespPackage, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this RespPackage to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
     }
 
     /** ErrorCode enum. */
@@ -17,7 +214,42 @@ export namespace pb {
         LoginAccountOrPasswordError = 3,
         RegisterAccountExit = 4,
         AuthFailed = 5,
-        RoomUnExistent = 6
+        RoomUnExistent = 6,
+        RoomPasswordError = 7
+    }
+
+    /** MessageCommand enum. */
+    enum MessageCommand {
+        Unknown = 0,
+        CallLinkAuth = 1,
+        CallHeartBeat = 2,
+        CallGetUserInfo = 3,
+        CallCreateRoom = 4,
+        CallJoinRoom = 5,
+        SyncRoomInfo = 6,
+        InputRoomReady = 7,
+        InputRoomRole = 8
+    }
+
+    /** EnumSex enum. */
+    enum EnumSex {
+        Unknow = 0,
+        Male = 1,
+        Female = 2
+    }
+
+    /** EnumGameRole enum. */
+    enum EnumGameRole {
+        DefaultRole = 0,
+        Warrior = 1,
+        Rogue = 2,
+        Mage = 3,
+        Hunter = 4,
+        Druid = 5,
+        Paladin = 6,
+        Priest = 7,
+        Warlock = 8,
+        Shaman = 9
     }
 
     /** Properties of a ReqEntry. */
@@ -596,222 +828,6 @@ export namespace pb {
         public toJSON(): { [k: string]: any };
     }
 
-    /** MessageCommand enum. */
-    enum MessageCommand {
-        Unknown = 0,
-        LinkAuth = 1,
-        HeartBeat = 2,
-        GetUserInfo = 3,
-        CreateRoom = 4,
-        JoinRoom = 5,
-        PreGame = 6,
-        ReadyState = 7
-    }
-
-    /** Properties of a ReqPackage. */
-    interface IReqPackage {
-
-        /** ReqPackage Cmd */
-        Cmd?: (pb.MessageCommand|null);
-
-        /** ReqPackage Token */
-        Token?: (string|null);
-
-        /** ReqPackage Msg */
-        Msg?: (Uint8Array|null);
-    }
-
-    /** Represents a ReqPackage. */
-    class ReqPackage implements IReqPackage {
-
-        /**
-         * Constructs a new ReqPackage.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: pb.IReqPackage);
-
-        /** ReqPackage Cmd. */
-        public Cmd: pb.MessageCommand;
-
-        /** ReqPackage Token. */
-        public Token: string;
-
-        /** ReqPackage Msg. */
-        public Msg: Uint8Array;
-
-        /**
-         * Creates a new ReqPackage instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns ReqPackage instance
-         */
-        public static create(properties?: pb.IReqPackage): pb.ReqPackage;
-
-        /**
-         * Encodes the specified ReqPackage message. Does not implicitly {@link pb.ReqPackage.verify|verify} messages.
-         * @param message ReqPackage message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: pb.IReqPackage, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified ReqPackage message, length delimited. Does not implicitly {@link pb.ReqPackage.verify|verify} messages.
-         * @param message ReqPackage message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: pb.IReqPackage, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a ReqPackage message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns ReqPackage
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.ReqPackage;
-
-        /**
-         * Decodes a ReqPackage message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns ReqPackage
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.ReqPackage;
-
-        /**
-         * Verifies a ReqPackage message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a ReqPackage message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns ReqPackage
-         */
-        public static fromObject(object: { [k: string]: any }): pb.ReqPackage;
-
-        /**
-         * Creates a plain object from a ReqPackage message. Also converts values to other types if specified.
-         * @param message ReqPackage
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: pb.ReqPackage, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this ReqPackage to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** Properties of a RespPackage. */
-    interface IRespPackage {
-
-        /** RespPackage Cmd */
-        Cmd?: (pb.MessageCommand|null);
-
-        /** RespPackage ErrCode */
-        ErrCode?: (pb.ErrorCode|null);
-
-        /** RespPackage Msg */
-        Msg?: (Uint8Array|null);
-    }
-
-    /** Represents a RespPackage. */
-    class RespPackage implements IRespPackage {
-
-        /**
-         * Constructs a new RespPackage.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: pb.IRespPackage);
-
-        /** RespPackage Cmd. */
-        public Cmd: pb.MessageCommand;
-
-        /** RespPackage ErrCode. */
-        public ErrCode: pb.ErrorCode;
-
-        /** RespPackage Msg. */
-        public Msg: Uint8Array;
-
-        /**
-         * Creates a new RespPackage instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns RespPackage instance
-         */
-        public static create(properties?: pb.IRespPackage): pb.RespPackage;
-
-        /**
-         * Encodes the specified RespPackage message. Does not implicitly {@link pb.RespPackage.verify|verify} messages.
-         * @param message RespPackage message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: pb.IRespPackage, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified RespPackage message, length delimited. Does not implicitly {@link pb.RespPackage.verify|verify} messages.
-         * @param message RespPackage message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: pb.IRespPackage, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a RespPackage message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns RespPackage
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.RespPackage;
-
-        /**
-         * Decodes a RespPackage message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns RespPackage
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.RespPackage;
-
-        /**
-         * Verifies a RespPackage message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a RespPackage message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns RespPackage
-         */
-        public static fromObject(object: { [k: string]: any }): pb.RespPackage;
-
-        /**
-         * Creates a plain object from a RespPackage message. Also converts values to other types if specified.
-         * @param message RespPackage
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: pb.RespPackage, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this RespPackage to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
     /** Properties of a UserBaseInfo. */
     interface IUserBaseInfo {
 
@@ -1214,8 +1230,8 @@ export namespace pb {
         /** ReqCreateRoom RoomName */
         RoomName?: (string|null);
 
-        /** ReqCreateRoom MapId */
-        MapId?: (number|null);
+        /** ReqCreateRoom Password */
+        Password?: (string|null);
     }
 
     /** Represents a ReqCreateRoom. */
@@ -1230,8 +1246,8 @@ export namespace pb {
         /** ReqCreateRoom RoomName. */
         public RoomName: string;
 
-        /** ReqCreateRoom MapId. */
-        public MapId: number;
+        /** ReqCreateRoom Password. */
+        public Password: string;
 
         /**
          * Creates a new ReqCreateRoom instance using the specified properties.
@@ -1307,8 +1323,8 @@ export namespace pb {
     /** Properties of a RespCreateRoom. */
     interface IRespCreateRoom {
 
-        /** RespCreateRoom PreGame */
-        PreGame?: (pb.ISyncPreGame|null);
+        /** RespCreateRoom Info */
+        Info?: (pb.IRoomInfo|null);
     }
 
     /** Represents a RespCreateRoom. */
@@ -1320,8 +1336,8 @@ export namespace pb {
          */
         constructor(properties?: pb.IRespCreateRoom);
 
-        /** RespCreateRoom PreGame. */
-        public PreGame?: (pb.ISyncPreGame|null);
+        /** RespCreateRoom Info. */
+        public Info?: (pb.IRoomInfo|null);
 
         /**
          * Creates a new RespCreateRoom instance using the specified properties.
@@ -1399,6 +1415,9 @@ export namespace pb {
 
         /** ReqJoinRoom RoomId */
         RoomId?: (number|null);
+
+        /** ReqJoinRoom Password */
+        Password?: (string|null);
     }
 
     /** Represents a ReqJoinRoom. */
@@ -1412,6 +1431,9 @@ export namespace pb {
 
         /** ReqJoinRoom RoomId. */
         public RoomId: number;
+
+        /** ReqJoinRoom Password. */
+        public Password: string;
 
         /**
          * Creates a new ReqJoinRoom instance using the specified properties.
@@ -1487,8 +1509,8 @@ export namespace pb {
     /** Properties of a RespJoinRoom. */
     interface IRespJoinRoom {
 
-        /** RespJoinRoom PreGame */
-        PreGame?: (pb.ISyncPreGame|null);
+        /** RespJoinRoom Info */
+        Info?: (pb.IRoomInfo|null);
     }
 
     /** Represents a RespJoinRoom. */
@@ -1500,8 +1522,8 @@ export namespace pb {
          */
         constructor(properties?: pb.IRespJoinRoom);
 
-        /** RespJoinRoom PreGame. */
-        public PreGame?: (pb.ISyncPreGame|null);
+        /** RespJoinRoom Info. */
+        public Info?: (pb.IRoomInfo|null);
 
         /**
          * Creates a new RespJoinRoom instance using the specified properties.
@@ -1574,418 +1596,418 @@ export namespace pb {
         public toJSON(): { [k: string]: any };
     }
 
-    /** Properties of a SyncPreGame. */
-    interface ISyncPreGame {
+    /** Properties of a RoomInfo. */
+    interface IRoomInfo {
 
-        /** SyncPreGame RoomId */
+        /** RoomInfo RoomId */
         RoomId?: (number|null);
 
-        /** SyncPreGame RoomName */
+        /** RoomInfo RoomName */
         RoomName?: (string|null);
 
-        /** SyncPreGame MapId */
-        MapId?: (number|null);
+        /** RoomInfo Password */
+        Password?: (string|null);
 
-        /** SyncPreGame States */
-        States?: (pb.SyncPreGame.IProGameState[]|null);
+        /** RoomInfo Users */
+        Users?: (pb.RoomInfo.IRoomUser[]|null);
     }
 
-    /** Represents a SyncPreGame. */
-    class SyncPreGame implements ISyncPreGame {
+    /** Represents a RoomInfo. */
+    class RoomInfo implements IRoomInfo {
 
         /**
-         * Constructs a new SyncPreGame.
+         * Constructs a new RoomInfo.
          * @param [properties] Properties to set
          */
-        constructor(properties?: pb.ISyncPreGame);
+        constructor(properties?: pb.IRoomInfo);
 
-        /** SyncPreGame RoomId. */
+        /** RoomInfo RoomId. */
         public RoomId: number;
 
-        /** SyncPreGame RoomName. */
+        /** RoomInfo RoomName. */
         public RoomName: string;
 
-        /** SyncPreGame MapId. */
-        public MapId: number;
+        /** RoomInfo Password. */
+        public Password: string;
 
-        /** SyncPreGame States. */
-        public States: pb.SyncPreGame.IProGameState[];
+        /** RoomInfo Users. */
+        public Users: pb.RoomInfo.IRoomUser[];
 
         /**
-         * Creates a new SyncPreGame instance using the specified properties.
+         * Creates a new RoomInfo instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns SyncPreGame instance
+         * @returns RoomInfo instance
          */
-        public static create(properties?: pb.ISyncPreGame): pb.SyncPreGame;
+        public static create(properties?: pb.IRoomInfo): pb.RoomInfo;
 
         /**
-         * Encodes the specified SyncPreGame message. Does not implicitly {@link pb.SyncPreGame.verify|verify} messages.
-         * @param message SyncPreGame message or plain object to encode
+         * Encodes the specified RoomInfo message. Does not implicitly {@link pb.RoomInfo.verify|verify} messages.
+         * @param message RoomInfo message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: pb.ISyncPreGame, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: pb.IRoomInfo, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified SyncPreGame message, length delimited. Does not implicitly {@link pb.SyncPreGame.verify|verify} messages.
-         * @param message SyncPreGame message or plain object to encode
+         * Encodes the specified RoomInfo message, length delimited. Does not implicitly {@link pb.RoomInfo.verify|verify} messages.
+         * @param message RoomInfo message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: pb.ISyncPreGame, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: pb.IRoomInfo, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a SyncPreGame message from the specified reader or buffer.
+         * Decodes a RoomInfo message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns SyncPreGame
+         * @returns RoomInfo
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.SyncPreGame;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.RoomInfo;
 
         /**
-         * Decodes a SyncPreGame message from the specified reader or buffer, length delimited.
+         * Decodes a RoomInfo message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns SyncPreGame
+         * @returns RoomInfo
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.SyncPreGame;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.RoomInfo;
 
         /**
-         * Verifies a SyncPreGame message.
+         * Verifies a RoomInfo message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a SyncPreGame message from a plain object. Also converts values to their respective internal types.
+         * Creates a RoomInfo message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns SyncPreGame
+         * @returns RoomInfo
          */
-        public static fromObject(object: { [k: string]: any }): pb.SyncPreGame;
+        public static fromObject(object: { [k: string]: any }): pb.RoomInfo;
 
         /**
-         * Creates a plain object from a SyncPreGame message. Also converts values to other types if specified.
-         * @param message SyncPreGame
+         * Creates a plain object from a RoomInfo message. Also converts values to other types if specified.
+         * @param message RoomInfo
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: pb.SyncPreGame, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: pb.RoomInfo, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this SyncPreGame to JSON.
+         * Converts this RoomInfo to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
     }
 
-    namespace SyncPreGame {
+    namespace RoomInfo {
 
-        /** Properties of a ProGameState. */
-        interface IProGameState {
+        /** Properties of a RoomUser. */
+        interface IRoomUser {
 
-            /** ProGameState UserId */
+            /** RoomUser UserId */
             UserId?: (number|null);
 
-            /** ProGameState UserNickName */
+            /** RoomUser UserNickName */
             UserNickName?: (string|null);
 
-            /** ProGameState GameRoleId */
-            GameRoleId?: (number|null);
+            /** RoomUser GameRoleId */
+            GameRoleId?: (pb.EnumGameRole|null);
 
-            /** ProGameState TotalNum */
+            /** RoomUser TotalNum */
             TotalNum?: (number|null);
 
-            /** ProGameState PassNum */
+            /** RoomUser PassNum */
             PassNum?: (number|null);
 
-            /** ProGameState MapLv */
+            /** RoomUser MapLv */
             MapLv?: (number|null);
 
-            /** ProGameState IsReady */
+            /** RoomUser IsReady */
             IsReady?: (boolean|null);
         }
 
-        /** Represents a ProGameState. */
-        class ProGameState implements IProGameState {
+        /** Represents a RoomUser. */
+        class RoomUser implements IRoomUser {
 
             /**
-             * Constructs a new ProGameState.
+             * Constructs a new RoomUser.
              * @param [properties] Properties to set
              */
-            constructor(properties?: pb.SyncPreGame.IProGameState);
+            constructor(properties?: pb.RoomInfo.IRoomUser);
 
-            /** ProGameState UserId. */
+            /** RoomUser UserId. */
             public UserId: number;
 
-            /** ProGameState UserNickName. */
+            /** RoomUser UserNickName. */
             public UserNickName: string;
 
-            /** ProGameState GameRoleId. */
-            public GameRoleId: number;
+            /** RoomUser GameRoleId. */
+            public GameRoleId: pb.EnumGameRole;
 
-            /** ProGameState TotalNum. */
+            /** RoomUser TotalNum. */
             public TotalNum: number;
 
-            /** ProGameState PassNum. */
+            /** RoomUser PassNum. */
             public PassNum: number;
 
-            /** ProGameState MapLv. */
+            /** RoomUser MapLv. */
             public MapLv: number;
 
-            /** ProGameState IsReady. */
+            /** RoomUser IsReady. */
             public IsReady: boolean;
 
             /**
-             * Creates a new ProGameState instance using the specified properties.
+             * Creates a new RoomUser instance using the specified properties.
              * @param [properties] Properties to set
-             * @returns ProGameState instance
+             * @returns RoomUser instance
              */
-            public static create(properties?: pb.SyncPreGame.IProGameState): pb.SyncPreGame.ProGameState;
+            public static create(properties?: pb.RoomInfo.IRoomUser): pb.RoomInfo.RoomUser;
 
             /**
-             * Encodes the specified ProGameState message. Does not implicitly {@link pb.SyncPreGame.ProGameState.verify|verify} messages.
-             * @param message ProGameState message or plain object to encode
+             * Encodes the specified RoomUser message. Does not implicitly {@link pb.RoomInfo.RoomUser.verify|verify} messages.
+             * @param message RoomUser message or plain object to encode
              * @param [writer] Writer to encode to
              * @returns Writer
              */
-            public static encode(message: pb.SyncPreGame.IProGameState, writer?: $protobuf.Writer): $protobuf.Writer;
+            public static encode(message: pb.RoomInfo.IRoomUser, writer?: $protobuf.Writer): $protobuf.Writer;
 
             /**
-             * Encodes the specified ProGameState message, length delimited. Does not implicitly {@link pb.SyncPreGame.ProGameState.verify|verify} messages.
-             * @param message ProGameState message or plain object to encode
+             * Encodes the specified RoomUser message, length delimited. Does not implicitly {@link pb.RoomInfo.RoomUser.verify|verify} messages.
+             * @param message RoomUser message or plain object to encode
              * @param [writer] Writer to encode to
              * @returns Writer
              */
-            public static encodeDelimited(message: pb.SyncPreGame.IProGameState, writer?: $protobuf.Writer): $protobuf.Writer;
+            public static encodeDelimited(message: pb.RoomInfo.IRoomUser, writer?: $protobuf.Writer): $protobuf.Writer;
 
             /**
-             * Decodes a ProGameState message from the specified reader or buffer.
+             * Decodes a RoomUser message from the specified reader or buffer.
              * @param reader Reader or buffer to decode from
              * @param [length] Message length if known beforehand
-             * @returns ProGameState
+             * @returns RoomUser
              * @throws {Error} If the payload is not a reader or valid buffer
              * @throws {$protobuf.util.ProtocolError} If required fields are missing
              */
-            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.SyncPreGame.ProGameState;
+            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.RoomInfo.RoomUser;
 
             /**
-             * Decodes a ProGameState message from the specified reader or buffer, length delimited.
+             * Decodes a RoomUser message from the specified reader or buffer, length delimited.
              * @param reader Reader or buffer to decode from
-             * @returns ProGameState
+             * @returns RoomUser
              * @throws {Error} If the payload is not a reader or valid buffer
              * @throws {$protobuf.util.ProtocolError} If required fields are missing
              */
-            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.SyncPreGame.ProGameState;
+            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.RoomInfo.RoomUser;
 
             /**
-             * Verifies a ProGameState message.
+             * Verifies a RoomUser message.
              * @param message Plain object to verify
              * @returns `null` if valid, otherwise the reason why it is not
              */
             public static verify(message: { [k: string]: any }): (string|null);
 
             /**
-             * Creates a ProGameState message from a plain object. Also converts values to their respective internal types.
+             * Creates a RoomUser message from a plain object. Also converts values to their respective internal types.
              * @param object Plain object
-             * @returns ProGameState
+             * @returns RoomUser
              */
-            public static fromObject(object: { [k: string]: any }): pb.SyncPreGame.ProGameState;
+            public static fromObject(object: { [k: string]: any }): pb.RoomInfo.RoomUser;
 
             /**
-             * Creates a plain object from a ProGameState message. Also converts values to other types if specified.
-             * @param message ProGameState
+             * Creates a plain object from a RoomUser message. Also converts values to other types if specified.
+             * @param message RoomUser
              * @param [options] Conversion options
              * @returns Plain object
              */
-            public static toObject(message: pb.SyncPreGame.ProGameState, options?: $protobuf.IConversionOptions): { [k: string]: any };
+            public static toObject(message: pb.RoomInfo.RoomUser, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
             /**
-             * Converts this ProGameState to JSON.
+             * Converts this RoomUser to JSON.
              * @returns JSON object
              */
             public toJSON(): { [k: string]: any };
         }
     }
 
-    /** Properties of an InputGameRole. */
-    interface IInputGameRole {
+    /** Properties of a GameRole. */
+    interface IGameRole {
 
-        /** InputGameRole PlayerRoleId */
-        PlayerRoleId?: (number|null);
+        /** GameRole RoleId */
+        RoleId?: (pb.EnumGameRole|null);
     }
 
-    /** Represents an InputGameRole. */
-    class InputGameRole implements IInputGameRole {
+    /** Represents a GameRole. */
+    class GameRole implements IGameRole {
 
         /**
-         * Constructs a new InputGameRole.
+         * Constructs a new GameRole.
          * @param [properties] Properties to set
          */
-        constructor(properties?: pb.IInputGameRole);
+        constructor(properties?: pb.IGameRole);
 
-        /** InputGameRole PlayerRoleId. */
-        public PlayerRoleId: number;
+        /** GameRole RoleId. */
+        public RoleId: pb.EnumGameRole;
 
         /**
-         * Creates a new InputGameRole instance using the specified properties.
+         * Creates a new GameRole instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns InputGameRole instance
+         * @returns GameRole instance
          */
-        public static create(properties?: pb.IInputGameRole): pb.InputGameRole;
+        public static create(properties?: pb.IGameRole): pb.GameRole;
 
         /**
-         * Encodes the specified InputGameRole message. Does not implicitly {@link pb.InputGameRole.verify|verify} messages.
-         * @param message InputGameRole message or plain object to encode
+         * Encodes the specified GameRole message. Does not implicitly {@link pb.GameRole.verify|verify} messages.
+         * @param message GameRole message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: pb.IInputGameRole, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: pb.IGameRole, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified InputGameRole message, length delimited. Does not implicitly {@link pb.InputGameRole.verify|verify} messages.
-         * @param message InputGameRole message or plain object to encode
+         * Encodes the specified GameRole message, length delimited. Does not implicitly {@link pb.GameRole.verify|verify} messages.
+         * @param message GameRole message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: pb.IInputGameRole, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: pb.IGameRole, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes an InputGameRole message from the specified reader or buffer.
+         * Decodes a GameRole message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns InputGameRole
+         * @returns GameRole
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.InputGameRole;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.GameRole;
 
         /**
-         * Decodes an InputGameRole message from the specified reader or buffer, length delimited.
+         * Decodes a GameRole message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns InputGameRole
+         * @returns GameRole
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.InputGameRole;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.GameRole;
 
         /**
-         * Verifies an InputGameRole message.
+         * Verifies a GameRole message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates an InputGameRole message from a plain object. Also converts values to their respective internal types.
+         * Creates a GameRole message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns InputGameRole
+         * @returns GameRole
          */
-        public static fromObject(object: { [k: string]: any }): pb.InputGameRole;
+        public static fromObject(object: { [k: string]: any }): pb.GameRole;
 
         /**
-         * Creates a plain object from an InputGameRole message. Also converts values to other types if specified.
-         * @param message InputGameRole
+         * Creates a plain object from a GameRole message. Also converts values to other types if specified.
+         * @param message GameRole
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: pb.InputGameRole, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: pb.GameRole, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this InputGameRole to JSON.
+         * Converts this GameRole to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
     }
 
-    /** Properties of an InputReadyState. */
-    interface IInputReadyState {
+    /** Properties of a RoomReady. */
+    interface IRoomReady {
 
-        /** InputReadyState IsReady */
+        /** RoomReady IsReady */
         IsReady?: (boolean|null);
     }
 
-    /** Represents an InputReadyState. */
-    class InputReadyState implements IInputReadyState {
+    /** Represents a RoomReady. */
+    class RoomReady implements IRoomReady {
 
         /**
-         * Constructs a new InputReadyState.
+         * Constructs a new RoomReady.
          * @param [properties] Properties to set
          */
-        constructor(properties?: pb.IInputReadyState);
+        constructor(properties?: pb.IRoomReady);
 
-        /** InputReadyState IsReady. */
+        /** RoomReady IsReady. */
         public IsReady: boolean;
 
         /**
-         * Creates a new InputReadyState instance using the specified properties.
+         * Creates a new RoomReady instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns InputReadyState instance
+         * @returns RoomReady instance
          */
-        public static create(properties?: pb.IInputReadyState): pb.InputReadyState;
+        public static create(properties?: pb.IRoomReady): pb.RoomReady;
 
         /**
-         * Encodes the specified InputReadyState message. Does not implicitly {@link pb.InputReadyState.verify|verify} messages.
-         * @param message InputReadyState message or plain object to encode
+         * Encodes the specified RoomReady message. Does not implicitly {@link pb.RoomReady.verify|verify} messages.
+         * @param message RoomReady message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: pb.IInputReadyState, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: pb.IRoomReady, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified InputReadyState message, length delimited. Does not implicitly {@link pb.InputReadyState.verify|verify} messages.
-         * @param message InputReadyState message or plain object to encode
+         * Encodes the specified RoomReady message, length delimited. Does not implicitly {@link pb.RoomReady.verify|verify} messages.
+         * @param message RoomReady message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: pb.IInputReadyState, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: pb.IRoomReady, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes an InputReadyState message from the specified reader or buffer.
+         * Decodes a RoomReady message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns InputReadyState
+         * @returns RoomReady
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.InputReadyState;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.RoomReady;
 
         /**
-         * Decodes an InputReadyState message from the specified reader or buffer, length delimited.
+         * Decodes a RoomReady message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns InputReadyState
+         * @returns RoomReady
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.InputReadyState;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.RoomReady;
 
         /**
-         * Verifies an InputReadyState message.
+         * Verifies a RoomReady message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates an InputReadyState message from a plain object. Also converts values to their respective internal types.
+         * Creates a RoomReady message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns InputReadyState
+         * @returns RoomReady
          */
-        public static fromObject(object: { [k: string]: any }): pb.InputReadyState;
+        public static fromObject(object: { [k: string]: any }): pb.RoomReady;
 
         /**
-         * Creates a plain object from an InputReadyState message. Also converts values to other types if specified.
-         * @param message InputReadyState
+         * Creates a plain object from a RoomReady message. Also converts values to other types if specified.
+         * @param message RoomReady
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: pb.InputReadyState, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: pb.RoomReady, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this InputReadyState to JSON.
+         * Converts this RoomReady to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };

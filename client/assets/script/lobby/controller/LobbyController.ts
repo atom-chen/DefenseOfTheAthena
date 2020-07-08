@@ -2,7 +2,7 @@ import { WebSocketController } from "../../websocket/WebSocketController";
 import { pb } from "../../other/proto";
 import { UITip } from "../../commonUI/UITip";
 import Clog, { ClogKey } from "../../framework/clog/Clog";
-import { ErrorDecode } from "../../other/ErrorDecode";
+import { Pb2String } from "../../other/Pb2String";
 import { Session } from "../../login/model/SessionData";
 import { UserInfoData, MoneyInfo } from "../../login/model/UserData";
 import { HeatBeat } from "../../websocket/HeatBeat";
@@ -14,7 +14,7 @@ export class LobbyController {
      * 心跳
      */
     public static async HeartBeat() {
-        await WebSocketController.Call(pb.MessageCommand.HeartBeat)
+        await WebSocketController.Call(pb.MessageCommand.CallHeartBeat)
         HeatBeat.OnHeatBeat()
     }
 
@@ -22,16 +22,16 @@ export class LobbyController {
      * 授权
      */
     public static async LongLinkAuth() {
-        let data = await WebSocketController.Call(pb.MessageCommand.LinkAuth)
+        let data = await WebSocketController.Call(pb.MessageCommand.CallLinkAuth)
     }
 
     /**
      * 获取用户信息
      */
     public static async GetUserInfo() {
-        let resp = await WebSocketController.Call(pb.MessageCommand.GetUserInfo)
+        let resp = await WebSocketController.Call(pb.MessageCommand.CallGetUserInfo)
         if (resp.ErrCode != pb.ErrorCode.OK) {
-            UITip.Info(ErrorDecode.ToChinese(resp.ErrCode))
+            UITip.Info(Pb2String.ErrCode(resp.ErrCode))
             return;
         }
         let msg: pb.RespUserInfo = pb.RespUserInfo.decode(resp.Msg)

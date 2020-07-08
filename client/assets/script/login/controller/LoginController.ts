@@ -5,7 +5,7 @@ import Clog, { ClogKey } from "../../framework/clog/Clog";
 import { UITip } from "../../commonUI/UITip";
 import { UserInfoData, MoneyInfo } from "../model/UserData";
 import { Session } from "../model/SessionData";
-import { ErrorDecode } from "../../other/ErrorDecode";
+import { Pb2String } from "../../other/Pb2String";
 import { UIManager } from "../../framework/ui/UIManager";
 import { pb } from "../../other/proto";
 import { WebSocketController } from "../../websocket/WebSocketController";
@@ -30,7 +30,7 @@ export class LoginController {
         let data = await Http.Post(SystemInfo.LoginUrl, req)
         let resp = pb.RespLogin.fromObject(data)
         if (resp.ErrCode != pb.ErrorCode.OK) {
-            UITip.Info(ErrorDecode.ToChinese(resp.ErrCode))
+            UITip.Info(Pb2String.ErrCode(resp.ErrCode))
             return;
         }
         Session.Token = resp.Token
@@ -58,7 +58,7 @@ export class LoginController {
         let data = await Http.Post(SystemInfo.RegisterUrl, postData)
         let resp = pb.RespRegister.fromObject(data)
         if (resp.ErrCode != pb.ErrorCode.OK) {
-            UITip.Info(ErrorDecode.ToChinese(resp.ErrCode))
+            UITip.Info(Pb2String.ErrCode(resp.ErrCode))
             return;
         }
     }

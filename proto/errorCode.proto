@@ -11,4 +11,5 @@ enum ErrorCode
 	RegisterAccountExit = 4;			//账号已存在（注册）
 	AuthFailed = 5;						//授权失败（先登录再进行长连接）
 	RoomUnExistent = 6;					//房间不存在
+	RoomPasswordError=7;				//房间密码错误
 }

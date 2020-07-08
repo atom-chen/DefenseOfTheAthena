@@ -1,0 +1,85 @@
+syntax = "proto3";   
+package pb;
+import "enum.proto";
+
+
+//用户基本数据
+message UserBaseInfo{
+	string NickName=1;
+	string Icon=2;
+	EnumSex Sex=3;
+	uint32 Age=4;
+	uint32 Vip=5;
+	uint32 Lv=6;
+}
+
+//用户的货币数据
+message UserMoneyInfo{
+	uint32 Gold=1;
+	uint32 Diamond=2;
+}
+
+//call req用户信息
+message ReqUserInfo{
+	
+}
+
+//call resp用户信息
+message RespUserInfo{
+	UserBaseInfo BaseInfo=1;
+	UserMoneyInfo MoneyInfo=2;
+}
+
+//call req创建房间
+message ReqCreateRoom{
+	string RoomName=1;					//房间名称
+	string Password=2;   				//房间密码
+}
+
+//call resp创建房间
+message RespCreateRoom{
+	RoomInfo Info=1;						//房间的状态
+}
+
+//call req加入房间
+message ReqJoinRoom{
+	uint32 RoomId=1;				    	//房间Id
+	string Password=2;   				//房间密码
+}
+
+//call resp加入房间
+message RespJoinRoom{
+	RoomInfo Info=1;						//房间的状态
+}
+
+//房间数据结构
+message RoomInfo{
+	//房间玩家数据结构
+	message RoomUser{
+		uint32 UserId=1;
+		string UserNickName =2;	 			//用户昵称
+		EnumGameRole GameRoleId=3;     		//玩家角色
+		uint32 TotalNum=4;					//该地图玩家总计游戏次数
+		uint32 PassNum=5;					//该地图通关次数
+		uint32 MapLv=6;						//地图等级
+		bool IsReady=7;	         			//是否已准备好
+	}
+	uint32 RoomId=1;					 //房间Id
+	string RoomName=2;					 //房间名称
+	string Password=3;					 //房间名称	
+	repeated RoomUser Users = 4;         //房间里的用户
+}
+
+//input玩家选择游戏角色
+message GameRole{
+	EnumGameRole RoleId=1;				//玩家选择的角色
+}
+
+//input玩家请求状态
+message RoomReady{
+	bool IsReady=1;						//是否已准备好
+}
+
+
+
+

@@ -3,6 +3,7 @@ import { UIEventCenter } from "../../framework/util/UIEventCenter";
 import Clog, { ClogKey } from "../../framework/clog/Clog";
 import { RoomController } from "../controller/RoomController";
 import { RoomUserItem } from "./RoomUserItem";
+import { GameCenter, UIEventCommand } from "../../other/GameCenter";
 
 export class UIRoom extends UIBase {
 
@@ -29,7 +30,7 @@ export class UIRoom extends UIBase {
     }
 
     onDestroy() {
-
+        this.removeEvent();
     }
 
     private initRoot() {
@@ -52,6 +53,15 @@ export class UIRoom extends UIBase {
 
     private initEvent() {
         UIEventCenter.ButtonEvent(this._btnStart, () => this.onBtnStartClick())
+        GameCenter.EventTarget.on(UIEventCommand.RefreshRoomState, this.RefreshRoomInfo, this)
+    }
+
+    private removeEvent() {
+        GameCenter.EventTarget.off(UIEventCommand.RefreshRoomState, this.RefreshRoomInfo, this)
+    }
+
+    private RefreshRoomInfo() {
+        this.allRoomUsers.forEach(item => item.Refresh())
     }
 
     private onBtnStartClick() {

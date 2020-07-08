@@ -4,11 +4,12 @@ package pb;
 enum MessageCommand
 { 
 	Unknown=0;
-	LinkAuth=1;
-    HeartBeat=2; 
-	GetUserInfo=3;
-	CreateRoom=4;
-	JoinRoom=5;
-	PreGame=6;
-	ReadyState=7;
+	CallLinkAuth=1;
+    CallHeartBeat=2; 			//心跳
+	CallGetUserInfo=3;			//获取玩家数据
+	CallCreateRoom=4;			//创建房间
+	CallJoinRoom=5;				//加入房间
+	SyncRoomInfo=6;				//房间状态
+	InputRoomReady=7;		    //房间内玩家准备
+	InputRoomRole=8;			//房间选角色
 };

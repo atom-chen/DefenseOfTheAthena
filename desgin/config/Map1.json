@@ -1,0 +1,39 @@
+{
+    "MapId": 1,
+    "MapName": "守卫雅典娜",
+    "MaxPlayer": 6,
+    "Roles": [
+        {
+            "RoleId": 1,
+            "RoleName": "战士"
+        },
+        {
+            "RoleId": 2,
+            "RoleName": "刺客"
+        },
+        {
+            "RoleId": 3,
+            "RoleName": "法师"
+        },
+        {
+            "RoleId": 4,
+            "RoleName": "猎人"
+        },
+        {
+            "RoleId": 5,
+            "RoleName": "德鲁伊"
+        },
+        {
+            "RoleId": 6,
+            "RoleName": "圣骑士"
+        },
+        {
+            "RoleId": 7,
+            "RoleName": "牧师"
+        },
+        {
+            "RoleId": 8,
+            "RoleName": "术士"
+        }
+    ]
+}

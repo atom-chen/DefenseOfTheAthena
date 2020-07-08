@@ -5,7 +5,7 @@ import { AudioManager } from "../../framework/audio/AudioManager";
 import Http from "../../framework/net/Http";
 import { SystemInfo } from "../model/SystemInfo";
 import { UITip } from "../../commonUI/UITip";
-import { ErrorDecode } from "../../other/ErrorDecode";
+import { Pb2String } from "../../other/Pb2String";
 import { pb } from "../../other/proto";
 
 export class EntryControler {
@@ -49,7 +49,7 @@ export class EntryControler {
         let resp = pb.RespEntry.fromObject(data)
         Clog.Green(ClogKey.Login, "HttpHello >> resp:" + JSON.stringify(resp));
         if (resp.ErrCode != pb.ErrorCode.OK) {
-            UITip.Info(ErrorDecode.ToChinese(resp.ErrCode))
+            UITip.Info(Pb2String.ErrCode(resp.ErrCode))
             return;
         }
         SystemInfo.LoginUrl = resp.LoginUrl

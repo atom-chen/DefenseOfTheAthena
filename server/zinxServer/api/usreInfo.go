@@ -5,10 +5,10 @@ import (
 	"github.com/golang/protobuf/proto"
 	"log"
 	"server/db"
+	"server/logic"
 	"server/pb"
 	"server/zinx/ziface"
 	"server/zinx/znet"
-	"server/zinxServer/link"
 )
 
 type UserInfo struct {
@@ -19,11 +19,11 @@ func (a *UserInfo) Handle(request ziface.IRequest) {
 	//根据连接获取玩家
 	l, _ := request.GetConnection().GetProperty("linkId")
 	linkId := l.(uint32)
-	userLink := link.Manager.Find(linkId)
+	userLink := logic.LinkManager.Find(linkId)
 	u := db.FindUserByToken(request.GetToken())
 	var pkg = new(pb.RespPackage)
 	if u == nil {
-		pkg.Cmd = pb.MessageCommand_GetUserInfo
+		pkg.Cmd = pb.MessageCommand_CallGetUserInfo
 		pkg.ErrCode = pb.ErrorCode_AuthFailed
 		userLink.Conn.Stop()
 		return
@@ -46,7 +46,7 @@ func (a *UserInfo) Handle(request ziface.IRequest) {
 		return
 	}
 
-	pkg.Cmd = pb.MessageCommand_GetUserInfo
+	pkg.Cmd = pb.MessageCommand_CallGetUserInfo
 	pkg.ErrCode = pb.ErrorCode_OK
 	pkg.Msg = userInfoBuf
 
